@@ -1,5 +1,8 @@
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/auth-context";
 const Login = () => {
+  const { signIn } = useAuth();
+
   return (
     <div>
       <input type="email" name="" id="" />
