@@ -1,4 +1,5 @@
 import express from "express";
+import user from "./models/user";
 
 const app = express();
 
@@ -10,7 +11,14 @@ app.get("/", (req, res) => {
   res.send("Home");
 });
 
-app.post("/register", async (req, res) => {});
+app.post("/register", async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+    await user.create({ name, email, password });
+  } catch (err) {
+    console.error(res);
+  }
+});
 app.post("/login", async (req, res) => {});
 
 app.listen(PORT, () => {
