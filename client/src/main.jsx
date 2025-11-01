@@ -3,9 +3,10 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Home from "./pages/Home";
+import Chat from "./pages/Chat";
 import "./index.css";
 import { AuthProvider } from "./context/auth-context";
+import PrivateRoute from "./routes/PrivateRoute";
 
 const root = document.getElementById("root");
 
@@ -16,7 +17,9 @@ ReactDOM.createRoot(root).render(
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/home" element={<Home />} />
+          <Route element={<PrivateRoute />}>
+            <Route path="/chat" element={<Chat />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </AuthProvider>

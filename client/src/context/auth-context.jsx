@@ -7,6 +7,7 @@ export const AuthProvider = ({ children }) => {
 
   function signIn() {
     setUser(true);
+    console.log(user);
   }
   function signOut() {
     setUser(null);
