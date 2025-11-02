@@ -29,7 +29,25 @@ app.post("/register", async (req, res) => {
     res.status(500).json({ error: "Erro ao registrar usuário" });
   }
 });
-app.post("/login", async (req, res) => {});
+app.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+  const user = await User.findOne({ where: { email } });
+
+  if (!user) {
+    res.status(400).json({ error: "Usuário não encontrado" });
+  }
+  if (user.password == password) {
+    res.json({ message: "Login realizado com sucesso" });
+  } else {
+    res.json({ message: "Senha incorreta" });
+  }
+
+  try {
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Erro ao fazer login" });
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
