@@ -18,6 +18,7 @@ ReactDOM.createRoot(root).render(
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route element={<PrivateRoute />}>
+            <Route path="*" element={<Chat />} />
             <Route path="/chat" element={<Chat />} />
           </Route>
         </Routes>
