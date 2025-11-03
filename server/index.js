@@ -1,9 +1,10 @@
 import express from "express";
 import User from "./models/user.js";
 import sequelize from "./config/database.js";
+import cors from "cors";
 
 const app = express();
-
+app.use(cors());
 app.use(express.json());
 
 const PORT = 3333;
