@@ -2,14 +2,14 @@ import express from "express";
 import User from "./models/user.js";
 import sequelize from "./config/database.js";
 import cors from "cors";
+import jwt from "jsonwebtoken";
+import "dotenv/config";
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
 const PORT = 3333;
-
-await sequelize.sync({});
 
 (async () => {
   try {
@@ -32,18 +32,20 @@ app.post("/register", async (req, res) => {
 });
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
-  const user = await User.findOne({ where: { email } });
-
-  if (!user) {
-    res.status(400).json({ error: "Usuário não encontrado" });
-  }
-  if (user.password == password) {
-    res.json({ message: "Login realizado com sucesso" });
-  } else {
-    res.json({ message: "Senha incorreta" });
-  }
-
   try {
+    const user = await User.findOne({ where: { email } });
+
+    if (!user) {
+      res.status(400).json({ error: "Usuário não encontrado" });
+    }
+    if (user.password !== password) {
+      res.json({ message: "Senha incorreta" });
+    }
+
+    const secret = process.env.SECRET;
+    const token = jwt.sign({ id: user.id }, secret, { expiresIn: "7d" });
+
+    return res.json({ message: "Login realizado com sucesso", token });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Erro ao fazer login" });
