@@ -2,7 +2,7 @@ import express from "express";
 import User from "./models/user.js";
 import sequelize from "./config/database.js";
 import cors from "cors";
-import jwt, { verify } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import "dotenv/config";
 
 const app = express();
@@ -77,6 +77,10 @@ function authenticateToken(req, res, next) {
     return res.status(403).json({ message: "Token inválido ou expirado." });
   }
 }
+
+app.get("/chat", authenticateToken, async (req, res) => {
+  res.send("chat");
+});
 
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
