@@ -5,14 +5,20 @@ const AuthContext = createContext({});
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
-  function signIn() {
-    setUser(true);
-    console.log(user);
+  async function signIn({ email, password }) {
+    const response = await fetch("http://localhost:3333/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+    if (!response.ok) {
+      throw new Error("Erro no login");
+    }
+    const data = await response.json();
+    setUser(data.user);
   }
 
-  function signOut() {
-    setUser(null);
-  }
+  function signOut() {}
 
   return (
     <AuthContext.Provider value={{ user, signIn, signOut }}>
