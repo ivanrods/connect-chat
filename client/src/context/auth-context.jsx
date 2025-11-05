@@ -1,9 +1,18 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const userData = localStorage.getItem("user");
+
+    if (token && userData) {
+      setUser(userData);
+    }
+  }, [user]);
 
   async function signIn({ email, password }) {
     const response = await fetch("http://localhost:3333/login", {
@@ -15,7 +24,10 @@ export const AuthProvider = ({ children }) => {
       throw new Error("Erro no login");
     }
     const data = await response.json();
-    setUser(data.user);
+    console.log(data);
+
+    localStorage.setItem("user", JSON.stringify(data.user));
+    localStorage.setItem("token", data.token);
   }
 
   function signOut() {}
