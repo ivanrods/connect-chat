@@ -80,12 +80,19 @@ function authenticateToken(req, res, next) {
     req.user = verified;
     next();
   } catch (err) {
+    console.error(err);
     return res.status(403).json({ message: "Token inválido ou expirado." });
   }
 }
 
 app.get("/chat", authenticateToken, async (req, res) => {
-  res.send("chat");
+  try {
+    const data = await Chat.findAll();
+    res.status(200).json(data);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Erro ao buscar mensagens." });
+  }
 });
 
 app.post("/chat", authenticateToken, async (req, res) => {
@@ -97,6 +104,7 @@ app.post("/chat", authenticateToken, async (req, res) => {
     await Chat.create({ user: user.email, message });
     res.status(201).json({ message: "Sucesso" });
   } catch (err) {
+    console.error(err);
     res.status(500).json({ message: "Erro ao salvar mensagem." });
   }
 });
