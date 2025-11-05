@@ -3,6 +3,7 @@ import User from "./models/user.js";
 import sequelize from "./config/database.js";
 import cors from "cors";
 import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
 import "dotenv/config";
 
 const app = express();
@@ -23,7 +24,10 @@ const PORT = 3333;
 app.post("/register", async (req, res) => {
   try {
     const { name, email, password } = req.body;
-    await User.create({ name, email, password });
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    await User.create({ name, email, password: hashedPassword });
+
     res.status(201).json({ message: "Usuário registrado com sucesso" });
   } catch (err) {
     console.error(err);
@@ -39,7 +43,9 @@ app.post("/login", async (req, res) => {
       return res.status(400).json({ error: "Usuário não encontrado" });
     }
 
-    if (user.password !== password) {
+    const comparePassword = await bcrypt.compare(password, user.password);
+
+    if (!comparePassword) {
       return res.status(400).json({ error: "Senha incorreta" });
     }
 
