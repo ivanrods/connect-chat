@@ -1,5 +1,6 @@
 import express from "express";
 import User from "./models/user.js";
+import Chat from "./models/chat.js";
 import sequelize from "./config/database.js";
 import cors from "cors";
 import jwt from "jsonwebtoken";
@@ -34,6 +35,7 @@ app.post("/register", async (req, res) => {
     res.status(500).json({ error: "Erro ao registrar usuário" });
   }
 });
+
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
   try {
@@ -70,9 +72,7 @@ function authenticateToken(req, res, next) {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
   if (!token) {
-    return res
-      .status(401)
-      .json({ message: "Acesso negado. Token não fornecido." });
+    return res.status(401).json({ message: "Token não fornecido." });
   }
 
   try {
@@ -86,6 +86,19 @@ function authenticateToken(req, res, next) {
 
 app.get("/chat", authenticateToken, async (req, res) => {
   res.send("chat");
+});
+
+app.post("/chat", authenticateToken, async (req, res) => {
+  const { id } = req.user;
+  const { message } = req.body;
+
+  try {
+    const user = await User.findByPk(id);
+    await Chat.create({ user: user.email, message });
+    res.status(201).json({ message: "Sucesso" });
+  } catch (err) {
+    res.status(500).json({ message: "Erro ao salvar mensagem." });
+  }
 });
 
 app.listen(PORT, () => {
