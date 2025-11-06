@@ -1,5 +1,16 @@
+import { useChat } from "../hooks/use-chat";
+
 const Chat = () => {
-  return <div>Chat</div>;
+  const { messages } = useChat();
+  return (
+    <div>
+      {messages.map((msg) => (
+        <p key={messages.id}>
+          <span></span> {msg.user} : {msg.message}
+        </p>
+      ))}
+    </div>
+  );
 };
 
 export default Chat;
