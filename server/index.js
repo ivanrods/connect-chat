@@ -7,6 +7,7 @@ import cors from "cors";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import "dotenv/config";
+import { chatSchema } from "./schemas/chat-schema.js";
 
 const app = express();
 app.use(cors());
@@ -98,7 +99,7 @@ app.get("/chat", authenticateToken, async (req, res) => {
 
 app.post("/chat", authenticateToken, async (req, res) => {
   const { id } = req.user;
-  const { message } = req.body;
+  const { message } = chatSchema.parse(req.body);
 
   try {
     const user = await User.findByPk(id);
