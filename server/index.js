@@ -2,6 +2,7 @@ import express from "express";
 import User from "./models/user.js";
 import Chat from "./models/chat.js";
 import sequelize from "./config/database.js";
+import { loginSchema, registerSchema } from "./schemas/auth-schema.js";
 import cors from "cors";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
@@ -24,7 +25,7 @@ const PORT = 3333;
 
 app.post("/register", async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password } = registerSchema.parse(req.body);
 
     const hashedPassword = await bcrypt.hash(password, 10);
     await User.create({ name, email, password: hashedPassword });
@@ -37,7 +38,7 @@ app.post("/register", async (req, res) => {
 });
 
 app.post("/login", async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password } = loginSchema.parse(req.body);
   try {
     const user = await User.findOne({ where: { email } });
 
