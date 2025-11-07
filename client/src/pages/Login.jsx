@@ -1,15 +1,24 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/auth-context";
 import { useState } from "react";
 const Login = () => {
   const { signIn } = useAuth();
+
+  const navigate = useNavigate();
 
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
 
   async function handleSubmit(e) {
     e.preventDefault();
-    await signIn({ email, password });
+    try {
+      await signIn({ email, password });
+
+      navigate("/chat");
+    } catch (err) {
+      console.error(err);
+      return alert("Erro ao entrar");
+    }
   }
 
   return (
