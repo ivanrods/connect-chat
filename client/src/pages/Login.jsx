@@ -6,7 +6,11 @@ import { loginSchema } from "../lib/schemas/auth-schema";
 
 const Login = () => {
   const { signIn } = useAuth();
-  const { register, handleSubmit } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
     resolver: zodResolver(loginSchema),
   });
 
@@ -25,7 +29,9 @@ const Login = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <input {...register("email")} />
+      {errors.email && <span>{errors.email.message}</span>}
       <input {...register("password")} />
+      {errors.password && <span>{errors.password.message}</span>}
       <button type="submit">Entrar</button>
       <Link to="/register">Registrar</Link>
     </form>

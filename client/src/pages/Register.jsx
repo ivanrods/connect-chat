@@ -5,7 +5,11 @@ import { registerSchema } from "../lib/schemas/auth-schema";
 
 const Register = () => {
   const navigate = useNavigate();
-  const { register, handleSubmit } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
     resolver: zodResolver(registerSchema),
   });
 
@@ -31,8 +35,11 @@ const Register = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <input {...register("name")} />
+      {errors.name && <span>{errors.name.message}</span>}
       <input {...register("email")} />
+      {errors.email && <span>{errors.email.message}</span>}
       <input {...register("password")} />
+      {errors.password && <span>{errors.password.message}</span>}
       <button type="submit">Criar conta</button>
       <Link to="/login">Entrar</Link>
     </form>
