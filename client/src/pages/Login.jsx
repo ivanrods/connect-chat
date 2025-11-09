@@ -28,12 +28,19 @@ const Login = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <input {...register("email")} />
-      {errors.email && <span>{errors.email.message}</span>}
-      <input {...register("password")} />
-      {errors.password && <span>{errors.password.message}</span>}
-      <button type="submit">Entrar</button>
-      <Link to="/register">Registrar</Link>
+      <div>
+        <label>Email:</label> <input {...register("email")} />
+        {errors.email && <span>{errors.email.message}</span>}
+      </div>
+      <div>
+        <label>Senha:</label> <input {...register("password")} />
+        {errors.password && <span>{errors.password.message}</span>}
+      </div>
+
+      <div>
+        <button type="submit">Entrar</button>
+        <Link to="/register">Registrar</Link>
+      </div>
     </form>
   );
 };
