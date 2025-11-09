@@ -1,18 +1,16 @@
-import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
+
 const Register = () => {
   const navigate = useNavigate();
-  const [name, setName] = useState(null);
-  const [email, setEmail] = useState(null);
-  const [password, setPassword] = useState(null);
+  const { register, handleSubmit } = useForm();
 
-  async function handleSubmit(e) {
-    e.preventDefault();
+  const onSubmit = async (data) => {
     try {
       const response = await fetch("http://localhost:3333/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password }),
+        body: JSON.stringify(data),
       });
 
       if (!response.ok) {
@@ -24,31 +22,13 @@ const Register = () => {
     } catch (err) {
       alert(err.message);
     }
-  }
+  };
+
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        onChange={(e) => {
-          setName(e.target.value);
-        }}
-      />
-      <input
-        type="email"
-        name="email"
-        id="email"
-        onChange={(e) => {
-          setEmail(e.target.value);
-        }}
-      />
-      <input
-        type="password"
-        name="password"
-        id="password"
-        onChange={(e) => {
-          setPassword(e.target.value);
-        }}
-      />
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <input {...register("name")} />
+      <input {...register("email")} />
+      <input {...register("password")} />
       <button type="submit">Criar conta</button>
       <Link to="/login">Entrar</Link>
     </form>
