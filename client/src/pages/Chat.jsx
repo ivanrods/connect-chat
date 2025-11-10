@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useGetChat, usePostChat } from "../hooks/use-chat";
 import { useAuth } from "../context/auth-context";
+import { formatDate } from "../utils/format-date";
 
 const Chat = () => {
   const { messages } = useGetChat();
@@ -21,9 +22,12 @@ const Chat = () => {
       </button>
       <div>
         {messages.map((msg) => (
-          <p key={msg.id}>
-            <span></span> {msg.user} : {msg.message}
-          </p>
+          <div key={msg.id}>
+            <span> {formatDate(msg.createdAt)}</span>
+
+            <p>{msg.message}</p>
+            <span>{msg.user}</span>
+          </div>
         ))}
       </div>
       <form onSubmit={handleSubmit}>
