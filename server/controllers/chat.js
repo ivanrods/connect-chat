@@ -1,6 +1,7 @@
 import User from "../models/user.js";
 import Chat from "../models/chat.js";
 import { chatSchema } from "../schemas/chat-schema.js";
+import { io } from "../index.js";
 export const getChat = async (req, res) => {
   try {
     const data = await Chat.findAll();
@@ -17,7 +18,8 @@ export const createChat = async (req, res) => {
 
   try {
     const user = await User.findByPk(id);
-    await Chat.create({ user: user.email, message });
+    const newMessage = await Chat.create({ user: user.email, message });
+    io.emit("newMessage", newMessage);
     res.status(201).json({ message: "Sucesso" });
   } catch (err) {
     console.error(err);
