@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useGetChat, usePostChat } from "../hooks/use-chat";
-import { useAuth } from "../context/auth-context";
+
 import { formatDate } from "../utils/format-date";
+import Header from "../components/Header";
 
 const Chat = () => {
   const { messages } = useGetChat();
   const { postMessage } = usePostChat();
-  const { signOut } = useAuth();
 
   const [message, setMessage] = useState();
 
@@ -17,9 +17,7 @@ const Chat = () => {
 
   return (
     <>
-      <button type="button" onClick={signOut}>
-        Sair
-      </button>
+      <Header />
       <div>
         {messages.map((msg) => (
           <div key={msg.id}>
