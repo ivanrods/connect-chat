@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { usePostChat } from "../hooks/use-chat";
+import { Send } from "lucide-react";
 const InputMessage = () => {
   const { postMessage } = usePostChat();
 
@@ -19,7 +20,9 @@ const InputMessage = () => {
           setMessage(e.target.value);
         }}
       />
-      <button type="submit">Enviar</button>
+      <button type="submit">
+        <Send />
+      </button>
     </form>
   );
 };
