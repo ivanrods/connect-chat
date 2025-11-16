@@ -1,0 +1,46 @@
+.inputMessage {
+  position: fixed;
+  bottom: 0px;
+  left: 0;
+  right: 0;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+  padding: 8px;
+}
+.inputMessage form {
+  max-width: 750px;
+  width: 100%;
+  padding: 8px;
+  border-radius: 100px;
+  border: 0;
+  display: flex;
+  background-color: aliceblue;
+}
+.inputMessage form:focus-within {
+  border: 2px solid cornflowerblue;
+}
+.inputMessage input {
+  width: 100%;
+  background-color: transparent;
+  border: 0;
+  outline: none;
+  padding: 8px;
+  font-size: 14px;
+}
+
+.inputMessage button {
+  background-color: cornflowerblue;
+  border-radius: 100%;
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+}
+.inputMessage button svg {
+  color: white;
+}

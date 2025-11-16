@@ -4,16 +4,18 @@ import styles from "../styles/Header.module.css";
 const Header = () => {
   const { signOut } = useAuth();
   return (
-    <header className={styles.Header}>
-      <div className={styles.logo}>
-        <MessagesSquare />
-        <h1>ConnectChat</h1>
-      </div>
+    <div className={styles.container}>
+      <header className={styles}>
+        <div className={styles.logo}>
+          <MessagesSquare />
+          <h1>ConnectChat</h1>
+        </div>
 
-      <button type="button" onClick={signOut} className={styles.LogOut}>
-        <LogOut />
-      </button>
-    </header>
+        <button type="button" onClick={signOut} className={styles.LogOut}>
+          <LogOut />
+        </button>
+      </header>
+    </div>
   );
 };
 
