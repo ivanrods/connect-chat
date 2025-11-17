@@ -1,8 +1,5 @@
 .container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  width: 100%;
   background-color: white;
   padding: 16px 8px;
   box-shadow: 0 2px 6px -4px rgba(0, 0, 0, 0.3);
@@ -10,10 +7,10 @@
 .container header {
   max-width: 750px;
   width: 100%;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   margin: 0 auto;
 }
 .logo {

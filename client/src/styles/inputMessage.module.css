@@ -1,19 +1,14 @@
 .inputMessage {
-  position: fixed;
-  bottom: 0px;
-  left: 0;
-  right: 0;
   background-color: white;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100px;
-  padding: 8px;
+  padding: 18px 8px;
 }
 .inputMessage form {
   max-width: 750px;
   width: 100%;
-  padding: 8px;
+
   border-radius: 100px;
   border: 0;
   display: flex;
@@ -27,7 +22,7 @@
   background-color: transparent;
   border: 0;
   outline: none;
-  padding: 8px;
+  padding: 16px;
   font-size: 14px;
 }
 
@@ -39,6 +34,7 @@
   align-items: center;
   border: none;
   padding: 8px;
+  margin: 8px;
   cursor: pointer;
 }
 .inputMessage button svg {
