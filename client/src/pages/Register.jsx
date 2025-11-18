@@ -42,18 +42,22 @@ const Register = () => {
           <MessagesSquare />
           <h1>ConnectChat</h1>
         </div>
-        <div>
-          <InputForm
-            {...register("name")}
-            placeholder="Nome"
-            type="text"
-            icon={<User />}
-          />
-          {errors.name && <span>{errors.name.message}</span>}
-        </div>
+
+        <InputForm
+          {...register("name")}
+          placeholder="Nome"
+          type="text"
+          icon={<User />}
+        />
+        {errors.name && <span>{errors.name.message}</span>}
 
         <div>
-          <InputForm {...register("email")} type="email" icon={<Mail />} />
+          <InputForm
+            {...register("email")}
+            type="email"
+            placeholder="E-mail"
+            icon={<Mail />}
+          />
           {errors.email && <span>{errors.email.message}</span>}
         </div>
 
@@ -61,6 +65,7 @@ const Register = () => {
           <InputForm
             {...register("password")}
             type="password"
+            placeholder="Senha"
             icon={<Lock />}
           />
           {errors.password && <span>{errors.password.message}</span>}

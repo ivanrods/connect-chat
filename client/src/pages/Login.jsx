@@ -37,7 +37,12 @@ const Login = () => {
           <h1>ConnectChat</h1>
         </div>
         <div>
-          <InputForm {...register("email")} type="email" icon={<Mail />} />
+          <InputForm
+            {...register("email")}
+            type="email"
+            placeholder="E-mail"
+            icon={<Mail />}
+          />
           {errors.email && <span>{errors.email.message}</span>}
         </div>
 
@@ -45,6 +50,7 @@ const Login = () => {
           <InputForm
             {...register("password")}
             type="password"
+            placeholder="Senha"
             icon={<Lock />}
           />
           {errors.password && <span>{errors.password.message}</span>}

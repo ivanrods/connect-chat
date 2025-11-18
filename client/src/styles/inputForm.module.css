@@ -1,0 +1,18 @@
+.input {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: aliceblue;
+  color: gray;
+  font-size: 14px;
+  padding: 12px 8px;
+  border-radius: 8px;
+}
+.input input {
+  width: 100%;
+  background-color: aliceblue;
+  outline: none;
+  border: none;
+  font-size: 14px;
+}
