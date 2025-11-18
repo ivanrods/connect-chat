@@ -1,6 +1,17 @@
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
+
+:root {
+  --radius: 0.65rem;
+  --background: #ffff;
+  --text: #fafafa;
+  --text-foreground: #78716c;
+  --foreground: #eff6ff;
+  --primary: #3b82f6;
+  --secondary: #1e40af;
+  --border: #3b82f6;
+}
 * {
   padding: 0;
   margin: 0;

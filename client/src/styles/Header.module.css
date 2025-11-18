@@ -1,13 +1,12 @@
 .container {
   width: 100%;
-  background-color: white;
+  background-color: var(--background);
   padding: 16px 8px;
   box-shadow: 0 2px 6px -4px rgba(0, 0, 0, 0.3);
 }
 .container header {
   max-width: 750px;
   width: 100%;
-
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -17,7 +16,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  color: cornflowerblue;
+  color: var(--primary);
 }
 .logo h1 {
   font-size: 22px;
@@ -29,6 +28,6 @@
   padding: 0;
   border: 0;
   background-color: transparent;
-  color: dimgray;
+  color: var(--text-foreground);
   cursor: pointer;
 }

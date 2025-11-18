@@ -1,6 +1,6 @@
 .login {
   height: 100vh;
-  background-color: aliceblue;
+  background-color: var(--foreground);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -11,12 +11,19 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 20px;
   padding: 64px;
-  border-radius: 32px;
-  background-color: white;
+  border-radius: 12px;
+  background-color: var(--background);
   box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px,
     rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;
+}
+.login a {
+  color: var(--text-foreground);
+  display: block;
+  text-align: center;
+  margin: 16px 0 0 0;
+  text-decoration: none;
 }
 
 .logo {
@@ -24,14 +31,14 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
-  color: cornflowerblue;
+  color: var(--primary);
 }
 
 .logo svg {
   display: flex;
   align-items: center;
   gap: 10px;
-  color: cornflowerblue;
+  color: var(--primary);
 }
 .logo h1 {
   font-size: 22px;

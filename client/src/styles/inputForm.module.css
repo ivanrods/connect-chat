@@ -3,15 +3,15 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  background-color: aliceblue;
-  color: gray;
+  background-color: var(--foreground);
+  color: var(--text-foreground);
   font-size: 14px;
   padding: 12px 8px;
-  border-radius: 8px;
+  border-radius: 12px;
 }
 .input input {
   width: 100%;
-  background-color: aliceblue;
+  background-color: var(--foreground);
   outline: none;
   border: none;
   font-size: 14px;

@@ -24,20 +24,20 @@
 
 .message span {
   font-size: 12px;
-  color: grey;
+  color: var(--text-foreground);
 }
 
 .message p {
-  background-color: cornflowerblue;
+  background-color: var(--primary);
   padding: 8px;
-  color: white;
+  color: var(--text);
   max-width: 250px;
-  border-radius: 20px 20px 20px 0px;
+  border-radius: 12px 12px 12px 0px;
 
   padding: 16px;
 }
 
 .message span {
   font-size: 14px;
-  color: grey;
+  color: var(--text-foreground);
 }
