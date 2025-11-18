@@ -3,6 +3,8 @@ import { useAuth } from "../context/auth-context";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "../lib/schemas/auth-schema";
+import { MessagesSquare } from "lucide-react";
+import styles from "../styles/Login.module.css";
 
 const Login = () => {
   const { signIn } = useAuth();
@@ -27,21 +29,27 @@ const Login = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <label>Email:</label> <input {...register("email")} />
-        {errors.email && <span>{errors.email.message}</span>}
-      </div>
-      <div>
-        <label>Senha:</label> <input {...register("password")} />
-        {errors.password && <span>{errors.password.message}</span>}
-      </div>
+    <div className={styles.login}>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className={styles.logo}>
+          <MessagesSquare />
+          <h1>ConnectChat</h1>
+        </div>
+        <div>
+          <label>Email:</label> <input {...register("email")} />
+          {errors.email && <span>{errors.email.message}</span>}
+        </div>
+        <div>
+          <label>Senha:</label> <input {...register("password")} />
+          {errors.password && <span>{errors.password.message}</span>}
+        </div>
 
-      <div>
-        <button type="submit">Entrar</button>
-        <Link to="/register">Registrar</Link>
-      </div>
-    </form>
+        <div>
+          <button type="submit">Entrar</button>
+          <Link to="/register">Registrar</Link>
+        </div>
+      </form>
+    </div>
   );
 };
 
