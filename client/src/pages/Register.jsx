@@ -5,6 +5,7 @@ import { registerSchema } from "../lib/schemas/auth-schema";
 import { Lock, Mail, MessagesSquare, User } from "lucide-react";
 import styles from "../styles/Register.module.css";
 import InputForm from "../components/inputForm";
+import ButtonForm from "../components/buttonForm";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -71,7 +72,8 @@ const Register = () => {
           {errors.password && <span>{errors.password.message}</span>}
         </div>
         <div>
-          <button type="submit">Criar conta</button>
+          <ButtonForm text="Criar conta" />
+
           <Link to="/login">Entrar</Link>
         </div>
       </form>

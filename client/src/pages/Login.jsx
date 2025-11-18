@@ -6,6 +6,7 @@ import { loginSchema } from "../lib/schemas/auth-schema";
 import { Lock, Mail, MessagesSquare } from "lucide-react";
 import styles from "../styles/Login.module.css";
 import InputForm from "../components/inputForm";
+import ButtonForm from "../components/buttonForm";
 
 const Login = () => {
   const { signIn } = useAuth();
@@ -57,7 +58,8 @@ const Login = () => {
         </div>
 
         <div>
-          <button type="submit">Entrar</button>
+          <ButtonForm text="Entrar" />
+
           <Link to="/register">Registrar</Link>
         </div>
       </form>
