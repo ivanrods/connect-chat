@@ -3,8 +3,9 @@ import { useAuth } from "../context/auth-context";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "../lib/schemas/auth-schema";
-import { MessagesSquare } from "lucide-react";
+import { Lock, Mail, MessagesSquare } from "lucide-react";
 import styles from "../styles/Login.module.css";
+import InputForm from "../components/inputForm";
 
 const Login = () => {
   const { signIn } = useAuth();
@@ -36,11 +37,16 @@ const Login = () => {
           <h1>ConnectChat</h1>
         </div>
         <div>
-          <label>Email:</label> <input {...register("email")} />
+          <InputForm {...register("email")} type="email" icon={<Mail />} />
           {errors.email && <span>{errors.email.message}</span>}
         </div>
+
         <div>
-          <label>Senha:</label> <input {...register("password")} />
+          <InputForm
+            {...register("password")}
+            type="password"
+            icon={<Lock />}
+          />
           {errors.password && <span>{errors.password.message}</span>}
         </div>
 
