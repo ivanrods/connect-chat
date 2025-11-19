@@ -4,9 +4,30 @@ import { chatSchema } from "../schemas/chat-schema.js";
 import { getIO } from "../config/socket.js";
 
 export const getChat = async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 20;
+  const offset = (page - 1) * limit;
+
   try {
-    const data = await Chat.findAll();
-    res.status(200).json(data);
+    const { rows, count } = await Chat.findAndCountAll({
+      limit,
+      offset,
+      order: [["createdAt", "DESC"]],
+    });
+
+    const totalPages = Math.ceil(count / limit);
+
+    res.status(200).json({
+      messages: rows,
+      pagination: {
+        totalItems: count,
+        totalPages,
+        currentPage: page,
+        perPage: limit,
+        hasNextPage: page < totalPages,
+        hasPrevPage: page > 1,
+      },
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Erro ao buscar mensagens." });
