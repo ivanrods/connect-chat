@@ -18,7 +18,6 @@ export function formatDate(isoString) {
     return date.toLocaleTimeString("pt-BR", {
       hour: "2-digit",
       minute: "2-digit",
-
       hour12: false,
     });
   }
@@ -44,7 +43,6 @@ export function formatDate(isoString) {
     const time = date.toLocaleTimeString("pt-BR", {
       hour: "2-digit",
       minute: "2-digit",
-
       hour12: false,
     });
 
@@ -60,7 +58,6 @@ export function formatDate(isoString) {
       year: "numeric",
       hour: "2-digit",
       minute: "2-digit",
-
       hour12: false,
     })
     .replace(".", "")

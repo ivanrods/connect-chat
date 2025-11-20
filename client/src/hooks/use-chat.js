@@ -8,18 +8,24 @@ const socket = io("http://localhost:3333", {
   },
 });
 
-export function useGetChat() {
+export function useGetChat(page, limit) {
   const [messages, setMessages] = useState([]);
   useEffect(() => {
     const getMessage = async () => {
       try {
-        const response = await fetch("http://localhost:3333/chat", {
-          method: "GET",
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        });
+        const response = await fetch(
+          `http://localhost:3333/chat?page=${page}&limit=${limit}`,
+
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
         const data = await response.json();
 
-        setMessages(data);
+        setMessages(data.messages.reverse() || []);
       } catch (err) {
         console.error(err);
       }
@@ -33,7 +39,7 @@ export function useGetChat() {
     return () => {
       socket.off("newMessage");
     };
-  }, []);
+  }, [page, limit]);
   return { messages };
 }
 
