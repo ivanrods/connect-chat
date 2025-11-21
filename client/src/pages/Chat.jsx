@@ -7,25 +7,26 @@ import styles from "../styles/Chat.module.css";
 
 const Chat = () => {
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(5);
+  const [limit, setLimit] = useState(10);
+  const [isAtBottom, setIsAtBottom] = useState(true);
+
   const { messages } = useGetChat(page, limit);
   const bottomRef = useRef(null);
   const messageRef = useRef(null);
-
-  useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
 
   useEffect(() => {
     const container = messageRef.current;
     if (!container) return;
 
     const handleScroll = () => {
-      const isBottom =
-        container.scrollTop + container.clientHeight >=
-        container.scrollHeight - 10;
+      const atBottom =
+        container.scrollHeight - container.scrollTop - container.clientHeight <
+        20;
 
-      if (isBottom) {
+      setIsAtBottom(atBottom);
+
+      // Scroll infinito no topo
+      if (container.scrollTop <= 10) {
         setLimit((prev) => prev + 3);
       }
     };
@@ -33,6 +34,15 @@ const Chat = () => {
     container.addEventListener("scroll", handleScroll);
     return () => container.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    const container = messageRef.current;
+    if (!container) return;
+
+    if (isAtBottom) {
+      container.scrollTop = container.scrollHeight;
+    }
+  }, [messages]);
 
   return (
     <div className={styles.chat}>

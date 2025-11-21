@@ -25,7 +25,7 @@ export function useGetChat(page, limit) {
         );
         const data = await response.json();
 
-        setMessages(data.messages.reverse() || []);
+        setMessages(data.messages || []);
       } catch (err) {
         console.error(err);
       }

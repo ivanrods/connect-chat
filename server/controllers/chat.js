@@ -14,7 +14,7 @@ export const getChat = async (req, res) => {
       offset,
       order: [["createdAt", "DESC"]],
     });
-
+    rows.reverse();
     const totalPages = Math.ceil(count / limit);
 
     res.status(200).json({
