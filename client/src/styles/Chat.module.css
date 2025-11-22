@@ -27,7 +27,7 @@
   color: var(--text-foreground);
 }
 
-.message p {
+.msg {
   background-color: var(--primary);
   padding: 8px;
   color: var(--text);
@@ -40,4 +40,14 @@
 .message span {
   font-size: 14px;
   color: var(--text-foreground);
+}
+.loading {
+  background-color: transparent;
+  padding: 0px;
+  color: var(--text-foreground);
+  max-width: 100%;
+  border-radius: 0px;
+  text-align: center;
+
+  padding: 0px;
 }

@@ -6,11 +6,11 @@ import InputMessage from "../components/inputMessage";
 import styles from "../styles/Chat.module.css";
 
 const Chat = () => {
-  const [page, setPage] = useState(1);
+  const [page] = useState(1);
   const [limit, setLimit] = useState(10);
   const [isAtBottom, setIsAtBottom] = useState(true);
 
-  const { messages } = useGetChat(page, limit);
+  const { messages, loading } = useGetChat(page, limit);
   const bottomRef = useRef(null);
   const messageRef = useRef(null);
 
@@ -47,12 +47,14 @@ const Chat = () => {
   return (
     <div className={styles.chat}>
       <Header />
+
       <div className={styles.message} ref={messageRef}>
+        {loading && <p className={styles.loading}>Carregando..</p>}
         {messages.map((msg) => (
           <section key={msg.id}>
             <span>{msg.user}</span>
             <div>
-              <p>{msg.message}</p>
+              <p className={styles.msg}>{msg.message}</p>
               <span> {formatDate(msg.createdAt)}</span>
             </div>
           </section>

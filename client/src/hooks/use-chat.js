@@ -10,6 +10,8 @@ const socket = io("http://localhost:3333", {
 
 export function useGetChat(page, limit) {
   const [messages, setMessages] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const getMessage = async () => {
       try {
@@ -26,6 +28,7 @@ export function useGetChat(page, limit) {
         const data = await response.json();
 
         setMessages(data.messages || []);
+        setLoading(false);
       } catch (err) {
         console.error(err);
       }
@@ -40,7 +43,7 @@ export function useGetChat(page, limit) {
       socket.off("newMessage");
     };
   }, [page, limit]);
-  return { messages };
+  return { messages, loading };
 }
 
 export function usePostChat() {
