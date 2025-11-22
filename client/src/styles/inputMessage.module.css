@@ -13,7 +13,8 @@
   border-radius: 12px;
   border: 0;
   display: flex;
-  background-color: var(--foreground);
+
+  border: 2px solid var(--primary);
 }
 .inputMessage form:focus-within {
   border: 2px solid var(--primary);

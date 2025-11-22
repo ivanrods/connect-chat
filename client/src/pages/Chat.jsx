@@ -11,8 +11,10 @@ const Chat = () => {
   const [isAtBottom, setIsAtBottom] = useState(true);
 
   const { messages, loading } = useGetChat(page, limit);
+
   const bottomRef = useRef(null);
   const messageRef = useRef(null);
+  const [user] = useState("ivan@test.com");
 
   useEffect(() => {
     const container = messageRef.current;
@@ -49,16 +51,21 @@ const Chat = () => {
       <Header />
 
       <div className={styles.message} ref={messageRef}>
-        {loading && <p className={styles.loading}>Carregando..</p>}
+        {loading && <p className={styles.loading}>Carregando...</p>}
+
         {messages.map((msg) => (
-          <section key={msg.id}>
+          <section
+            key={msg.id}
+            className={msg.user === user ? styles.me_msg : styles.msg}
+          >
             <span>{msg.user}</span>
             <div>
-              <p className={styles.msg}>{msg.message}</p>
-              <span> {formatDate(msg.createdAt)}</span>
+              <p>{msg.message}</p>
+              <span>{formatDate(msg.createdAt)}</span>
             </div>
           </section>
         ))}
+
         <div ref={bottomRef} />
       </div>
       <InputMessage />
