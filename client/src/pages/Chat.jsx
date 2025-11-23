@@ -58,7 +58,7 @@ const Chat = () => {
             key={msg.id}
             className={msg.user === user ? styles.me_msg : styles.msg}
           >
-            <span>{msg.user}</span>
+            <small>{msg.user}</small>
             <div>
               <p>{msg.message}</p>
               <span>{formatDate(msg.createdAt)}</span>
