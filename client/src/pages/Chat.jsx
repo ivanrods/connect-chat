@@ -1,6 +1,6 @@
 import { useGetChat } from "../hooks/use-chat";
 import { useEffect, useRef, useState } from "react";
-import { formatDate } from "../utils/format-date";
+import { formatTime } from "../utils/format-date";
 import Header from "../components/Header";
 import InputMessage from "../components/inputMessage";
 import styles from "../styles/Chat.module.css";
@@ -15,6 +15,16 @@ const Chat = () => {
   const bottomRef = useRef(null);
   const messageRef = useRef(null);
   const [user] = useState("ivan@test.com");
+
+  //agrupar mensagens por data
+  const groupedMessages = messages.reduce((acc, msg) => {
+    const date = new Date(msg.createdAt).toLocaleDateString("pt-BR");
+
+    if (!acc[date]) acc[date] = [];
+    acc[date].push(msg);
+
+    return acc;
+  }, {});
 
   useEffect(() => {
     const container = messageRef.current;
@@ -53,17 +63,23 @@ const Chat = () => {
       <div className={styles.message} ref={messageRef}>
         {loading && <p className={styles.loading}>Carregando...</p>}
 
-        {messages.map((msg) => (
-          <section
-            key={msg.id}
-            className={msg.user === user ? styles.me_msg : styles.msg}
-          >
-            <small>{msg.user}</small>
-            <div>
-              <p>{msg.message}</p>
-              <span>{formatDate(msg.createdAt)}</span>
-            </div>
-          </section>
+        {Object.entries(groupedMessages).map(([date, msgs]) => (
+          <div key={date}>
+            <h4>{date}</h4>
+
+            {msgs.map((msg) => (
+              <section
+                key={msg.id}
+                className={msg.user === user ? styles.me_msg : styles.msg}
+              >
+                <small>{msg.user}</small>
+                <div>
+                  <p>{msg.message}</p>
+                  <span>{formatTime(msg.createdAt)}</span>
+                </div>
+              </section>
+            ))}
+          </div>
         ))}
 
         <div ref={bottomRef} />
