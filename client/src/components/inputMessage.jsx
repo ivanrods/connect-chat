@@ -9,7 +9,9 @@ const InputMessage = () => {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    if (!message.trim()) return;
     await postMessage(message);
+    setMessage("");
   }
   return (
     <div className={styles.inputMessage}>
@@ -19,6 +21,7 @@ const InputMessage = () => {
           name="message"
           id="message"
           placeholder="Digite uma mensagem"
+          value={message}
           onChange={(e) => {
             setMessage(e.target.value);
           }}

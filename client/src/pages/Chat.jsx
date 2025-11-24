@@ -63,6 +63,7 @@ const Chat = () => {
     if (isAtBottom) {
       container.scrollTop = container.scrollHeight;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages]);
 
   return (
