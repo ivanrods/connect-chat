@@ -10,11 +10,20 @@ const Chat = () => {
   const [limit, setLimit] = useState(10);
   const [isAtBottom, setIsAtBottom] = useState(true);
 
+  const [user, setUser] = useState({});
+
   const { messages, loading } = useGetChat(page, limit);
 
   const bottomRef = useRef(null);
   const messageRef = useRef(null);
-  const [user] = useState("ivan@test.com");
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      const parsedUser = JSON.parse(storedUser);
+      setUser(parsedUser);
+    }
+  }, []);
 
   //agrupar mensagens por data
   const groupedMessages = messages.reduce((acc, msg) => {
@@ -70,7 +79,7 @@ const Chat = () => {
             {msgs.map((msg) => (
               <section
                 key={msg.id}
-                className={msg.user === user ? styles.me_msg : styles.msg}
+                className={msg.user === user.email ? styles.me_msg : styles.msg}
               >
                 <small>{msg.user}</small>
                 <div>
