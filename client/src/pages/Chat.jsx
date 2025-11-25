@@ -27,7 +27,7 @@ const Chat = () => {
 
   //agrupar mensagens por data
   const groupedMessages = messages.reduce((acc, msg) => {
-    const date = new Date(msg.createdAt);
+    const date = formatDay(msg.createdAt);
 
     if (!acc[date]) acc[date] = [];
     acc[date].push(msg);
@@ -75,7 +75,7 @@ const Chat = () => {
 
         {Object.entries(groupedMessages).map(([date, msgs]) => (
           <div key={date}>
-            <h4>{formatDay(date)}</h4>
+            <h4>{date}</h4>
 
             {msgs.map((msg) => (
               <section
