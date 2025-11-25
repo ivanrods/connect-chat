@@ -1,6 +1,6 @@
 import { useGetChat } from "../hooks/use-chat";
 import { useEffect, useRef, useState } from "react";
-import { formatTime } from "../utils/format-date";
+import { formatTime, formatDay } from "../utils/format-date";
 import Header from "../components/Header";
 import InputMessage from "../components/inputMessage";
 import styles from "../styles/Chat.module.css";
@@ -27,7 +27,7 @@ const Chat = () => {
 
   //agrupar mensagens por data
   const groupedMessages = messages.reduce((acc, msg) => {
-    const date = new Date(msg.createdAt).toLocaleDateString("pt-BR");
+    const date = new Date(msg.createdAt);
 
     if (!acc[date]) acc[date] = [];
     acc[date].push(msg);
@@ -75,7 +75,7 @@ const Chat = () => {
 
         {Object.entries(groupedMessages).map(([date, msgs]) => (
           <div key={date}>
-            <h4>{date}</h4>
+            <h4>{formatDay(date)}</h4>
 
             {msgs.map((msg) => (
               <section
