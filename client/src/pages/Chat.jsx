@@ -9,12 +9,9 @@ const Chat = () => {
   const [page] = useState(1);
   const [limit, setLimit] = useState(10);
   const [isAtBottom, setIsAtBottom] = useState(true);
-
   const [user, setUser] = useState({});
 
   const { messages, loading } = useGetChat(page, limit);
-
-  const bottomRef = useRef(null);
   const messageRef = useRef(null);
 
   useEffect(() => {
@@ -69,7 +66,6 @@ const Chat = () => {
   return (
     <div className={styles.chat}>
       <Header />
-
       <div className={styles.message} ref={messageRef}>
         {loading && <p className={styles.loading}>Carregando...</p>}
 
@@ -91,8 +87,6 @@ const Chat = () => {
             ))}
           </div>
         ))}
-
-        <div ref={bottomRef} />
       </div>
       <InputMessage />
     </div>

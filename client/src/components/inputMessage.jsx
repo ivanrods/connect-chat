@@ -2,6 +2,7 @@ import { useState } from "react";
 import { usePostChat } from "../hooks/use-chat";
 import { Send } from "lucide-react";
 import styles from "../styles/inputMessage.module.css";
+import FileUploader from "./fileUploader";
 const InputMessage = () => {
   const { postMessage } = usePostChat();
 
@@ -16,6 +17,7 @@ const InputMessage = () => {
   return (
     <div className={styles.inputMessage}>
       <form onSubmit={handleSubmit}>
+        <FileUploader />
         <input
           type="text"
           name="message"

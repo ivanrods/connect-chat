@@ -1,0 +1,8 @@
+.uploader input {
+  display: none;
+}
+.uploader svg {
+  height: 100%;
+  color: var(--text-foreground);
+  cursor: pointer;
+}
