@@ -7,11 +7,12 @@ const InputMessage = () => {
   const { postMessage } = usePostChat();
 
   const [message, setMessage] = useState();
+  const [file, setFile] = useState("OK");
 
   async function handleSubmit(e) {
     e.preventDefault();
     if (!message.trim()) return;
-    await postMessage(message);
+    await postMessage({ message, file });
     setMessage("");
   }
   return (

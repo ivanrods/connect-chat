@@ -28,6 +28,7 @@ export function useGetChat(page, limit) {
         const data = await response.json();
 
         setMessages(data.messages || []);
+        console.log(messages);
         setLoading(false);
       } catch (err) {
         console.error(err);
@@ -47,7 +48,7 @@ export function useGetChat(page, limit) {
 }
 
 export function usePostChat() {
-  const postMessage = async (message) => {
+  const postMessage = async ({ message, file }) => {
     try {
       const response = await fetch("http://localhost:3333/chat", {
         method: "POST",
@@ -55,7 +56,7 @@ export function usePostChat() {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        body: JSON.stringify({ message }),
+        body: JSON.stringify({ message, file }),
       });
 
       const data = await response.json();

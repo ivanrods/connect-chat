@@ -3,7 +3,7 @@ import styles from "../styles/fileUploader.module.css";
 import { useState } from "react";
 
 const FileUploader = () => {
-  const [setSelectedFile] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
 
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
@@ -34,7 +34,6 @@ const FileUploader = () => {
   return (
     <label className={styles.uploader}>
       <input type="file" onChange={handleFileChange} />
-
       <Paperclip />
     </label>
   );

@@ -36,11 +36,15 @@ export const getChat = async (req, res) => {
 
 export const createChat = async (req, res) => {
   const { id } = req.user;
-  const { message } = chatSchema.parse(req.body);
+  const { message, file } = chatSchema.parse(req.body);
 
   try {
     const user = await User.findByPk(id);
-    const newMessage = await Chat.create({ user: user.email, message });
+    const newMessage = await Chat.create({
+      user: user.email,
+      message,
+      file,
+    });
 
     const io = getIO();
     io.emit("newMessage", newMessage);
@@ -48,5 +52,15 @@ export const createChat = async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Erro ao salvar mensagem." });
+  }
+};
+
+export const createUpload = async (req, res) => {
+  if (req.file) {
+    const filename = req.file.filename;
+    res.json({ filename });
+    console.log(`Arquivo enviado: ${filename}`);
+  } else {
+    res.status(400).json({ error: "Nenhum arquivo enviado" });
   }
 };
