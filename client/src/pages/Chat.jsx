@@ -81,6 +81,14 @@ const Chat = () => {
                 <small>{msg.user}</small>
                 <div>
                   <p>{msg.message}</p>
+                  {msg.file && (
+                    <div className={styles.imageWrapper}>
+                      <img
+                        src={`http://localhost:3333/uploads/${msg.file}`}
+                        alt="Anexo"
+                      />
+                    </div>
+                  )}
                   <span>{formatTime(msg.createdAt)}</span>
                 </div>
               </section>
