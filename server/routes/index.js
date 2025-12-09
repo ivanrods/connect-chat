@@ -10,7 +10,6 @@ router.post("/register", register);
 router.post("/login", login);
 router.post("/chat", authenticateToken, createChat);
 router.get("/chat", authenticateToken, getChat);
-
-router.post("/upload", upload.single("file"), createUpload);
+router.post("/upload", authenticateToken, upload.single("file"), createUpload);
 
 export default router;

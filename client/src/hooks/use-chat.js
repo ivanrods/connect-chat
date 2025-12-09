@@ -28,7 +28,6 @@ export function useGetChat(page, limit) {
         const data = await response.json();
 
         setMessages(data.messages || []);
-        console.log(messages);
         setLoading(false);
       } catch (err) {
         console.error(err);

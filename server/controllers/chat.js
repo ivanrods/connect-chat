@@ -56,9 +56,27 @@ export const createChat = async (req, res) => {
 };
 
 export const createUpload = async (req, res) => {
+  const { id } = req.user;
   if (req.file) {
+    const { message } = req.body;
     const filename = req.file.filename;
-    res.json({ filename });
+
+    try {
+      const user = await User.findByPk(id);
+      const newMessage = await Chat.create({
+        user: user.email,
+        message,
+        file: filename,
+      });
+
+      const io = getIO();
+      io.emit("newMessage", newMessage);
+      res.status(201).json({ message: "Sucesso" });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: "Erro ao salvar mensagem." });
+    }
+
     console.log(`Arquivo enviado: ${filename}`);
   } else {
     res.status(400).json({ error: "Nenhum arquivo enviado" });
