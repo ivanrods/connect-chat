@@ -110,3 +110,25 @@
 
   padding: 0px;
 }
+
+.file {
+  border: 2px solid var(--text-foreground);
+  max-width: 380px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.file img {
+  width: 100%;
+}
+
+.me_file {
+  border: 2px solid var(--primary);
+  max-width: 380px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.me_file img {
+  width: 100%;
+}

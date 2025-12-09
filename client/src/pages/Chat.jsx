@@ -80,9 +80,14 @@ const Chat = () => {
               >
                 <small>{msg.user}</small>
                 <div>
-                  <p>{msg.message}</p>
+                  {msg.message !== "" && <p>{msg.message}</p>}
+
                   {msg.file && (
-                    <div className={styles.imageWrapper}>
+                    <div
+                      className={
+                        msg.user === user.email ? styles.me_file : styles.file
+                      }
+                    >
                       <img
                         src={`http://localhost:3333/uploads/${msg.file}`}
                         alt="Anexo"
