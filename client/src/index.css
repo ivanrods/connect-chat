@@ -4,14 +4,15 @@
 
 :root {
   --radius: 0.65rem;
-  --background: #ffff;
+  --background: #171717;
   --text: #fafafa;
   --text-foreground: #78716c;
-  --foreground: #eff6ff;
-  --primary: #3b82f6;
-  --secondary: #1e40af;
+  --foreground: #0a0a0a;
+  --primary: #1d4ed8;
+  --secondary: #262626;
   --border: #3b82f6;
 }
+
 * {
   padding: 0;
   margin: 0;

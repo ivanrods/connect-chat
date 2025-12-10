@@ -3,6 +3,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  background-color: var(--background);
 }
 .message {
   height: 100%;
@@ -17,7 +18,7 @@
 }
 
 .message h4 {
-  color: var(--text-foreground);
+  color: var(--text);
   text-align: center;
   font-weight: normal;
   font-size: 14px;
@@ -37,25 +38,24 @@
 
 .msg span {
   font-size: 12px;
-  color: var(--text-foreground);
+  color: var(--text);
 }
 
 .msg p {
-  background-color: var(--text-foreground);
-  padding: 8px;
+  background-color: var(--secondary);
   color: var(--text);
   max-width: 380px;
   border-radius: 12px 12px 12px 0px;
-  padding: 16px;
+  padding: 14px;
 }
 
 .msg span {
   font-size: 14px;
-  color: var(--text-foreground);
+  color: var(--text);
 }
 .msg small {
   font-size: 12px;
-  color: var(--text-foreground);
+  color: var(--text);
 }
 
 .me_msg {
@@ -75,35 +75,33 @@
 
 .me_msg span {
   font-size: 14px;
-  color: var(--text-foreground);
+  color: var(--text);
 }
 
 .me_msg small {
   display: flex;
   align-self: self-end;
   font-size: 12px;
-  color: var(--text-foreground);
+  color: var(--text);
 }
 
 .me_msg p {
   background-color: var(--primary);
-  padding: 8px;
   color: var(--text);
   max-width: 380px;
   border-radius: 12px 12px 0px 12px;
-
-  padding: 16px;
+  padding: 14px;
 }
 
 .me span {
   font-size: 14px;
-  color: var(--text-foreground);
+  color: var(--text);
 }
 
 .loading {
   background-color: transparent;
   padding: 0px;
-  color: var(--text-foreground);
+  color: var(--text);
   max-width: 100%;
   border-radius: 0px;
   text-align: center;
@@ -112,7 +110,7 @@
 }
 
 .file {
-  border: 2px solid var(--text-foreground);
+  border: 2px solid var(--text);
   max-width: 380px;
   border-radius: 8px;
   overflow: hidden;

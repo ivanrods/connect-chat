@@ -2,7 +2,7 @@
   width: 100%;
   background-color: var(--background);
   padding: 16px 8px;
-  box-shadow: 0 2px 6px -4px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 6px -4px rgba(73, 70, 70, 0.3);
 }
 .container header {
   max-width: 750px;
