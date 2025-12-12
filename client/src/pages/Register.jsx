@@ -43,14 +43,15 @@ const Register = () => {
           <MessagesSquare />
           <h1>ConnectChat</h1>
         </div>
-
-        <InputForm
-          {...register("name")}
-          placeholder="Nome"
-          type="text"
-          icon={<User />}
-        />
-        {errors.name && <span>{errors.name.message}</span>}
+        <div>
+          <InputForm
+            {...register("name")}
+            placeholder="Nome"
+            type="text"
+            icon={<User />}
+          />
+          {errors.name && <span>{errors.name.message}</span>}
+        </div>
 
         <div>
           <InputForm

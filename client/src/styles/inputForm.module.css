@@ -3,7 +3,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-
+  box-sizing: content-box;
   color: var(--text);
   font-size: 14px;
   padding: 14px;

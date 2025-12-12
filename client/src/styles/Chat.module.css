@@ -110,10 +110,11 @@
 }
 
 .file {
-  border: 2px solid var(--text);
+  border: 2px solid var(--secondary);
   max-width: 380px;
   border-radius: 8px;
   overflow: hidden;
+  color: var(--text);
 }
 
 .file img {
@@ -125,6 +126,7 @@
   max-width: 380px;
   border-radius: 8px;
   overflow: hidden;
+  color: var(--text);
 }
 
 .me_file img {
