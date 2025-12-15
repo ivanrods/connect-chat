@@ -132,3 +132,18 @@
 .me_file img {
   width: 100%;
 }
+
+.line {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.line h4 {
+  display: block;
+  width: 60px;
+}
+.line span {
+  display: block;
+  width: 100%;
+  border-bottom: 1px solid var(--secondary);
+}
