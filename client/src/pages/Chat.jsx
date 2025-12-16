@@ -72,8 +72,7 @@ const Chat = () => {
         {Object.entries(groupedMessages).map(([date, msgs]) => (
           <div key={date}>
             <div className={styles.line}>
-              <span /> <h4>{date}</h4>
-              <span />
+              <h4>{date}</h4>
             </div>
 
             {msgs.map((msg) => (
