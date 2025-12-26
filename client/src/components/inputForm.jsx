@@ -1,10 +1,19 @@
-import styles from "../styles/inputForm.module.css";
-const InputForm = ({ icon, type, placeholder, ...rest }) => {
+import { TextField, InputAdornment } from "@mui/material";
+
+const InputForm = ({ icon, type = "text", placeholder, ...rest }) => {
   return (
-    <div className={styles.input}>
-      <div>{icon}</div>
-      <input type={type} placeholder={placeholder} {...rest} />
-    </div>
+    <TextField
+      variant="outlined"
+      type={type}
+      placeholder={placeholder}
+      fullWidth
+      InputProps={{
+        startAdornment: (
+          <InputAdornment position="start">{icon}</InputAdornment>
+        ),
+      }}
+      {...rest}
+    />
   );
 };
 
