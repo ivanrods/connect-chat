@@ -1,9 +1,23 @@
-import styles from "../styles/buttonForm.module.css";
+import { Button } from "@mui/material";
+import SendIcon from "@mui/icons-material/Send";
+
 const ButtonForm = ({ text }) => {
   return (
-    <button className={styles.button} type="submit">
+    <Button
+      type="submit"
+      variant="contained"
+      endIcon={<SendIcon sx={{ color: "white", display: "block" }} />}
+      sx={{
+        width: "100%",
+        padding: "12px",
+        fontSize: "1rem",
+        borderRadius: "10px",
+        textTransform: "none",
+        fontWeight: "600",
+      }}
+    >
       {text}
-    </button>
+    </Button>
   );
 };
 
