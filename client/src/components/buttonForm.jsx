@@ -9,11 +9,12 @@ const ButtonForm = ({ text }) => {
       endIcon={<SendIcon sx={{ color: "white", display: "block" }} />}
       sx={{
         width: "100%",
-        padding: "12px",
+        padding: "10px",
         fontSize: "1rem",
         borderRadius: "10px",
         textTransform: "none",
         fontWeight: "600",
+        mt: 2,
       }}
     >
       {text}

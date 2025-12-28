@@ -4,9 +4,10 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "../lib/schemas/auth-schema";
 import { Lock, Mail, MessagesSquare } from "lucide-react";
-import styles from "../styles/Login.module.css";
+
 import InputForm from "../components/inputForm";
 import ButtonForm from "../components/buttonForm";
+import { Box, Paper, Typography } from "@mui/material";
 
 const Login = () => {
   const { signIn } = useAuth();
@@ -31,39 +32,57 @@ const Login = () => {
   };
 
   return (
-    <div className={styles.login}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className={styles.logo}>
-          <MessagesSquare />
-          <h1>ConnectChat</h1>
-        </div>
-        <div>
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      minHeight="100vh"
+      bgcolor="#262626"
+    >
+      <Paper elevation={4} sx={{ p: 4, width: "100%", maxWidth: 400 }}>
+        <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          gap={1}
+          mb={3}
+        >
+          <MessagesSquare size={32} />
+          <Typography variant="h5" fontWeight="bold">
+            ConnectChat
+          </Typography>
+        </Box>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <InputForm
-            {...register("email")}
+            label="E-mail"
             type="email"
             placeholder="E-mail"
-            icon={<Mail />}
+            icon={<Mail size={18} />}
+            {...register("email")}
+            error={errors.email}
+            helperText={errors.email?.message}
           />
-          {errors.email && <span>{errors.email.message}</span>}
-        </div>
 
-        <div>
           <InputForm
-            {...register("password")}
+            label="Senha"
             type="password"
             placeholder="Senha"
-            icon={<Lock />}
+            icon={<Lock size={18} />}
+            {...register("password")}
+            error={errors.password}
+            helperText={errors.password?.message}
           />
-          {errors.password && <span>{errors.password.message}</span>}
-        </div>
 
-        <div>
           <ButtonForm text="Entrar" />
 
-          <Link to="/register">Registrar</Link>
-        </div>
-      </form>
-    </div>
+          <Typography variant="body2" textAlign="center" mt={2}>
+            <Link to="/register" style={{ color: "#1d4ed8" }}>
+              Registrar
+            </Link>
+          </Typography>
+        </form>
+      </Paper>
+    </Box>
   );
 };
 

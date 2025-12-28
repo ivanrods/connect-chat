@@ -3,9 +3,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Link, useNavigate } from "react-router-dom";
 import { registerSchema } from "../lib/schemas/auth-schema";
 import { Lock, Mail, MessagesSquare, User } from "lucide-react";
-import styles from "../styles/Register.module.css";
 import InputForm from "../components/inputForm";
 import ButtonForm from "../components/buttonForm";
+import { Box, Paper, Typography } from "@mui/material";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -37,48 +37,68 @@ const Register = () => {
   };
 
   return (
-    <div className={styles.register}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className={styles.logo}>
-          <MessagesSquare />
-          <h1>ConnectChat</h1>
-        </div>
-        <div>
-          <InputForm
-            {...register("name")}
-            placeholder="Nome"
-            type="text"
-            icon={<User />}
-          />
-          {errors.name && <span>{errors.name.message}</span>}
-        </div>
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      minHeight="100vh"
+      bgcolor="#262626"
+    >
+      <Paper elevation={4} sx={{ p: 4, width: "100%", maxWidth: 400 }}>
+        <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          gap={1}
+          mb={3}
+        >
+          <MessagesSquare size={32} />
+          <Typography variant="h5" fontWeight="bold">
+            ConnectChat
+          </Typography>
+        </Box>
 
-        <div>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <InputForm
-            {...register("email")}
+            label="Nome"
+            type="text"
+            placeholder="Nome"
+            icon={<User size={18} />}
+            {...register("name")}
+            error={errors.name}
+            helperText={errors.name?.message}
+          />
+
+          <InputForm
+            label="E-mail"
             type="email"
             placeholder="E-mail"
-            icon={<Mail />}
+            icon={<Mail size={18} />}
+            {...register("email")}
+            error={errors.email}
+            helperText={errors.email?.message}
           />
-          {errors.email && <span>{errors.email.message}</span>}
-        </div>
 
-        <div>
           <InputForm
-            {...register("password")}
+            label="Senha"
             type="password"
             placeholder="Senha"
-            icon={<Lock />}
+            icon={<Lock size={18} />}
+            {...register("password")}
+            error={errors.password}
+            helperText={errors.password?.message}
           />
-          {errors.password && <span>{errors.password.message}</span>}
-        </div>
-        <div>
+
           <ButtonForm text="Criar conta" />
 
-          <Link to="/login">Entrar</Link>
-        </div>
-      </form>
-    </div>
+          <Typography variant="body2" textAlign="center" mt={2}>
+            <Link to="/login" style={{ color: "#1d4ed8" }}>
+              Entrar
+            </Link>
+          </Typography>
+        </form>
+      </Paper>
+    </Box>
   );
 };
 

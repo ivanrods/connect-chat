@@ -17,7 +17,6 @@ export const theme = createTheme({
       primary: "#fafafa",
       secondary: "#78716c",
     },
-    divider: "#3b82f6",
   },
   shape: {
     borderRadius: 10,
