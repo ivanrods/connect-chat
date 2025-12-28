@@ -1,5 +1,5 @@
 import { Paperclip } from "lucide-react";
-import styles from "../styles/fileUploader.module.css";
+import { IconButton } from "@mui/material";
 import { useState } from "react";
 
 const FileUploader = () => {
@@ -34,9 +34,27 @@ const FileUploader = () => {
   };
 
   return (
-    <label className={styles.uploader}>
-      <input type="file" onChange={handleFileChange} />
-      <Paperclip />
+    <label htmlFor="file-upload">
+      <input
+        id="file-upload"
+        type="file"
+        style={{ display: "none" }}
+        onChange={handleFileChange}
+      />
+
+      <IconButton
+        component="span"
+        sx={{
+          p: 1,
+          "& svg": {
+            color: "text.secondary",
+            width: 22,
+            height: 22,
+          },
+        }}
+      >
+        <Paperclip />
+      </IconButton>
     </label>
   );
 };
