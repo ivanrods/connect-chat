@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { formatTime, formatDay } from "../utils/format-date";
 import Header from "../components/Header";
 import InputMessage from "../components/inputMessage";
-import styles from "../styles/Chat.module.css";
+import { Box, Typography, Paper } from "@mui/material";
 
 const Chat = () => {
   const [page] = useState(1);
@@ -64,47 +64,127 @@ const Chat = () => {
   }, [messages]);
 
   return (
-    <div className={styles.chat}>
+    <Box
+      display="flex"
+      flexDirection="column"
+      height="100vh"
+      bgcolor="background.default"
+    >
       <Header />
-      <div className={styles.message} ref={messageRef}>
-        {loading && <p className={styles.loading}>Carregando...</p>}
+
+      {/* Área de mensagens */}
+      <Box
+        ref={messageRef}
+        flexGrow={1}
+        width="100%"
+        maxWidth={750}
+        mx="auto"
+        px={1}
+        py={2}
+        display="flex"
+        flexDirection="column"
+        gap={3}
+        overflow="auto"
+      >
+        {loading && (
+          <Typography variant="body2" textAlign="center">
+            Carregando...
+          </Typography>
+        )}
 
         {Object.entries(groupedMessages).map(([date, msgs]) => (
-          <div key={date}>
-            <div className={styles.line}>
-              <h4>{date}</h4>
-            </div>
+          <Box key={date}>
+            {/* Data */}
+            <Typography
+              variant="caption"
+              display="block"
+              textAlign="center"
+              color="text.secondary"
+              mb={1}
+            >
+              {date}
+            </Typography>
 
-            {msgs.map((msg) => (
-              <section
-                key={msg.id}
-                className={msg.user === user.email ? styles.me_msg : styles.msg}
-              >
-                <small>{msg.user}</small>
-                <div>
-                  {msg.message !== "" && <p>{msg.message}</p>}
+            {msgs.map((msg) => {
+              const isMe = msg.user === user.email;
+              return (
+                <Box
+                  key={msg.id}
+                  alignSelf={isMe ? "flex-end" : "flex-start"}
+                  display="flex"
+                  flexDirection="column"
+                  gap={0.5}
+                  my={1}
+                >
+                  {/* Nome do usuário */}
+                  <Typography
+                    variant="caption"
+                    color="text.secondary"
+                    alignSelf={isMe ? "flex-end" : "flex-start"}
+                  >
+                    {msg.user}
+                  </Typography>
 
-                  {msg.file && (
-                    <div
-                      className={
-                        msg.user === user.email ? styles.me_file : styles.file
-                      }
-                    >
-                      <img
-                        src={`http://localhost:3333/uploads/${msg.file}`}
-                        alt="Anexo"
-                      />
-                    </div>
-                  )}
-                  <span>{formatTime(msg.createdAt)}</span>
-                </div>
-              </section>
-            ))}
-          </div>
+                  <Box
+                    display="flex"
+                    flexDirection={isMe ? "row-reverse" : "row"}
+                    gap={1}
+                  >
+                    {/* Texto da mensagem */}
+                    {msg.message && (
+                      <Paper
+                        elevation={3}
+                        sx={{
+                          bgcolor: isMe ? "primary.main" : "secondary.main",
+                          color: "text.primary",
+                          p: 1.5,
+                          maxWidth: 380,
+                          borderRadius: isMe
+                            ? "12px 12px 0px 12px"
+                            : "12px 12px 12px 0px",
+                        }}
+                      >
+                        <Typography variant="body2">{msg.message}</Typography>
+                      </Paper>
+                    )}
+
+                    {/* Anexo */}
+                    {msg.file && (
+                      <Paper
+                        elevation={3}
+                        sx={{
+                          border: `2px solid ${isMe ? "#1d4ed8" : "#262626"}`,
+                          maxWidth: 380,
+                          borderRadius: 2,
+                          overflow: "hidden",
+                        }}
+                      >
+                        <img
+                          src={`http://localhost:3333/uploads/${msg.file}`}
+                          alt="Anexo"
+                          style={{ width: "100%" }}
+                        />
+                      </Paper>
+                    )}
+                  </Box>
+
+                  {/* Hora */}
+                  <Typography
+                    variant="caption"
+                    color="text.secondary"
+                    alignSelf={isMe ? "flex-end" : "flex-start"}
+                  >
+                    {formatTime(msg.createdAt)}
+                  </Typography>
+                </Box>
+              );
+            })}
+          </Box>
         ))}
-      </div>
+      </Box>
+
       <InputMessage />
-    </div>
+    </Box>
   );
 };
 
