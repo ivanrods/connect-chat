@@ -17,7 +17,7 @@ const InputMessage = () => {
   return (
     <Box
       sx={{
-        height: 100,
+        padding: 2,
         bgcolor: "background.default",
         display: "flex",
         alignItems: "center",
@@ -55,14 +55,15 @@ const InputMessage = () => {
             disableUnderline: true,
             sx: {
               px: 2,
-              fontSize: 14,
+              fontSize: 15,
               color: "text.primary",
+              padding: 1.5,
             },
           }}
         />
 
-        <IconButton type="submit">
-          <Send style={{ color: "var(--mui-palette-primary-main)" }} />
+        <IconButton type="submit" color="primary">
+          <Send />
         </IconButton>
       </Box>
     </Box>
