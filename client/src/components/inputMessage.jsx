@@ -17,7 +17,6 @@ const InputMessage = () => {
   return (
     <Box
       sx={{
-        padding: 2,
         bgcolor: "background.default",
         display: "flex",
         alignItems: "center",
@@ -26,46 +25,25 @@ const InputMessage = () => {
         boxShadow: "0px -2px 6px -1px rgba(0,0,0,0.25)",
       }}
     >
-      <Box
-        component="form"
-        onSubmit={handleSubmit}
+      <TextField
+        variant="outlined"
+        placeholder="Digite uma mensagem"
+        type="text"
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+        margin="normal"
         sx={{
-          width: "100%",
-          maxWidth: 750,
-          display: "flex",
-          alignItems: "center",
-          bgcolor: "background.paper",
-          borderRadius: 2,
-          px: 1,
-          "&:focus-within": {
-            border: "2px solid",
-            borderColor: "primary.main",
-          },
+          width: "750px",
         }}
-      >
-        <FileUploader />
-
-        <TextField
-          variant="standard"
-          placeholder="Digite uma mensagem"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          fullWidth
-          InputProps={{
-            disableUnderline: true,
-            sx: {
-              px: 2,
-              fontSize: 15,
-              color: "text.primary",
-              padding: 1.5,
-            },
-          }}
-        />
-
-        <IconButton type="submit" color="primary">
-          <Send />
-        </IconButton>
-      </Box>
+        InputProps={{
+          startAdornment: <FileUploader />,
+          endAdornment: (
+            <IconButton type="submit" color="primary" onClick={handleSubmit}>
+              <Send />
+            </IconButton>
+          ),
+        }}
+      />
     </Box>
   );
 };
