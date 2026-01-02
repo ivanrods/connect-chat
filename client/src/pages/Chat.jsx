@@ -117,13 +117,15 @@ const Chat = () => {
                   my={1}
                 >
                   {/* Nome do usuário */}
-                  <Typography
-                    variant="caption"
-                    color="text.secondary"
-                    alignSelf={isMe ? "flex-end" : "flex-start"}
-                  >
-                    {msg.user}
-                  </Typography>
+                  {!isMe && (
+                    <Typography
+                      variant="caption"
+                      color="text.secondary"
+                      alignSelf={isMe ? "flex-end" : "flex-start"}
+                    >
+                      {msg.user}
+                    </Typography>
+                  )}
 
                   <Box
                     display="flex"

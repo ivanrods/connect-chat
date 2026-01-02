@@ -7,7 +7,7 @@ const Header = () => {
 
   return (
     <AppBar position="static" color="transparent" elevation={1}>
-      <Toolbar sx={{ maxWidth: 750, width: "100%", mx: "auto" }}>
+      <Toolbar sx={{ maxWidth: 750, width: "100%", mx: "auto" }} disableGutters>
         <Box
           display="flex"
           alignItems="center"
@@ -15,7 +15,10 @@ const Header = () => {
           flexGrow={1}
           color="primary"
         >
-          <MessagesSquare style={{ color: "#1d4ed8" }} />
+          <IconButton>
+            <MessagesSquare style={{ color: "#1d4ed8" }} />
+          </IconButton>
+
           <Typography variant="h6" fontWeight="bold" color="primary">
             ConnectChat
           </Typography>
