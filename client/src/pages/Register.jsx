@@ -24,10 +24,10 @@ const Register = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
+      const res = await response.json();
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Erro ao criar conta");
+        throw new Error(res.error || "Erro ao criar conta");
       }
       alert("Conta criada com sucesso!");
       navigate("/login");

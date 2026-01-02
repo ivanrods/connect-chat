@@ -25,9 +25,8 @@ const Login = () => {
     try {
       await signIn(data);
       navigate("/chat");
-    } catch (err) {
-      console.error(err);
-      return alert("Erro ao entrar");
+    } catch (error) {
+      return alert(error.message);
     }
   };
 
