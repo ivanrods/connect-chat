@@ -43,6 +43,11 @@ const InputMessage = () => {
             </IconButton>
           ),
         }}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            handleSubmit(e);
+          }
+        }}
       />
     </Box>
   );
