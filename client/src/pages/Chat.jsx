@@ -96,7 +96,7 @@ const Chat = () => {
           <Box key={date}>
             {/* Data */}
             <Typography
-              variant="caption"
+              variant="body2"
               display="block"
               textAlign="center"
               color="text.secondary"
@@ -126,12 +126,21 @@ const Chat = () => {
                       {msg.user}
                     </Typography>
                   )}
-
                   <Box
                     display="flex"
+                    alignItems="self-end"
                     flexDirection={isMe ? "row-reverse" : "row"}
                     gap={1}
                   >
+                    <Box
+                      component="img"
+                      src="https://avatars.githubusercontent.com/u/67488687?v="
+                      sx={{
+                        borderRadius: "50%",
+                        width: 30,
+                        height: 30,
+                      }}
+                    />
                     {/* Texto da mensagem */}
                     {msg.message && (
                       <Paper
@@ -142,14 +151,13 @@ const Chat = () => {
                           p: 1.5,
                           maxWidth: 380,
                           borderRadius: isMe
-                            ? "12px 12px 0px 12px"
-                            : "12px 12px 12px 0px",
+                            ? "8px 8px 0px 8px"
+                            : "8px 8px 8px 0px",
                         }}
                       >
-                        <Typography variant="body2">{msg.message}</Typography>
+                        <Typography variant="body1">{msg.message}</Typography>
                       </Paper>
-                    )}
-
+                    )}{" "}
                     {/* Anexo */}
                     {msg.file && (
                       <Paper
@@ -169,7 +177,6 @@ const Chat = () => {
                       </Paper>
                     )}
                   </Box>
-
                   {/* Hora */}
                   <Typography
                     variant="caption"
