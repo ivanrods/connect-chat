@@ -42,6 +42,7 @@ export const createChat = async (req, res) => {
     const user = await User.findByPk(id);
     const newMessage = await Chat.create({
       user: user.email,
+      avatar: user.avatar,
       message,
       file,
     });

@@ -134,7 +134,7 @@ const Chat = () => {
                   >
                     <Box
                       component="img"
-                      src="https://avatars.githubusercontent.com/u/67488687?v="
+                      src={msg.avatar}
                       sx={{
                         borderRadius: "50%",
                         width: 30,

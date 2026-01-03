@@ -5,5 +5,6 @@ const Chat = sequelize.define("chat", {
   user: { type: Sequelize.STRING, allowNull: false },
   message: { type: Sequelize.STRING, allowNull: false },
   file: { type: Sequelize.STRING, allowNull: true },
+  avatar: { type: Sequelize.STRING, allowNull: true },
 });
 export default Chat;

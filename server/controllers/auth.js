@@ -8,8 +8,17 @@ export const register = async (req, res) => {
   try {
     const { name, email, password } = registerSchema.parse(req.body);
 
+    const avatarUrl = `https://api.dicebear.com/7.x/bottts-neutral/svg?seed=${encodeURIComponent(
+      name
+    )}`;
+
     const hashedPassword = await bcrypt.hash(password, 10);
-    await User.create({ name, email, password: hashedPassword });
+    await User.create({
+      name,
+      email,
+      password: hashedPassword,
+      avatar: avatarUrl,
+    });
 
     res.status(201).json({ message: "Usuário registrado com sucesso" });
   } catch (err) {
