@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link, useNavigate } from "react-router-dom";
 import { registerSchema } from "../lib/schemas/auth-schema";
-import { Lock, Mail, MessagesSquare, User } from "lucide-react";
+import { Lock, Mail, MessagesSquare, SendIcon, User } from "lucide-react";
 import InputForm from "../components/inputForm";
 import ButtonForm from "../components/buttonForm";
 import { Box, Paper, Typography } from "@mui/material";
@@ -89,7 +89,11 @@ const Register = () => {
             helperText={errors.password?.message}
           />
 
-          <ButtonForm text="Criar conta" />
+          <ButtonForm
+            text="Criar conta"
+            variant="outlined"
+            icon={<SendIcon sx={{ color: "white", display: "block" }} />}
+          />
 
           <Typography variant="body2" textAlign="center" mt={2}>
             <Link to="/login" style={{ color: "#1d4ed8" }}>

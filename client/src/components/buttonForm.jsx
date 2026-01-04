@@ -1,12 +1,13 @@
 import { Button } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 
-const ButtonForm = ({ text }) => {
+const ButtonForm = ({ text, variant, icon, onClick }) => {
   return (
     <Button
       type="submit"
-      variant="contained"
-      endIcon={<SendIcon sx={{ color: "white", display: "block" }} />}
+      variant={variant}
+      endIcon={icon}
+      onClick={onClick}
       sx={{
         width: "100%",
         padding: "10px",

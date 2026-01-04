@@ -57,7 +57,12 @@ const Profile = () => {
                 icon={<Mail size={18} />}
               />
 
-              <ButtonForm onClick={() => signOut()}>Sair</ButtonForm>
+              <ButtonForm
+                text="Sair"
+                variant="outlined"
+                onClick={() => signOut()}
+                icon={<LogOut />}
+              />
             </Box>
           </Paper>
         </Box>
