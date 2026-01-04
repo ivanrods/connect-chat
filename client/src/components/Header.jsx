@@ -1,10 +1,8 @@
-import { useAuth } from "../context/auth-context";
-import { MessagesSquare, LogOut } from "lucide-react";
+import { MessagesSquare } from "lucide-react";
 import { AppBar, Toolbar, Box, Typography, IconButton } from "@mui/material";
+import Profile from "./Profile";
 
 const Header = () => {
-  const { signOut } = useAuth();
-
   return (
     <AppBar position="static" color="transparent" elevation={1}>
       <Toolbar sx={{ maxWidth: 750, width: "100%", mx: "auto" }} disableGutters>
@@ -24,9 +22,7 @@ const Header = () => {
           </Typography>
         </Box>
 
-        <IconButton onClick={signOut} color="default" aria-label="Sair">
-          <LogOut />
-        </IconButton>
+        <Profile />
       </Toolbar>
     </AppBar>
   );
