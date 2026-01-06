@@ -3,7 +3,7 @@ import { useAuth } from "../context/auth-context";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "../lib/schemas/auth-schema";
-import { Lock, Mail, MessagesSquare, SendIcon } from "lucide-react";
+import { Lock, Mail, MessagesSquare, SendHorizonalIcon } from "lucide-react";
 
 import InputForm from "../components/inputForm";
 import ButtonForm from "../components/buttonForm";
@@ -74,8 +74,10 @@ const Login = () => {
 
           <ButtonForm
             text="Entrar"
-            variant="outlined"
-            icon={<SendIcon sx={{ color: "white", display: "block" }} />}
+            variant="contained"
+            icon={
+              <SendHorizonalIcon sx={{ color: "white", display: "block" }} />
+            }
           />
 
           <Typography variant="body2" textAlign="center" mt={2}>

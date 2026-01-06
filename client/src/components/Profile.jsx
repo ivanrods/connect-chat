@@ -1,13 +1,29 @@
 import { Box, IconButton, Paper } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import InputForm from "./inputForm";
 import { useAuth } from "../context/auth-context";
 import { LogOut, Mail, User } from "lucide-react";
 import ButtonForm from "./buttonForm";
+import { useUser } from "../hooks/use-profile";
 
 const Profile = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { signOut } = useAuth();
+
+  const [userId, setUserId] = useState(null);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      const parsedUser = JSON.parse(storedUser);
+      setUserId(parsedUser.id);
+    }
+  }, []);
+
+  const { user, loading } = useUser(userId);
+  if (loading) {
+    <div>carregando</div>;
+  }
 
   return (
     <div>
@@ -15,7 +31,11 @@ const Profile = () => {
         component="img"
         position="relative"
         onClick={() => setIsOpen(!isOpen)}
-        src="https://api.dicebear.com/7.x/bottts-neutral/svg?seed=teste"
+        src={
+          user
+            ? user.avatar
+            : "https://api.dicebear.com/7.x/bottts-neutral/svg?seed=user"
+        }
         sx={{
           borderRadius: "50%",
           width: 30,
@@ -37,7 +57,7 @@ const Profile = () => {
             >
               <Box
                 component="img"
-                src="https://api.dicebear.com/7.x/bottts-neutral/svg?seed=teste"
+                src={user ? user.avatar : ""}
                 sx={{
                   borderRadius: "50%",
                   width: 50,
@@ -48,12 +68,14 @@ const Profile = () => {
                 label="Nome"
                 type="text"
                 placeholder="Nome"
+                value={user.name}
                 icon={<User size={18} />}
               />
               <InputForm
                 label="E-mail"
                 type="email"
-                placeholder="E-mail"
+                placeholder={user.email}
+                value={user.email}
                 icon={<Mail size={18} />}
               />
 
