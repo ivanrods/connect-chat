@@ -1,5 +1,5 @@
 import { Box, IconButton, Paper } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import InputForm from "./inputForm";
 import { useAuth } from "../context/auth-context";
 import { LogOut, Mail, User } from "lucide-react";
@@ -11,6 +11,7 @@ const Profile = () => {
   const { signOut } = useAuth();
 
   const [userId, setUserId] = useState(null);
+  const profileRef = useRef(null);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -24,6 +25,20 @@ const Profile = () => {
   if (loading) {
     <div>carregando</div>;
   }
+
+  //fecha ao clicar fora do componente
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (profileRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <div>
@@ -45,7 +60,7 @@ const Profile = () => {
       />
 
       {isOpen && (
-        <Box position="absolute" right={4}>
+        <Box position="absolute" right={4} ref={profileRef}>
           <Paper elevation={4} sx={{ p: 4, width: "100%", maxWidth: 400 }}>
             <Box
               sx={{
