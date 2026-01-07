@@ -68,6 +68,7 @@ export const createUpload = async (req, res) => {
         user: user.email,
         message,
         file: filename,
+        avatar: user.avatar,
       });
 
       const io = getIO();

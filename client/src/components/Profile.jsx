@@ -11,7 +11,7 @@ const Profile = () => {
   const { signOut } = useAuth();
 
   const [userId, setUserId] = useState(null);
-  const profileRef = useRef(null);
+  const profileRef = useRef("");
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -29,7 +29,7 @@ const Profile = () => {
   //fecha ao clicar fora do componente
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (profileRef.current.contains(event.target)) {
+      if (profileRef.current && !profileRef.current.contains(event.target)) {
         setIsOpen(false);
       }
     };

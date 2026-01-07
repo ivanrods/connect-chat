@@ -38,7 +38,10 @@ const Login = () => {
       minHeight="100vh"
       bgcolor="#262626"
     >
-      <Paper elevation={4} sx={{ p: 4, width: "100%", maxWidth: 400 }}>
+      <Paper
+        elevation={4}
+        sx={{ p: 4, width: "100%", maxWidth: 400, margin: 2 }}
+      >
         <Box
           display="flex"
           alignItems="center"
