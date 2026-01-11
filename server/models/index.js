@@ -1,7 +1,7 @@
-import User from "./User.js";
-import Conversation from "./Conversation.js";
-import Message from "./Message.js";
-import ConversationUser from "./ConversationUser.js";
+import User from "./user.js";
+import Conversation from "./conversation.js";
+import Message from "./message.js";
+import ConversationUser from "./conversation-user.js";
 
 User.belongsToMany(Conversation, { through: ConversationUser });
 Conversation.belongsToMany(User, { through: ConversationUser });
