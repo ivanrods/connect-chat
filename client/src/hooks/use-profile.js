@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 export function useUser(id) {
+  const apiUrl = import.meta.env.VITE_API_URL;
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
 
@@ -9,7 +10,7 @@ export function useUser(id) {
       if (!id) return;
       try {
         const response = await fetch(
-          `http://localhost:3333/user/${id}`,
+          `${apiUrl}/api/user/${id}`,
 
           {
             method: "GET",

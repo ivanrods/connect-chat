@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-
+const apiUrl = import.meta.env.VITE_API_URL;
 import { io } from "socket.io-client";
 
-const socket = io("http://localhost:3333", {
+const socket = io(`${apiUrl}`, {
   auth: {
     token: localStorage.getItem("token"),
   },
@@ -16,7 +16,7 @@ export function useGetChat(page, limit) {
     const getMessage = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3333/chat?page=${page}&limit=${limit}`,
+          `${apiUrl}/api/chat?page=${page}&limit=${limit}`,
 
           {
             method: "GET",
@@ -49,7 +49,7 @@ export function useGetChat(page, limit) {
 export function usePostChat() {
   const postMessage = async ({ message, file }) => {
     try {
-      const response = await fetch("http://localhost:3333/chat", {
+      const response = await fetch(`${apiUrl}/api/chat`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

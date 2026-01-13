@@ -2,6 +2,8 @@ import { Paperclip } from "lucide-react";
 import { IconButton } from "@mui/material";
 import { useState } from "react";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 const FileUploader = () => {
   const [selectedFile, setSelectedFile] = useState(null);
 
@@ -16,7 +18,7 @@ const FileUploader = () => {
     formData.append("message", "");
 
     try {
-      const response = await fetch("http://localhost:3333/upload", {
+      const response = await fetch(`${apiUrl}/api/chat/upload`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,

@@ -13,6 +13,8 @@ import InputForm from "../components/inputForm";
 import ButtonForm from "../components/buttonForm";
 import { Box, Paper, Typography } from "@mui/material";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 const Register = () => {
   const navigate = useNavigate();
   const {
@@ -25,7 +27,7 @@ const Register = () => {
 
   const onSubmit = async (data) => {
     try {
-      const response = await fetch("http://localhost:3333/register", {
+      const response = await fetch(`${apiUrl}/api/auth/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),

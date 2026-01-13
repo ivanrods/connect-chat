@@ -6,6 +6,7 @@ import InputMessage from "../components/inputMessage";
 import { Box, Typography, Paper } from "@mui/material";
 
 const Chat = () => {
+  const apiUrl = import.meta.env.VITE_API_URL;
   const [page] = useState(1);
   const [limit, setLimit] = useState(10);
   const [isAtBottom, setIsAtBottom] = useState(true);
@@ -170,7 +171,7 @@ const Chat = () => {
                         }}
                       >
                         <img
-                          src={`http://localhost:3333/uploads/${msg.file}`}
+                          src={`${apiUrl}/uploads/${msg.file}`}
                           alt="Anexo"
                           style={{ width: "100%" }}
                         />
