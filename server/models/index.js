@@ -3,13 +3,30 @@ import Conversation from "./conversation.js";
 import Message from "./message.js";
 import ConversationUser from "./conversation-user.js";
 
-User.belongsToMany(Conversation, { through: ConversationUser });
-Conversation.belongsToMany(User, { through: ConversationUser });
+User.belongsToMany(Conversation, {
+  through: ConversationUser,
+  foreignKey: "userId",
+});
 
-Conversation.hasMany(Message);
-Message.belongsTo(Conversation);
+Conversation.belongsToMany(User, {
+  through: ConversationUser,
+  foreignKey: "conversationId",
+});
 
-User.hasMany(Message, { as: "sentMessages" });
-Message.belongsTo(User, { as: "sender" });
+Conversation.hasMany(Message, {
+  foreignKey: "conversationId",
+});
+Message.belongsTo(Conversation, {
+  foreignKey: "conversationId",
+});
+
+User.hasMany(Message, {
+  foreignKey: "senderId",
+  as: "sentMessages",
+});
+Message.belongsTo(User, {
+  foreignKey: "senderId",
+  as: "sender",
+});
 
 export { User, Conversation, Message, ConversationUser };

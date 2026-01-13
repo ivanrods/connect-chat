@@ -1,9 +1,9 @@
+import { DataTypes } from "sequelize";
 import sequelize from "../config/database.js";
-import { Sequelize } from "sequelize";
 
 const ConversationUser = sequelize.define("conversation_user", {
   role: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     defaultValue: "member",
   },
 });

@@ -1,9 +1,14 @@
+import { DataTypes } from "sequelize";
 import sequelize from "../config/database.js";
-import { Sequelize } from "sequelize";
 
 const Message = sequelize.define("message", {
+  id: {
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
+    primaryKey: true,
+  },
   content: {
-    type: Sequelize.TEXT,
+    type: DataTypes.TEXT,
     allowNull: false,
   },
 });

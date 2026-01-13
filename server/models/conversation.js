@@ -1,10 +1,10 @@
+import { DataTypes } from "sequelize";
 import sequelize from "../config/database.js";
-import { Sequelize } from "sequelize";
 
 const Conversation = sequelize.define("conversation", {
   id: {
-    type: Sequelize.UUID,
-    defaultValue: Sequelize.UUIDV4,
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
     primaryKey: true,
   },
 });

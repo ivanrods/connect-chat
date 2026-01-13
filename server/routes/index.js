@@ -7,7 +7,7 @@ import chatRoutes from "./chat.routes.js";
 const router = Router();
 
 router.use("/api/auth", authRoutes);
-router.use("/api/users", userRoutes);
+router.use("/api/user", userRoutes);
 router.use("/api/conversations", conversationRoutes);
 
 //remover depois
