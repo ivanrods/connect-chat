@@ -4,6 +4,7 @@ import { formatTime, formatDay } from "../utils/format-date";
 import Header from "../components/Header";
 import InputMessage from "../components/inputMessage";
 import { Box, Typography, Paper } from "@mui/material";
+import { Sidebar } from "../components/Sidebar";
 
 const Chat = () => {
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -72,6 +73,7 @@ const Chat = () => {
       bgcolor="background.default"
     >
       <Header />
+      <Sidebar />
 
       {/* Área de mensagens */}
       <Box
