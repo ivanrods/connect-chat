@@ -20,7 +20,7 @@ export const getOrCreateConversation = async (req, res) => {
   }
 
   try {
-    // 1️⃣ Buscar conversas do usuário logado
+    //  Buscar conversas do usuário logado
     const conversations = await Conversation.findAll({
       include: {
         model: User,
@@ -29,7 +29,7 @@ export const getOrCreateConversation = async (req, res) => {
       },
     });
 
-    // 2️⃣ Verificar se alguma conversa tem o outro usuário
+    // Verificar se alguma conversa tem o outro usuário
     for (const conversation of conversations) {
       const users = await conversation.getUsers({
         where: { id: otherUserId },
@@ -40,7 +40,7 @@ export const getOrCreateConversation = async (req, res) => {
       }
     }
 
-    // 3️⃣ Criar nova conversa
+    // Criar nova conversa
     const conversation = await Conversation.create();
 
     await conversation.addUsers([userId, otherUserId]);

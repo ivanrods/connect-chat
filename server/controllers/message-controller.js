@@ -2,7 +2,7 @@ import { Message, Conversation, User } from "../models/index.js";
 import { getIO } from "../config/socket.js";
 
 export const getMessages = async (req, res) => {
-  const { conversationId } = req.params;
+  const { id: conversationId } = req.params;
   const userId = req.user.id;
 
   try {
@@ -38,7 +38,7 @@ export const getMessages = async (req, res) => {
 };
 
 export const createMessage = async (req, res) => {
-  const { conversationId } = req.params;
+  const { id: conversationId } = req.params;
   const { content } = req.body;
   const userId = req.user.id;
 
