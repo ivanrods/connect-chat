@@ -1,47 +1,46 @@
 import sequelize from "../config/database.js";
 import { Conversation, User } from "../models/index.js";
 
-/**
- * Criar ou recuperar uma conversa 1–1
- */
+//Criar ou recuperar uma conversa 1–1
+
 export const getOrCreateConversation = async (req, res) => {
   const userId = req.user.id;
-  const { otherUserId } = req.params;
+  const { userId: otherUserId } = req.params;
+
+  if (!otherUserId) {
+    return res.status(400).json({
+      message: "ID do outro usuário não informado",
+    });
+  }
 
   if (userId === otherUserId) {
-    return res
-      .status(400)
-      .json({ message: "Não é possível criar conversa consigo mesmo." });
+    return res.status(400).json({
+      message: "Não é possível criar conversa consigo mesmo",
+    });
   }
 
   try {
-    // Buscar conversas onde os dois usuários participam
+    // 1️⃣ Buscar conversas do usuário logado
     const conversations = await Conversation.findAll({
       include: {
         model: User,
-        where: {
-          id: [userId, otherUserId],
-        },
-        attributes: ["id"],
+        where: { id: userId },
         through: { attributes: [] },
       },
     });
 
-    // Verifica se existe conversa 1–1
-    const existingConversation = conversations.find(
-      (conv) => conv.users.length === 2
-    );
-
-    if (existingConversation) {
-      return res.status(200).json(existingConversation);
-    }
-
-    // Criar nova conversa
-    if (!otherUserId) {
-      return res.status(400).json({
-        message: "ID do outro usuário não informado",
+    // 2️⃣ Verificar se alguma conversa tem o outro usuário
+    for (const conversation of conversations) {
+      const users = await conversation.getUsers({
+        where: { id: otherUserId },
       });
+
+      if (users.length > 0) {
+        return res.json(conversation);
+      }
     }
+
+    // 3️⃣ Criar nova conversa
     const conversation = await Conversation.create();
 
     await conversation.addUsers([userId, otherUserId]);
