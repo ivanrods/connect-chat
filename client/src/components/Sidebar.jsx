@@ -9,7 +9,10 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { useConversations } from "../hooks/use-conversations";
+import {
+  useConversations,
+  createConversation,
+} from "../hooks/use-conversations";
 
 const drawerWidth = 280;
 
@@ -56,9 +59,9 @@ export function Sidebar({
           return (
             <ListItemButton
               key={conversation.id}
-              onClick={() => {
+              onClick={async () => {
+                const conversation = await createConversation(conversation.id);
                 setSelectedConversation(conversation);
-                if (isMobile) onClose();
               }}
               sx={{
                 bgcolor: isSelected ? "rgba(255,255,255,0.12)" : "transparent",
