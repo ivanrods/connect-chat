@@ -7,13 +7,16 @@ import { useMessages } from "../hooks/use-messages";
 import { useConversationSocket } from "../hooks/use-conversation-socket";
 
 import { Sidebar } from "../components/Sidebar";
+import { MessageInput } from "../components/MessageInput";
+import { useSendMessage } from "../hooks/use-send-message";
 
 export default function Chat() {
   const { user } = useUser();
 
   const { conversations, loading: loadingConversations } = useConversations();
-
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [selectedConversation, setSelectedConversation] = useState(null);
+  const { sendMessage } = useSendMessage();
 
   const {
     messages,
@@ -54,10 +57,21 @@ export default function Chat() {
           </Box>
         ) : (
           <>
+            <ChatHeader
+              conversation={selectedConversation}
+              userId={user.id}
+              onMenuClick={() => setSidebarOpen(true)}
+            />
             <MessageList
               messages={messages}
               loading={loadingMessages}
               user={user}
+            />
+            <MessageInput
+              disabled={!selectedConversation}
+              onSend={(content) =>
+                sendMessage(selectedConversation.id, content)
+              }
             />
           </>
         )}
