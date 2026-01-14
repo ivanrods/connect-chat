@@ -2,33 +2,29 @@ import {
   Drawer,
   List,
   ListItemButton,
-  ListItemText,
   Avatar,
   Box,
   Typography,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import {
-  useConversations,
-  createConversation,
-} from "../hooks/use-conversations";
 
 const drawerWidth = 280;
 
 export function Sidebar({
   open,
   onClose,
+  conversations,
+  loading,
   selectedConversation,
   setSelectedConversation,
   userId,
 }) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  const { conversations, loading } = useConversations();
 
   if (loading) {
-    return <div>carregando...</div>;
+    return <div>Carregando...</div>;
   }
 
   return (
@@ -47,9 +43,6 @@ export function Sidebar({
         },
       }}
     >
-      {/* HEADER */}
-
-      {/* LISTA DE CHATS */}
       <List>
         {conversations.map((conversation) => {
           const otherUser = conversation.users.find((u) => u.id !== userId);
@@ -59,9 +52,9 @@ export function Sidebar({
           return (
             <ListItemButton
               key={conversation.id}
-              onClick={async () => {
-                const conversation = await createConversation(conversation.id);
+              onClick={() => {
                 setSelectedConversation(conversation);
+                if (isMobile) onClose();
               }}
               sx={{
                 bgcolor: isSelected ? "rgba(255,255,255,0.12)" : "transparent",

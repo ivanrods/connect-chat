@@ -7,8 +7,6 @@ export function useConversationSocket(conversationId, onMessage) {
   useEffect(() => {
     if (!socket || !conversationId) return;
 
-    const room = `conversation_${conversationId}`;
-
     socket.emit("joinConversation", conversationId);
 
     socket.on("newMessage", onMessage);
