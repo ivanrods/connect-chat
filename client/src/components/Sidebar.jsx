@@ -24,8 +24,6 @@ export function Sidebar({
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const { conversations, loading } = useConversations();
 
-  const otherUser = conversations.users.find((u) => u.id !== userId);
-
   if (loading) {
     return <div>carregando...</div>;
   }
