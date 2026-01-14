@@ -9,12 +9,27 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
+import { useConversations } from "../hooks/use-conversations";
 
 const drawerWidth = 280;
 
-export function Sidebar({ open, onClose }) {
+export function Sidebar({
+  open,
+  onClose,
+  selectedConversation,
+  setSelectedConversation,
+  userId,
+}) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const { conversations, loading } = useConversations();
+
+  const otherUser = conversations.users.find((u) => u.id !== userId);
+
+  if (loading) {
+    return <div>carregando...</div>;
+  }
+
   return (
     <Drawer
       variant={isMobile ? "temporary" : "permanent"}
@@ -35,30 +50,42 @@ export function Sidebar({ open, onClose }) {
 
       {/* LISTA DE CHATS */}
       <List>
-        {["Maria", "João", "Carlos", "Ana"].map((chat) => (
-          <ListItemButton
-            key={chat}
-            sx={{
-              "&:hover": {
-                bgcolor: "rgba(255,255,255,0.08)",
-              },
-            }}
-          >
-            <Box
+        {conversations.map((conversation) => {
+          const otherUser = conversation.users.find((u) => u.id !== userId);
+
+          const isSelected = selectedConversation?.id === conversation.id;
+
+          return (
+            <ListItemButton
+              key={conversation.id}
+              onClick={() => {
+                setSelectedConversation(conversation);
+                if (isMobile) onClose();
+              }}
               sx={{
-                display: "flex",
-                alignItems: "center",
-                gap: 2,
-                p: 1,
-                borderBottom: "1px solid rgba(255,255,255,0.1)",
-                width: "100%",
+                bgcolor: isSelected ? "rgba(255,255,255,0.12)" : "transparent",
+                "&:hover": {
+                  bgcolor: "rgba(255,255,255,0.08)",
+                },
               }}
             >
-              <Avatar />
-              <Typography fontWeight="bold">{chat}</Typography>
-            </Box>
-          </ListItemButton>
-        ))}
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 2,
+                  p: 1,
+                  width: "100%",
+                }}
+              >
+                <Avatar src={otherUser?.avatar} />
+                <Typography fontWeight="bold">
+                  {otherUser?.name || "Usuário"}
+                </Typography>
+              </Box>
+            </ListItemButton>
+          );
+        })}
       </List>
     </Drawer>
   );
