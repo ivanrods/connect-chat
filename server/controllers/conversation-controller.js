@@ -1,5 +1,4 @@
-import sequelize from "../config/database.js";
-import { Conversation, User } from "../models/index.js";
+import { Conversation, User, ConversationUser } from "../models/index.js";
 
 //Criar ou recuperar uma conversa 1–1
 
@@ -63,18 +62,24 @@ export const getUserConversations = async (req, res) => {
 
   try {
     const conversations = await Conversation.findAll({
-      include: {
-        model: User,
-        where: { id: userId },
-        attributes: ["id", "name", "avatar"],
-        through: { attributes: [] },
-      },
+      include: [
+        {
+          model: ConversationUser,
+          where: { userId },
+          attributes: [],
+        },
+        {
+          model: User,
+          attributes: ["id", "name", "avatar"],
+          through: { attributes: [] },
+        },
+      ],
       order: [["updatedAt", "DESC"]],
     });
 
-    res.status(200).json(conversations);
+    res.json(conversations);
   } catch (err) {
-    console.error("Erro ao buscar conversas:", err);
+    console.error(err);
     res.status(500).json({
       message: "Erro ao buscar conversas.",
       error: err.message,

@@ -6,11 +6,27 @@ import ConversationUser from "./conversation-user.js";
 User.belongsToMany(Conversation, {
   through: ConversationUser,
   foreignKey: "userId",
+  otherKey: "conversationId",
 });
 
 Conversation.belongsToMany(User, {
   through: ConversationUser,
   foreignKey: "conversationId",
+  otherKey: "userId",
+});
+
+Conversation.hasMany(ConversationUser, {
+  foreignKey: "conversationId",
+});
+ConversationUser.belongsTo(Conversation, {
+  foreignKey: "conversationId",
+});
+
+User.hasMany(ConversationUser, {
+  foreignKey: "userId",
+});
+ConversationUser.belongsTo(User, {
+  foreignKey: "userId",
 });
 
 Conversation.hasMany(Message, {
