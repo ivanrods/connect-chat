@@ -9,14 +9,15 @@ import { useConversationSocket } from "../hooks/use-conversation-socket";
 import { Sidebar } from "../components/Sidebar";
 import { MessageInput } from "../components/MessageInput";
 import { useSendMessage } from "../hooks/use-send-message";
+import { ChatHeader } from "../components/ChatHeader";
+import { MessageList } from "../components/MessageList";
 
 export default function Chat() {
   const { user } = useUser();
-
-  const { conversations, loading: loadingConversations } = useConversations();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { conversations, loading: loadingConversations } = useConversations();
+
   const [selectedConversation, setSelectedConversation] = useState(null);
-  const { sendMessage } = useSendMessage();
 
   const {
     messages,
@@ -24,21 +25,29 @@ export default function Chat() {
     loading: loadingMessages,
   } = useMessages(selectedConversation?.id);
 
-  // 🔌 Socket da conversa
-  useConversationSocket({
-    conversationId: selectedConversation?.id,
-    setMessages,
+  const { sendMessage } = useSendMessage(selectedConversation?.id);
+
+  // Socket em tempo real
+  useConversationSocket(selectedConversation?.id, (newMessage) => {
+    setMessages((prev) => [...prev, newMessage]);
   });
+
+  const handleSendMessage = async (content) => {
+    await sendMessage(content);
+  };
 
   return (
     <Box display="flex" height="100vh">
       {/* LISTA DE CONVERSAS */}
       <Box width={320} borderRight="1px solid #ddd">
         <Sidebar
+          open={open}
+          onClose={false}
           conversations={conversations}
           loading={loadingConversations}
           selectedConversation={selectedConversation}
-          onSelect={setSelectedConversation}
+          setSelectedConversation={setSelectedConversation}
+          userId="64a6db8e-cb84-49bf-b68f-ae2598e90dc5"
         />
       </Box>
 
@@ -59,7 +68,7 @@ export default function Chat() {
           <>
             <ChatHeader
               conversation={selectedConversation}
-              userId={user.id}
+              userId="64a6db8e-cb84-49bf-b68f-ae2598e90dc5"
               onMenuClick={() => setSidebarOpen(true)}
             />
             <MessageList
@@ -67,11 +76,10 @@ export default function Chat() {
               loading={loadingMessages}
               user={user}
             />
+
             <MessageInput
               disabled={!selectedConversation}
-              onSend={(content) =>
-                sendMessage(selectedConversation.id, content)
-              }
+              onSend={handleSendMessage}
             />
           </>
         )}

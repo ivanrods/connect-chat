@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useSocket } from "../context/socket-context";
 
-export function useConversationSocket(conversationId, onMessage) {
+export function useConversationSocket(conversationId, onNewMessage) {
   const socket = useSocket();
 
   useEffect(() => {
@@ -9,11 +9,10 @@ export function useConversationSocket(conversationId, onMessage) {
 
     socket.emit("joinConversation", conversationId);
 
-    socket.on("newMessage", onMessage);
+    socket.on("newMessage", onNewMessage);
 
     return () => {
-      socket.off("newMessage", onMessage);
-      socket.emit("leaveConversation", conversationId);
+      socket.off("newMessage", onNewMessage);
     };
-  }, [socket, conversationId]);
+  }, [socket, conversationId, onNewMessage]);
 }
