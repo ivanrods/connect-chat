@@ -13,6 +13,7 @@ export function useConversationSocket(conversationId, onNewMessage) {
 
     return () => {
       socket.off("newMessage", onNewMessage);
+      socket.emit("leaveConversation", conversationId);
     };
   }, [socket, conversationId, onNewMessage]);
 }

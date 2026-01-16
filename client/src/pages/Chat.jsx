@@ -13,7 +13,8 @@ import { ChatHeader } from "../components/ChatHeader";
 import { MessageList } from "../components/MessageList";
 
 export default function Chat() {
-  const { user } = useUser();
+  const { user, loading: loadingUser } = useUser();
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { conversations, loading: loadingConversations } = useConversations();
 
@@ -36,6 +37,15 @@ export default function Chat() {
     await sendMessage(content);
   };
 
+  if (loadingUser) {
+    return <p>Carregando usuário...</p>;
+  }
+
+  // 🔹 Se não estiver autenticado
+  if (!user) {
+    return <p>Usuário não autenticado</p>;
+  }
+
   return (
     <Box display="flex" height="100vh">
       {/* LISTA DE CONVERSAS */}
@@ -47,7 +57,7 @@ export default function Chat() {
           loading={loadingConversations}
           selectedConversation={selectedConversation}
           setSelectedConversation={setSelectedConversation}
-          userId="64a6db8e-cb84-49bf-b68f-ae2598e90dc5"
+          userId={user.id}
         />
       </Box>
 
@@ -68,7 +78,7 @@ export default function Chat() {
           <>
             <ChatHeader
               conversation={selectedConversation}
-              userId="64a6db8e-cb84-49bf-b68f-ae2598e90dc5"
+              userId={user.id}
               onMenuClick={() => setSidebarOpen(true)}
             />
             <MessageList
