@@ -32,10 +32,8 @@ export function MessageList({ messages, loading, userId }) {
       ref={messageRef}
       flexGrow={1}
       width="100%"
-      maxWidth={750}
       mx="auto"
-      px={1}
-      py={2}
+      p={2}
       display="flex"
       flexDirection="column"
       gap={3}
@@ -71,13 +69,6 @@ export function MessageList({ messages, loading, userId }) {
                 gap={0.5}
                 my={1}
               >
-                {/* Nome do usuário */}
-                {!isMe && (
-                  <Typography variant="caption" color="text.secondary">
-                    {msg.sender.name}
-                  </Typography>
-                )}
-
                 <Box
                   display="flex"
                   alignItems="flex-end"
@@ -101,9 +92,9 @@ export function MessageList({ messages, loading, userId }) {
                       elevation={3}
                       sx={{
                         bgcolor: isMe ? "primary.main" : "secondary.main",
-                        color: "text.primary",
+                        color: "text.secondary",
                         p: 1.5,
-                        maxWidth: 380,
+                        maxWidth: 500,
                         borderRadius: isMe
                           ? "8px 8px 0px 8px"
                           : "8px 8px 8px 0px",

@@ -18,8 +18,7 @@ export function MessageInput({ onSend, disabled }) {
         display: "flex",
         gap: 1,
         p: 2,
-        borderTop: "1px solid #262626",
-        bgcolor: "#0f0f0f",
+        borderTop: "1px solid #ddd",
       }}
     >
       <TextField
@@ -28,6 +27,12 @@ export function MessageInput({ onSend, disabled }) {
         maxRows={3}
         placeholder="Digite uma mensagem..."
         value={message}
+        sx={{
+          "& .MuiInputBase-root": {
+            color: "#747272",
+            border: "1px solid #ddd",
+          },
+        }}
         disabled={disabled}
         onChange={(e) => setMessage(e.target.value)}
         onKeyDown={(e) => {
@@ -35,12 +40,6 @@ export function MessageInput({ onSend, disabled }) {
             e.preventDefault();
             handleSend();
           }
-        }}
-        sx={{
-          "& .MuiInputBase-root": {
-            bgcolor: "#171717",
-            color: "#fff",
-          },
         }}
       />
 

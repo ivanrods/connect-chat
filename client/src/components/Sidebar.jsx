@@ -9,8 +9,6 @@ import {
   useTheme,
 } from "@mui/material";
 
-const drawerWidth = 280;
-
 export function Sidebar({
   open,
   onClose,
@@ -33,13 +31,11 @@ export function Sidebar({
       open={open}
       onClose={onClose}
       sx={{
-        width: drawerWidth,
+        width: 400,
         flexShrink: 0,
         "& .MuiDrawer-paper": {
-          width: drawerWidth,
+          width: 400,
           boxSizing: "border-box",
-          bgcolor: "#171717",
-          color: "#fff",
         },
       }}
     >
@@ -58,9 +54,7 @@ export function Sidebar({
               }}
               sx={{
                 bgcolor: isSelected ? "rgba(255,255,255,0.12)" : "transparent",
-                "&:hover": {
-                  bgcolor: "rgba(255,255,255,0.08)",
-                },
+                borderBottom: "1px solid #ddd",
               }}
             >
               <Box

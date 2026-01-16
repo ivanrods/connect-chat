@@ -9,13 +9,11 @@ export function ChatHeader({ conversation, userId, onMenuClick }) {
   return (
     <Box
       sx={{
-        height: 64,
-        px: 2,
+        p: 2,
         display: "flex",
         alignItems: "center",
         gap: 2,
-        borderBottom: "1px solid #262626",
-        bgcolor: "#0f0f0f",
+        borderBottom: "1px solid #ddd",
       }}
     >
       {/* Botão menu (mobile) */}
@@ -28,9 +26,9 @@ export function ChatHeader({ conversation, userId, onMenuClick }) {
         </IconButton>
       )}
 
-      <Avatar src={otherUser?.avatar} />
-
-      <Typography fontWeight="bold">{otherUser?.name || "Usuário"}</Typography>
+      <Typography variant="body1" sx={{ color: "text.primary" }}>
+        {otherUser?.name || "Usuário"}
+      </Typography>
     </Box>
   );
 }

@@ -15,6 +15,7 @@ import { MessageList } from "../components/MessageList";
 export default function Chat() {
   const { user, loading: loadingUser } = useUser();
 
+  // eslint-disable-next-line no-unused-vars
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { conversations, loading: loadingConversations } = useConversations();
 
@@ -41,7 +42,6 @@ export default function Chat() {
     return <p>Carregando usuário...</p>;
   }
 
-  // 🔹 Se não estiver autenticado
   if (!user) {
     return <p>Usuário não autenticado</p>;
   }
@@ -49,7 +49,7 @@ export default function Chat() {
   return (
     <Box display="flex" height="100vh">
       {/* LISTA DE CONVERSAS */}
-      <Box width={320} borderRight="1px solid #ddd">
+      <Box borderRight="1px solid #ddd">
         <Sidebar
           open={open}
           onClose={false}
@@ -84,7 +84,7 @@ export default function Chat() {
             <MessageList
               messages={messages}
               loading={loadingMessages}
-              user={user}
+              userId={user.id}
             />
 
             <MessageInput

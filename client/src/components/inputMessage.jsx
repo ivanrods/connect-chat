@@ -17,7 +17,6 @@ const InputMessage = () => {
   return (
     <Box
       sx={{
-        bgcolor: "background.default",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
