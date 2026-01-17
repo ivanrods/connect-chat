@@ -11,13 +11,19 @@ import { MessageInput } from "../components/MessageInput";
 import { useSendMessage } from "../hooks/use-send-message";
 import { ChatHeader } from "../components/ChatHeader";
 import { MessageList } from "../components/MessageList";
+import { CreateConversation } from "../components/CreateConversation";
+import { useCreateConversation } from "../hooks/use-create-conversation";
 
 export default function Chat() {
   const { user, loading: loadingUser } = useUser();
 
   // eslint-disable-next-line no-unused-vars
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  // eslint-disable-next-line no-unused-vars
+  const [modalOpen, setModalOpen] = useState(false);
+
   const { conversations, loading: loadingConversations } = useConversations();
+  const { createConversation } = useCreateConversation();
 
   const [selectedConversation, setSelectedConversation] = useState(null);
 
@@ -58,6 +64,12 @@ export default function Chat() {
           selectedConversation={selectedConversation}
           setSelectedConversation={setSelectedConversation}
           userId={user.id}
+          onAddConversation={() => setModalOpen(true)}
+        />
+        <CreateConversation
+          open={modalOpen}
+          onClose={() => setModalOpen(false)}
+          onCreate={createConversation}
         />
       </Box>
 

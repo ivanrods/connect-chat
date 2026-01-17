@@ -7,8 +7,10 @@ import {
   Typography,
   useMediaQuery,
   useTheme,
+  Button,
 } from "@mui/material";
 import InputForm from "./SearchInput";
+import { CirclePlus } from "lucide-react";
 
 export function Sidebar({
   open,
@@ -18,6 +20,7 @@ export function Sidebar({
   selectedConversation,
   setSelectedConversation,
   userId,
+  onAddConversation,
 }) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
@@ -40,8 +43,11 @@ export function Sidebar({
         },
       }}
     >
-      <Box sx={{ padding: 1 }}>
+      <Box sx={{ padding: 1, display: "flex", alignItems: "center", gap: 1 }}>
         <InputForm />
+        <Button onClick={() => onAddConversation()}>
+          <CirclePlus size={35} />
+        </Button>
       </Box>
 
       <List>
