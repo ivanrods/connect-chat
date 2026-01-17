@@ -27,12 +27,6 @@ export function MessageInput({ onSend, disabled }) {
         maxRows={3}
         placeholder="Digite uma mensagem..."
         value={message}
-        sx={{
-          "& .MuiInputBase-root": {
-            color: "#747272",
-            border: "1px solid #ddd",
-          },
-        }}
         disabled={disabled}
         onChange={(e) => setMessage(e.target.value)}
         onKeyDown={(e) => {

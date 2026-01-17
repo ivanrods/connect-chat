@@ -7,7 +7,7 @@ import {
   Typography,
   useMediaQuery,
   useTheme,
-  Button,
+  IconButton,
 } from "@mui/material";
 import InputForm from "./SearchInput";
 import { CirclePlus } from "lucide-react";
@@ -43,11 +43,11 @@ export function Sidebar({
         },
       }}
     >
-      <Box sx={{ padding: 1, display: "flex", alignItems: "center", gap: 1 }}>
+      <Box display="flex" padding={2}>
         <InputForm />
-        <Button onClick={() => onAddConversation()}>
+        <IconButton onClick={() => onAddConversation()}>
           <CirclePlus size={35} />
-        </Button>
+        </IconButton>
       </Box>
 
       <List>
@@ -76,16 +76,7 @@ export function Sidebar({
                 }}
               >
                 <Avatar src={otherUser?.avatar} />
-                <Typography
-                  fontWeight="bold"
-                  sx={{
-                    borderBottom: "1px solid #ddd",
-                    width: "100%",
-                    padding: 2,
-                  }}
-                >
-                  {otherUser?.name || "Usuário"}
-                </Typography>
+                <Typography>{otherUser?.name || "Usuário"}</Typography>
               </Box>
             </ListItemButton>
           );

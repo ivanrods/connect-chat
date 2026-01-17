@@ -8,13 +8,7 @@ const InputForm = () => {
       placeholder="Procurar"
       type="text"
       fullWidth
-      margin="normal"
-      sx={{
-        "& .MuiInputBase-root": {
-          color: "#747272",
-          border: "1px solid #ddd",
-        },
-      }}
+      margin="dense"
       InputProps={{
         startAdornment: (
           <InputAdornment position="start" sx={{ color: "#ddd" }}>

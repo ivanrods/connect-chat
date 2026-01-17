@@ -55,7 +55,7 @@ export default function Chat() {
   return (
     <Box display="flex" height="100vh">
       {/* LISTA DE CONVERSAS */}
-      <Box borderRight="1px solid #ddd">
+      <Box>
         <Sidebar
           open={open}
           onClose={false}
@@ -82,9 +82,7 @@ export default function Chat() {
             alignItems="center"
             justifyContent="center"
           >
-            <Typography color="text.secondary">
-              Selecione uma conversa
-            </Typography>
+            <Typography color="text.primary">Selecione uma conversa</Typography>
           </Box>
         ) : (
           <>

@@ -9,7 +9,7 @@ export function ChatHeader({ conversation, userId, onMenuClick }) {
   return (
     <Box
       sx={{
-        p: 2,
+        p: 1.5,
         display: "flex",
         alignItems: "center",
         gap: 2,
@@ -25,7 +25,7 @@ export function ChatHeader({ conversation, userId, onMenuClick }) {
           <MenuIcon />
         </IconButton>
       )}
-
+      <Avatar src={otherUser.avatar} />
       <Typography variant="body1" sx={{ color: "text.primary" }}>
         {otherUser?.name || "Usuário"}
       </Typography>

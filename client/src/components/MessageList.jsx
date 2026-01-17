@@ -89,15 +89,15 @@ export function MessageList({ messages, loading, userId }) {
                   {/* Texto */}
                   {msg.content && (
                     <Paper
-                      elevation={3}
+                      elevation={0}
                       sx={{
                         bgcolor: isMe ? "primary.main" : "secondary.main",
                         color: "text.secondary",
                         p: 1.5,
                         maxWidth: 500,
                         borderRadius: isMe
-                          ? "8px 8px 0px 8px"
-                          : "8px 8px 8px 0px",
+                          ? "10px 10px 0px 10px"
+                          : "10px 10px 10px 0px",
                       }}
                     >
                       <Typography variant="body1">{msg.content}</Typography>
