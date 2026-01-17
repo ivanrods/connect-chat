@@ -40,7 +40,10 @@ export function Sidebar({
         },
       }}
     >
-      <InputForm />
+      <Box sx={{ padding: 1 }}>
+        <InputForm />
+      </Box>
+
       <List>
         {conversations.map((conversation) => {
           const otherUser = conversation.users.find((u) => u.id !== userId);
