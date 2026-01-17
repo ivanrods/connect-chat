@@ -14,7 +14,7 @@ const router = Router();
 
 router.use(authenticateToken);
 router.get("/", getUserConversations);
-router.post("/:userId", getOrCreateConversation);
+router.post("/", getOrCreateConversation);
 router.get("/:id/messages", getMessages);
 router.post("/:id/messages", upload.single("file"), createMessage);
 
