@@ -51,7 +51,7 @@ export function MessageList({ messages, loading, userId }) {
           <Typography
             variant="body2"
             textAlign="center"
-            color="text.secondary"
+            color="text.primary"
             mb={1}
           >
             {date}
@@ -108,7 +108,7 @@ export function MessageList({ messages, loading, userId }) {
                 {/* Hora */}
                 <Typography
                   variant="caption"
-                  color="text.secondary"
+                  color="text.primary"
                   alignSelf={isMe ? "flex-end" : "flex-start"}
                 >
                   {formatTime(msg.createdAt)}

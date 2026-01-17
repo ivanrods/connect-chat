@@ -36,7 +36,7 @@ const Login = () => {
       justifyContent="center"
       alignItems="center"
       minHeight="100vh"
-      bgcolor="#262626"
+      bgcolor="#ddd"
     >
       <Paper
         elevation={4}

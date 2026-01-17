@@ -8,6 +8,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
+import InputForm from "./SearchInput";
 
 export function Sidebar({
   open,
@@ -39,6 +40,7 @@ export function Sidebar({
         },
       }}
     >
+      <InputForm />
       <List>
         {conversations.map((conversation) => {
           const otherUser = conversation.users.find((u) => u.id !== userId);
@@ -54,7 +56,6 @@ export function Sidebar({
               }}
               sx={{
                 bgcolor: isSelected ? "rgba(255,255,255,0.12)" : "transparent",
-                borderBottom: "1px solid #ddd",
               }}
             >
               <Box
@@ -62,12 +63,18 @@ export function Sidebar({
                   display: "flex",
                   alignItems: "center",
                   gap: 2,
-                  p: 1,
                   width: "100%",
                 }}
               >
                 <Avatar src={otherUser?.avatar} />
-                <Typography fontWeight="bold">
+                <Typography
+                  fontWeight="bold"
+                  sx={{
+                    borderBottom: "1px solid #ddd",
+                    width: "100%",
+                    padding: 2,
+                  }}
+                >
                   {otherUser?.name || "Usuário"}
                 </Typography>
               </Box>
