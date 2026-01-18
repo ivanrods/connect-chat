@@ -43,7 +43,6 @@ const Login = () => {
   return (
     <Box
       display="flex"
-      flex="1"
       sx={{
         height: "100vh",
       }}
@@ -52,7 +51,7 @@ const Login = () => {
         display="flex"
         justifyContent="center"
         alignItems="center"
-        sx={{ width: "100%", maxWidth: 600, padding: 2 }}
+        sx={{ width: "100%", maxWidth: 600, padding: 4 }}
       >
         <Paper
           elevation={0}
@@ -74,7 +73,7 @@ const Login = () => {
               <Typography variant="h4" fontWeight="bold">
                 ConnectChat
               </Typography>
-            </Box>{" "}
+            </Box>
             <Typography variant="body1" textAlign="center">
               Envie mensagem em tempo real de forma facil
             </Typography>
