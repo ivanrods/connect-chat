@@ -2,37 +2,27 @@ import { useEffect, useState } from "react";
 
 export function useUser() {
   const apiUrl = import.meta.env.VITE_API_URL;
-  const [loading, setLoading] = useState(true);
+  const [load, setLoad] = useState(true);
   const [user, setUser] = useState(null);
 
-  const storedUser = localStorage.getItem("user");
-  const userParsed = storedUser ? JSON.parse(storedUser) : null;
-
   useEffect(() => {
-    const getUser = async () => {
-      if (!userParsed?.id) {
-        setLoading(false);
-        return;
-      }
+    const storedUser = localStorage.getItem("user");
+    const parsedUser = storedUser ? JSON.parse(storedUser) : null;
 
-      try {
-        const response = await fetch(`${apiUrl}/api/user/${userParsed.id}`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
+    if (!parsedUser?.id) {
+      setLoad(false);
+      return;
+    }
 
-        const data = await response.json();
-        setUser(data);
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    getUser();
+    fetch(`${apiUrl}/api/user/${parsedUser.id}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+      .then((res) => res.json())
+      .then(setUser)
+      .finally(() => setLoad(false));
   }, []);
 
-  return { user, loading };
+  return { user, load };
 }

@@ -1,30 +1,13 @@
-import { Box, IconButton, Paper } from "@mui/material";
+import { Avatar, Box, IconButton, Paper, Typography } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import InputForm from "./inputForm";
-import { useAuth } from "../context/auth-context";
 import { LogOut, Mail, User } from "lucide-react";
 import ButtonForm from "./buttonForm";
-import { useUser } from "../hooks/use-profile";
 
-const Profile = () => {
+const ProfilePage = ({ signOut, user }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { signOut } = useAuth();
 
-  const [userId, setUserId] = useState(null);
   const profileRef = useRef("");
-
-  useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      const parsedUser = JSON.parse(storedUser);
-      setUserId(parsedUser.id);
-    }
-  }, []);
-
-  const { user, loading } = useUser(userId);
-  if (loading) {
-    <div>carregando</div>;
-  }
 
   //fecha ao clicar fora do componente
   useEffect(() => {
@@ -40,33 +23,41 @@ const Profile = () => {
     };
   }, []);
 
+  if (!user) {
+    return <p>Carregando</p>;
+  }
+
   return (
     <div>
       <Box
-        component="img"
-        position="relative"
         onClick={() => setIsOpen(!isOpen)}
-        src={
-          user
-            ? user.avatar
-            : "https://api.dicebear.com/7.x/bottts-neutral/svg?seed=user"
-        }
-        sx={{
-          borderRadius: "50%",
-          width: 30,
-          height: 30,
-          mx: 1,
-        }}
-      />
+        display="flex"
+        alignItems="center"
+        gap={1}
+        padding={2}
+      >
+        <Avatar
+          src={
+            user
+              ? user.avatar
+              : "https://api.dicebear.com/7.x/bottts-neutral/svg?seed=user"
+          }
+        />
+        <Box>
+          <Typography variant="body1" fontWeight="bold">
+            {user.name}
+          </Typography>
+          <Typography variant="body2">{user.email}</Typography>
+        </Box>
+      </Box>
 
       {isOpen && (
-        <Box position="absolute" right={4} ref={profileRef}>
+        <Box position="absolute" left={8} ref={profileRef} zIndex={2}>
           <Paper elevation={4} sx={{ p: 4, width: "100%", maxWidth: 400 }}>
             <Box
               sx={{
                 display: "flex",
                 flexDirection: "column",
-
                 alignItems: "center",
               }}
             >
@@ -80,14 +71,12 @@ const Profile = () => {
                 }}
               />
               <InputForm
-                label="Nome"
                 type="text"
                 placeholder="Nome"
                 value={user.name}
                 icon={<User size={18} />}
               />
               <InputForm
-                label="E-mail"
                 type="email"
                 placeholder={user.email}
                 value={user.email}
@@ -96,7 +85,7 @@ const Profile = () => {
 
               <ButtonForm
                 text="Sair"
-                variant="outlined"
+                variant="contained"
                 onClick={() => signOut()}
                 icon={<LogOut />}
               />
@@ -108,4 +97,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default ProfilePage;

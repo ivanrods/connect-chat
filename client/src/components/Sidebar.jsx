@@ -11,6 +11,9 @@ import {
 } from "@mui/material";
 import InputForm from "./SearchInput";
 import { CirclePlus } from "lucide-react";
+import ProfilePage from "./ProfilePage";
+import { useAuth } from "../context/auth-context";
+import { useUser } from "../hooks/use-profile";
 
 export function Sidebar({
   open,
@@ -24,6 +27,9 @@ export function Sidebar({
 }) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const { signOut } = useAuth();
+
+  const { user } = useUser();
 
   if (loading) {
     return <div>Carregando...</div>;
@@ -43,6 +49,7 @@ export function Sidebar({
         },
       }}
     >
+      <ProfilePage signOut={signOut} user={user} />
       <Box display="flex" padding={2}>
         <InputForm />
         <IconButton onClick={() => onAddConversation()}>
