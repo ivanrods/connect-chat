@@ -19,4 +19,9 @@ export const theme = createTheme({
   shape: {
     borderRadius: 10,
   },
+  typography: {
+    h4: {
+      color: "#22c55e",
+    },
+  },
 });

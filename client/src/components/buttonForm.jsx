@@ -16,6 +16,7 @@ const ButtonForm = ({ text, variant, icon, onClick }) => {
         textTransform: "none",
         fontWeight: "600",
         mt: 2,
+        color: "white",
       }}
     >
       {text}
