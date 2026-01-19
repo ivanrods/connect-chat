@@ -20,7 +20,7 @@ export function ChatHeader({ conversation, userId, onMenuClick }) {
       {onMenuClick && (
         <IconButton
           onClick={onMenuClick}
-          sx={{ color: "#fff", display: { md: "none" } }}
+          sx={{ color: "#737373", display: { md: "none" } }}
         >
           <MenuIcon />
         </IconButton>

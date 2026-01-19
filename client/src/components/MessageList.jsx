@@ -92,7 +92,7 @@ export function MessageList({ messages, loading, userId }) {
                       elevation={0}
                       sx={{
                         bgcolor: isMe ? "primary.main" : "secondary.main",
-                        color: "text.secondary",
+                        color: isMe ? "text.secondary" : "text.primary",
                         p: 1.5,
                         maxWidth: 500,
                         borderRadius: isMe

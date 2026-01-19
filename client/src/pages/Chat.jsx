@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 
 import { useUser } from "../hooks/use-profile";
 import { useConversations } from "../hooks/use-conversations";
@@ -57,8 +57,8 @@ export default function Chat() {
       {/* LISTA DE CONVERSAS */}
       <Box>
         <Sidebar
-          open={open}
-          onClose={false}
+          open={sidebarOpen}
+          onClose={() => setSidebarOpen(false)}
           conversations={conversations}
           loading={loadingConversations}
           selectedConversation={selectedConversation}
@@ -82,7 +82,9 @@ export default function Chat() {
             alignItems="center"
             justifyContent="center"
           >
-            <Typography color="text.primary">Selecione uma conversa</Typography>
+            <Button variant="text" onClick={() => setSidebarOpen(true)}>
+              Selecione uma conversa
+            </Button>
           </Box>
         ) : (
           <>

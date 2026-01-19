@@ -83,7 +83,9 @@ export function Sidebar({
                 }}
               >
                 <Avatar src={otherUser?.avatar} />
-                <Typography>{otherUser?.name || "Usuário"}</Typography>
+                <Typography variant="subtitle1">
+                  {otherUser?.name || "Usuário"}
+                </Typography>
               </Box>
             </ListItemButton>
           );
