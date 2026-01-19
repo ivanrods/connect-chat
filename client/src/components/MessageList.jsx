@@ -1,4 +1,4 @@
-import { Box, Typography, Paper } from "@mui/material";
+import { Box, Typography, Paper, Avatar } from "@mui/material";
 import { useEffect, useMemo, useRef } from "react";
 import { formatTime, formatDay } from "../utils/format-date";
 
@@ -46,7 +46,6 @@ export function MessageList({ messages, loading, userId }) {
 
       {Object.entries(groupedMessages).map(([date, msgs]) => (
         <Box key={date}>
-          {/* Data */}
           <Typography
             variant="body2"
             textAlign="center"
@@ -74,18 +73,14 @@ export function MessageList({ messages, loading, userId }) {
                   flexDirection={isMe ? "row-reverse" : "row"}
                   gap={1}
                 >
-                  {/* Avatar */}
-                  <Box
-                    component="img"
+                  <Avatar
                     src={msg.sender.avatar}
                     sx={{
-                      borderRadius: "50%",
                       width: 30,
                       height: 30,
                     }}
                   />
 
-                  {/* Texto */}
                   {msg.content && (
                     <Paper
                       elevation={0}
@@ -104,7 +99,6 @@ export function MessageList({ messages, loading, userId }) {
                   )}
                 </Box>
 
-                {/* Hora */}
                 <Typography
                   variant="caption"
                   color="text.primary"

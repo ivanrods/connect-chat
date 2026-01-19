@@ -34,7 +34,6 @@ const ProfilePage = ({ signOut, user }) => {
         display="flex"
         alignItems="center"
         gap={1}
-        padding={2}
       >
         <Avatar
           src={

@@ -10,7 +10,7 @@ import {
   IconButton,
   TextField,
 } from "@mui/material";
-import InputForm from "./SearchInput";
+
 import { CirclePlus } from "lucide-react";
 import ProfilePage from "./ProfilePage";
 import { useAuth } from "../context/auth-context";
@@ -65,22 +65,24 @@ export function Sidebar({
         },
       }}
     >
-      <ProfilePage signOut={signOut} user={user} />
-      <Box display="flex" padding={2} sx={{ alignItems: "center", gap: 1 }}>
-        <TextField
-          fullWidth
-          size="small"
-          placeholder="Busque por nome ou email"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
+      <Box display="flex" gap={2} padding={2} sx={{ flexDirection: "column" }}>
+        <ProfilePage signOut={signOut} user={user} />
+        <Box display="flex" sx={{ alignItems: "center", gap: 1 }}>
+          <TextField
+            fullWidth
+            size="small"
+            placeholder="Busque por nome ou email"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
 
-        <IconButton
-          onClick={() => onAddConversation()}
-          sx={{ color: "primary.main" }}
-        >
-          <CirclePlus size={30} />
-        </IconButton>
+          <IconButton
+            onClick={() => onAddConversation()}
+            sx={{ color: "primary.main" }}
+          >
+            <CirclePlus size={30} />
+          </IconButton>
+        </Box>
       </Box>
 
       <List>
@@ -97,7 +99,7 @@ export function Sidebar({
                 if (isMobile) onClose();
               }}
               sx={{
-                bgcolor: isSelected ? "rgba(255,255,255,0.12)" : "transparent",
+                bgcolor: isSelected ? "#ddd" : "transparent",
               }}
             >
               <Box
