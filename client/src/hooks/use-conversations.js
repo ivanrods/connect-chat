@@ -29,20 +29,21 @@ export function useConversations() {
   };
 
   // CREATE conversation
-  const createConversation = async (otherUserId) => {
+  const createConversation = async (email) => {
     try {
-      const res = await fetch(`${apiUrl}/api/conversations/${otherUserId}`, {
+      const res = await fetch(`${apiUrl}/api/conversations`, {
         method: "POST",
         headers: {
+          "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
+        body: JSON.stringify({ email }),
       });
 
       const conversation = await res.json();
 
-      // evita duplicar conversa
       setConversations((prev) => {
-        const exists = prev.find((c) => c.id === conversation.id);
+        const exists = prev.some((c) => c.id === conversation.id);
         if (exists) return prev;
         return [conversation, ...prev];
       });

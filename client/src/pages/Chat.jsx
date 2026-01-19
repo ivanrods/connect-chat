@@ -12,18 +12,18 @@ import { useSendMessage } from "../hooks/use-send-message";
 import { ChatHeader } from "../components/ChatHeader";
 import { MessageList } from "../components/MessageList";
 import { CreateConversation } from "../components/CreateConversation";
-import { useCreateConversation } from "../hooks/use-create-conversation";
 
 export default function Chat() {
-  const { user, loading: loadingUser } = useUser();
-
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
-
-  const { conversations, loading: loadingConversations } = useConversations();
-  const { createConversation } = useCreateConversation();
-
   const [selectedConversation, setSelectedConversation] = useState(null);
+
+  const { user, loading: loadingUser } = useUser();
+  const {
+    conversations,
+    loading: loadingConversations,
+    createConversation,
+  } = useConversations();
 
   const {
     messages,
