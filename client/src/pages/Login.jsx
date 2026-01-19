@@ -114,7 +114,7 @@ const Login = () => {
               Registrar
             </Link>
           </Typography>
-        </Paper>{" "}
+        </Paper>
       </Box>
       {!isMobile && (
         <Box

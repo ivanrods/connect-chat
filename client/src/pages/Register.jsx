@@ -99,7 +99,7 @@ const Register = () => {
               <Typography variant="h4" fontWeight="bold">
                 ConnectChat
               </Typography>
-            </Box>{" "}
+            </Box>
             <Typography variant="body1" textAlign="center">
               Envie mensagem em tempo real de forma facil
             </Typography>

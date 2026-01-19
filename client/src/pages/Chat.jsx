@@ -17,9 +17,7 @@ import { useCreateConversation } from "../hooks/use-create-conversation";
 export default function Chat() {
   const { user, loading: loadingUser } = useUser();
 
-  // eslint-disable-next-line no-unused-vars
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  // eslint-disable-next-line no-unused-vars
   const [modalOpen, setModalOpen] = useState(false);
 
   const { conversations, loading: loadingConversations } = useConversations();
@@ -54,7 +52,6 @@ export default function Chat() {
 
   return (
     <Box display="flex" height="100vh">
-      {/* LISTA DE CONVERSAS */}
       <Box>
         <Sidebar
           open={sidebarOpen}
@@ -73,7 +70,6 @@ export default function Chat() {
         />
       </Box>
 
-      {/* ÁREA DO CHAT */}
       <Box flex={1} display="flex" flexDirection="column">
         {!selectedConversation ? (
           <Box

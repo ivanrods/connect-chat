@@ -8,12 +8,14 @@ import {
   useMediaQuery,
   useTheme,
   IconButton,
+  TextField,
 } from "@mui/material";
 import InputForm from "./SearchInput";
 import { CirclePlus } from "lucide-react";
 import ProfilePage from "./ProfilePage";
 import { useAuth } from "../context/auth-context";
 import { useUser } from "../hooks/use-profile";
+import { useState } from "react";
 
 export function Sidebar({
   open,
@@ -28,8 +30,22 @@ export function Sidebar({
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const { signOut } = useAuth();
-
   const { user } = useUser();
+
+  const [search, setSearch] = useState("");
+
+  const filteredConversations = conversations.filter((conversation) => {
+    const otherUser = conversation.users.find((u) => u.id !== userId);
+
+    if (!otherUser) return false;
+
+    const searchLower = search.toLowerCase();
+
+    return (
+      otherUser.name?.toLowerCase().includes(searchLower) ||
+      otherUser.email?.toLowerCase().includes(searchLower)
+    );
+  });
 
   if (loading) {
     return <div>Carregando...</div>;
@@ -50,15 +66,22 @@ export function Sidebar({
       }}
     >
       <ProfilePage signOut={signOut} user={user} />
-      <Box display="flex" padding={2}>
-        <InputForm />
+      <Box display="flex" padding={2} sx={{ alignItems: "center" }}>
+        <TextField
+          fullWidth
+          size="small"
+          placeholder="Busque por nome ou email"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+
         <IconButton onClick={() => onAddConversation()}>
-          <CirclePlus size={35} />
+          <CirclePlus size={35} color="#22c55e" />
         </IconButton>
       </Box>
 
       <List>
-        {conversations.map((conversation) => {
+        {filteredConversations.map((conversation) => {
           const otherUser = conversation.users.find((u) => u.id !== userId);
 
           const isSelected = selectedConversation?.id === conversation.id;

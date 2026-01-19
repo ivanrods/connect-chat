@@ -1,5 +1,6 @@
 import { Box, Avatar, Typography, IconButton } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
+
+import { PanelRight } from "lucide-react";
 
 export function ChatHeader({ conversation, userId, onMenuClick }) {
   if (!conversation) return null;
@@ -16,17 +17,13 @@ export function ChatHeader({ conversation, userId, onMenuClick }) {
         borderBottom: "1px solid #ddd",
       }}
     >
-      {/* Botão menu (mobile) */}
       {onMenuClick && (
-        <IconButton
-          onClick={onMenuClick}
-          sx={{ color: "#737373", display: { md: "none" } }}
-        >
-          <MenuIcon />
+        <IconButton onClick={onMenuClick} sx={{ display: { md: "none" } }}>
+          <PanelRight />
         </IconButton>
       )}
       <Avatar src={otherUser.avatar} />
-      <Typography variant="body1" sx={{ color: "text.primary" }}>
+      <Typography variant="subtitle1">
         {otherUser?.name || "Usuário"}
       </Typography>
     </Box>
