@@ -35,7 +35,12 @@ export function CreateConversation({ open, onClose, onCreate }) {
             onChange={(e) => setEmail(e.target.value)}
           />
 
-          <Button variant="contained" onClick={handleCreate} disabled={loading}>
+          <Button
+            variant="contained"
+            onClick={handleCreate}
+            disabled={loading}
+            sx={{ textTransform: "none", fontWeight: "bold", color: "white" }}
+          >
             Criar
           </Button>
         </Box>

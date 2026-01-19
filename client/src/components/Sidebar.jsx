@@ -66,7 +66,7 @@ export function Sidebar({
       }}
     >
       <ProfilePage signOut={signOut} user={user} />
-      <Box display="flex" padding={2} sx={{ alignItems: "center" }}>
+      <Box display="flex" padding={2} sx={{ alignItems: "center", gap: 1 }}>
         <TextField
           fullWidth
           size="small"
@@ -75,8 +75,11 @@ export function Sidebar({
           onChange={(e) => setSearch(e.target.value)}
         />
 
-        <IconButton onClick={() => onAddConversation()}>
-          <CirclePlus size={35} color="#22c55e" />
+        <IconButton
+          onClick={() => onAddConversation()}
+          sx={{ color: "primary.main" }}
+        >
+          <CirclePlus size={30} />
         </IconButton>
       </Box>
 

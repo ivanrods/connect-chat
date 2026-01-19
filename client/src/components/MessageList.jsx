@@ -1,6 +1,5 @@
 import { Box, Typography, Paper } from "@mui/material";
 import { useEffect, useMemo, useRef } from "react";
-
 import { formatTime, formatDay } from "../utils/format-date";
 
 export function MessageList({ messages, loading, userId }) {

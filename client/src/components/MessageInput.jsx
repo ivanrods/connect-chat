@@ -14,10 +14,11 @@ export function MessageInput({ onSend, disabled }) {
 
   return (
     <Box
+      display="flex"
       sx={{
-        display: "flex",
-        gap: 1,
+        alignItems: "center",
         p: 2,
+        gap: 1,
         borderTop: "1px solid #ddd",
       }}
     >
@@ -42,7 +43,7 @@ export function MessageInput({ onSend, disabled }) {
         disabled={disabled}
         sx={{ color: "primary.main" }}
       >
-        <SendIcon />
+        <SendIcon size={30} />
       </IconButton>
     </Box>
   );
