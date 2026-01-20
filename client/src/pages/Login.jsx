@@ -41,17 +41,14 @@ const Login = () => {
   };
 
   return (
-    <Box
-      display="flex"
-      sx={{
-        height: "100vh",
-      }}
-    >
+    <Box display="flex" height="100vh">
       <Box
         display="flex"
         justifyContent="center"
         alignItems="center"
-        sx={{ width: "100%", maxWidth: 600, padding: 4 }}
+        width="100%"
+        maxWidth={600}
+        padding={4}
       >
         <Paper
           elevation={0}
@@ -120,12 +117,12 @@ const Login = () => {
         <Box
           component="img"
           src="background.jpg"
+          backgroundRepeat="no-repeat"
+          backgroundSize="cover"
+          backgroundPosition="center"
+          width="100%"
           sx={{
-            backgroundRepeat: "no-repeat",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
             objectFit: "none",
-            width: "100%",
           }}
         />
       )}

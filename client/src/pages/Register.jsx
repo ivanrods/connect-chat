@@ -54,22 +54,17 @@ const Register = () => {
   };
 
   return (
-    <Box
-      display="flex"
-      sx={{
-        height: "100vh",
-      }}
-    >
+    <Box display="flex" height="100vh">
       {!isMobile && (
         <Box
           component="img"
           src="background.jpg"
+          backgroundRepeat="no-repeat"
+          backgroundSize="cover"
+          backgroundPosition="center"
+          width="100%"
           sx={{
-            backgroundRepeat: "no-repeat",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
             objectFit: "none",
-            width: "100%",
           }}
         />
       )}

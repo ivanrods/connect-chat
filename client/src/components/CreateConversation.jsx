@@ -39,7 +39,8 @@ export function CreateConversation({ open, onClose, onCreate }) {
             variant="contained"
             onClick={handleCreate}
             disabled={loading}
-            sx={{ textTransform: "none", fontWeight: "bold", color: "white" }}
+            textTransform="none"
+            fontWeight="bold"
           >
             Criar
           </Button>

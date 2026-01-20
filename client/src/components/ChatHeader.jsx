@@ -9,11 +9,11 @@ export function ChatHeader({ conversation, userId, onMenuClick }) {
 
   return (
     <Box
+      padding={1.5}
+      display="flex"
+      alignItems="center"
+      gap={2}
       sx={{
-        p: 1.5,
-        display: "flex",
-        alignItems: "center",
-        gap: 2,
         borderBottom: "1px solid #ddd",
       }}
     >

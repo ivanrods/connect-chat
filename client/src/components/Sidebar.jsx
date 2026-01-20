@@ -12,6 +12,8 @@ import {
   ButtonGroup,
   Button,
   LinearProgress,
+  ToggleButtonGroup,
+  ToggleButton,
 } from "@mui/material";
 
 import { CirclePlus } from "lucide-react";
@@ -75,14 +77,9 @@ export function Sidebar({
         height="100%"
       >
         <Box>
-          <Box
-            display="flex"
-            gap={2}
-            padding={2}
-            sx={{ flexDirection: "column" }}
-          >
+          <Box display="flex" flexDirection="column" gap={2} padding={2}>
             <ProfilePage signOut={signOut} user={user} />
-            <Box display="flex" sx={{ alignItems: "center", gap: 1 }}>
+            <Box display="flex" alignItems="center" gap={1}>
               <TextField
                 fullWidth
                 size="small"
@@ -91,10 +88,7 @@ export function Sidebar({
                 onChange={(e) => setSearch(e.target.value)}
               />
 
-              <IconButton
-                onClick={() => onAddConversation()}
-                sx={{ color: "primary.main" }}
-              >
+              <IconButton onClick={() => onAddConversation()} color="primary">
                 <CirclePlus size={30} />
               </IconButton>
             </Box>
@@ -117,16 +111,9 @@ export function Sidebar({
                     bgcolor: isSelected ? "#ddd" : "transparent",
                   }}
                 >
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 2,
-                      width: "100%",
-                    }}
-                  >
+                  <Box gap={2} display="flex" alignItems="center">
                     <Avatar src={otherUser?.avatar} />
-                    <Typography variant="subtitle1">
+                    <Typography variant="subtitle1" z>
                       {otherUser?.name || "Usuário"}
                     </Typography>
                   </Box>
@@ -135,21 +122,32 @@ export function Sidebar({
             })}
           </List>
         </Box>
-        <ButtonGroup
-          variant="outlined"
-          aria-label="Basic button group"
-          size="large"
-          sx={{
-            padding: 2,
-            display: "flex",
-            justifyContent: "center",
-          }}
-          color="secondary"
-        >
-          <Button sx={{ textTransform: "none" }}>Recentes</Button>
-          <Button sx={{ textTransform: "none" }}>Favoritos</Button>
-          <Button sx={{ textTransform: "none" }}>Contatos</Button>
-        </ButtonGroup>
+        <Box display="flex" justifyContent="center">
+          <ToggleButtonGroup
+            color="primary"
+            value="recentes"
+            exclusive
+            onChange={null}
+            aria-label="Platform"
+            sx={{ margin: 2 }}
+          >
+            <ToggleButton
+              value="recentes"
+              sx={{ textTransform: "none", px: 3 }}
+            >
+              Recentes
+            </ToggleButton>
+            <ToggleButton value="antigos" sx={{ textTransform: "none", px: 3 }}>
+              Mais antigos
+            </ToggleButton>
+            <ToggleButton
+              value="favoritos"
+              sx={{ textTransform: "none", px: 3 }}
+            >
+              Favoritos
+            </ToggleButton>
+          </ToggleButtonGroup>
+        </Box>
       </Box>
     </Drawer>
   );

@@ -15,10 +15,10 @@ export function MessageInput({ onSend, disabled }) {
   return (
     <Box
       display="flex"
+      alignItems="center"
+      padding={2}
+      gap={1}
       sx={{
-        alignItems: "center",
-        p: 2,
-        gap: 1,
         borderTop: "1px solid #ddd",
       }}
     >

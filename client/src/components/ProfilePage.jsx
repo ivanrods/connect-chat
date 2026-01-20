@@ -60,22 +60,8 @@ const ProfilePage = ({ signOut, user }) => {
       {isOpen && (
         <Box position="absolute" left={8} ref={profileRef} zIndex={2}>
           <Paper elevation={4} sx={{ p: 4, width: "100%", maxWidth: 400 }}>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
-              <Box
-                component="img"
-                src={user ? user.avatar : ""}
-                sx={{
-                  borderRadius: "50%",
-                  width: 50,
-                  height: 50,
-                }}
-              />
+            <Box display="flex" flexDirection="column" alignItems="center">
+              <Avatar src={user ? user.avatar : ""} />
               <InputForm
                 type="text"
                 placeholder="Nome"
