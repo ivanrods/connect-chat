@@ -1,4 +1,11 @@
-import { Avatar, Box, IconButton, Paper, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  IconButton,
+  LinearProgress,
+  Paper,
+  Typography,
+} from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import InputForm from "./inputForm";
 import { LogOut, Mail, User } from "lucide-react";
@@ -24,7 +31,7 @@ const ProfilePage = ({ signOut, user }) => {
   }, []);
 
   if (!user) {
-    return <p>Carregando</p>;
+    return <LinearProgress />;
   }
 
   return (

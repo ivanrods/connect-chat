@@ -11,6 +11,7 @@ import {
   TextField,
   ButtonGroup,
   Button,
+  LinearProgress,
 } from "@mui/material";
 
 import { CirclePlus } from "lucide-react";
@@ -50,7 +51,7 @@ export function Sidebar({
   });
 
   if (loading) {
-    return <div>Carregando...</div>;
+    return <LinearProgress />;
   }
 
   return (
@@ -60,7 +61,6 @@ export function Sidebar({
       onClose={onClose}
       sx={{
         width: 400,
-
         flexShrink: 0,
         "& .MuiDrawer-paper": {
           width: 400,

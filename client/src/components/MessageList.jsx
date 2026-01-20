@@ -1,4 +1,4 @@
-import { Box, Typography, Paper, Avatar } from "@mui/material";
+import { Box, Typography, Paper, Avatar, LinearProgress } from "@mui/material";
 import { useEffect, useMemo, useRef } from "react";
 import { formatTime, formatDay } from "../utils/format-date";
 
@@ -38,11 +38,7 @@ export function MessageList({ messages, loading, userId }) {
       gap={3}
       overflow="auto"
     >
-      {loading && (
-        <Typography variant="body2" textAlign="center">
-          Carregando...
-        </Typography>
-      )}
+      {loading && <LinearProgress />}
 
       {Object.entries(groupedMessages).map(([date, msgs]) => (
         <Box key={date}>
@@ -85,7 +81,7 @@ export function MessageList({ messages, loading, userId }) {
                     <Paper
                       elevation={0}
                       sx={{
-                        bgcolor: isMe ? "primary.main" : "secondary.main",
+                        bgcolor: isMe ? "primary.main" : "border.main",
                         color: isMe ? "text.secondary" : "text.primary",
                         p: 1.5,
                         maxWidth: 500,

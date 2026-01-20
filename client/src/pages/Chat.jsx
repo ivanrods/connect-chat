@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, LinearProgress, Typography } from "@mui/material";
 
 import { useUser } from "../hooks/use-profile";
 import { useConversations } from "../hooks/use-conversations";
@@ -43,7 +43,7 @@ export default function Chat() {
   };
 
   if (loadingUser) {
-    return <p>Carregando usuário...</p>;
+    return <LinearProgress />;
   }
 
   if (!user) {
