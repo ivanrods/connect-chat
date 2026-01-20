@@ -2,13 +2,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link, useNavigate } from "react-router-dom";
 import { registerSchema } from "../lib/schemas/auth-schema";
-import {
-  Lock,
-  Mail,
-  MessagesSquare,
-  SendHorizonalIcon,
-  User,
-} from "lucide-react";
+
 import InputForm from "../components/inputForm";
 import ButtonForm from "../components/buttonForm";
 import {
@@ -19,6 +13,12 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
+
+import PersonIcon from "@mui/icons-material/Person";
+import MailIcon from "@mui/icons-material/Mail";
+import PasswordIcon from "@mui/icons-material/Password";
+import ForumIcon from "@mui/icons-material/Forum";
+import SendIcon from "@mui/icons-material/Send";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -88,7 +88,7 @@ const Register = () => {
           <Box>
             <Box display="flex" alignItems="center" justifyContent="center">
               <Button>
-                <MessagesSquare size={32} />
+                <ForumIcon />
               </Button>
 
               <Typography variant="h4" fontWeight="bold">
@@ -107,7 +107,7 @@ const Register = () => {
             <InputForm
               type="text"
               placeholder="Nome"
-              icon={<User size={18} />}
+              icon={<PersonIcon />}
               {...register("name")}
               error={errors.name}
               helperText={errors.name?.message}
@@ -115,7 +115,7 @@ const Register = () => {
             <InputForm
               type="email"
               placeholder="E-mail"
-              icon={<Mail size={18} />}
+              icon={<MailIcon />}
               {...register("email")}
               error={errors.email}
               helperText={errors.email?.message}
@@ -124,7 +124,7 @@ const Register = () => {
             <InputForm
               type="password"
               placeholder="Senha"
-              icon={<Lock size={18} />}
+              icon={<PasswordIcon />}
               {...register("password")}
               error={errors.password}
               helperText={errors.password?.message}
@@ -133,9 +133,7 @@ const Register = () => {
             <ButtonForm
               text="Registrar"
               variant="contained"
-              icon={
-                <SendHorizonalIcon sx={{ color: "white", display: "block" }} />
-              }
+              icon={<SendIcon color="white" display="block" />}
             />
           </form>
           <Typography variant="body2" textAlign="center" mt={2}>

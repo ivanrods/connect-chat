@@ -16,7 +16,7 @@ import {
   ToggleButton,
 } from "@mui/material";
 
-import { CirclePlus } from "lucide-react";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import ProfilePage from "./ProfilePage";
 import { useAuth } from "../context/auth-context";
 import { useUser } from "../hooks/use-profile";
@@ -89,7 +89,7 @@ export function Sidebar({
               />
 
               <IconButton onClick={() => onAddConversation()} color="primary">
-                <CirclePlus size={30} />
+                <AddCircleOutlineIcon />
               </IconButton>
             </Box>
           </Box>

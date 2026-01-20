@@ -1,6 +1,6 @@
 import { Box, Avatar, Typography, IconButton } from "@mui/material";
 
-import { PanelRight } from "lucide-react";
+import MenuIcon from "@mui/icons-material/Menu";
 
 export function ChatHeader({ conversation, userId, onMenuClick }) {
   if (!conversation) return null;
@@ -19,7 +19,7 @@ export function ChatHeader({ conversation, userId, onMenuClick }) {
     >
       {onMenuClick && (
         <IconButton onClick={onMenuClick} sx={{ display: { md: "none" } }}>
-          <PanelRight />
+          <MenuIcon />
         </IconButton>
       )}
       <Avatar src={otherUser.avatar} />

@@ -3,10 +3,15 @@ import { useAuth } from "../context/auth-context";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "../lib/schemas/auth-schema";
-import { Lock, Mail, MessagesSquare, SendHorizonalIcon } from "lucide-react";
+
+import MailIcon from "@mui/icons-material/Mail";
+import PasswordIcon from "@mui/icons-material/Password";
+import ForumIcon from "@mui/icons-material/Forum";
+import SendIcon from "@mui/icons-material/Send";
 
 import InputForm from "../components/inputForm";
 import ButtonForm from "../components/buttonForm";
+
 import {
   Box,
   Button,
@@ -64,7 +69,7 @@ const Login = () => {
           <Box>
             <Box display="flex" alignItems="center" justifyContent="center">
               <Button>
-                <MessagesSquare size={32} />
+                <ForumIcon />
               </Button>
 
               <Typography variant="h4" fontWeight="bold">
@@ -83,7 +88,7 @@ const Login = () => {
             <InputForm
               type="email"
               placeholder="E-mail"
-              icon={<Mail size={18} />}
+              icon={<MailIcon />}
               {...register("email")}
               error={errors.email}
               helperText={errors.email?.message}
@@ -92,7 +97,7 @@ const Login = () => {
             <InputForm
               type="password"
               placeholder="Senha"
-              icon={<Lock size={18} />}
+              icon={<PasswordIcon />}
               {...register("password")}
               error={errors.password}
               helperText={errors.password?.message}
@@ -101,9 +106,7 @@ const Login = () => {
             <ButtonForm
               text="Entrar"
               variant="contained"
-              icon={
-                <SendHorizonalIcon sx={{ color: "white", display: "block" }} />
-              }
+              icon={<SendIcon color="white" display="block" />}
             />
           </form>
           <Typography variant="body2" textAlign="center" mt={2}>

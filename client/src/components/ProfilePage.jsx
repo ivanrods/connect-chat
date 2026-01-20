@@ -8,8 +8,11 @@ import {
 } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import InputForm from "./inputForm";
-import { LogOut, Mail, User } from "lucide-react";
 import ButtonForm from "./buttonForm";
+
+import PersonIcon from "@mui/icons-material/Person";
+import MailIcon from "@mui/icons-material/Mail";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 const ProfilePage = ({ signOut, user }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -66,20 +69,20 @@ const ProfilePage = ({ signOut, user }) => {
                 type="text"
                 placeholder="Nome"
                 value={user.name}
-                icon={<User size={18} />}
+                icon={<PersonIcon size={18} />}
               />
               <InputForm
                 type="email"
                 placeholder={user.email}
                 value={user.email}
-                icon={<Mail size={18} />}
+                icon={<MailIcon size={18} />}
               />
 
               <ButtonForm
                 text="Sair"
                 variant="contained"
                 onClick={() => signOut()}
-                icon={<LogOut />}
+                icon={<LogoutIcon />}
               />
             </Box>
           </Paper>
