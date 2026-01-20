@@ -6,10 +6,13 @@ export const theme = createTheme({
       main: "#22c55e",
     },
     secondary: {
-      main: "#ddd",
+      main: "#737373",
     },
     background: {
       paper: "#ffff",
+    },
+    border: {
+      main: "#ddd",
     },
     text: {
       primary: "#737373",

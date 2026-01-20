@@ -9,6 +9,8 @@ import {
   useTheme,
   IconButton,
   TextField,
+  ButtonGroup,
+  Button,
 } from "@mui/material";
 
 import { CirclePlus } from "lucide-react";
@@ -58,6 +60,7 @@ export function Sidebar({
       onClose={onClose}
       sx={{
         width: 400,
+
         flexShrink: 0,
         "& .MuiDrawer-paper": {
           width: 400,
@@ -65,60 +68,89 @@ export function Sidebar({
         },
       }}
     >
-      <Box display="flex" gap={2} padding={2} sx={{ flexDirection: "column" }}>
-        <ProfilePage signOut={signOut} user={user} />
-        <Box display="flex" sx={{ alignItems: "center", gap: 1 }}>
-          <TextField
-            fullWidth
-            size="small"
-            placeholder="Busque por nome ou email"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-
-          <IconButton
-            onClick={() => onAddConversation()}
-            sx={{ color: "primary.main" }}
+      <Box
+        display="flex"
+        flexDirection="column"
+        justifyContent="space-between"
+        height="100%"
+      >
+        <Box>
+          <Box
+            display="flex"
+            gap={2}
+            padding={2}
+            sx={{ flexDirection: "column" }}
           >
-            <CirclePlus size={30} />
-          </IconButton>
-        </Box>
-      </Box>
+            <ProfilePage signOut={signOut} user={user} />
+            <Box display="flex" sx={{ alignItems: "center", gap: 1 }}>
+              <TextField
+                fullWidth
+                size="small"
+                placeholder="Busque por nome ou email"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
 
-      <List>
-        {filteredConversations.map((conversation) => {
-          const otherUser = conversation.users.find((u) => u.id !== userId);
-
-          const isSelected = selectedConversation?.id === conversation.id;
-
-          return (
-            <ListItemButton
-              key={conversation.id}
-              onClick={() => {
-                setSelectedConversation(conversation);
-                if (isMobile) onClose();
-              }}
-              sx={{
-                bgcolor: isSelected ? "#ddd" : "transparent",
-              }}
-            >
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 2,
-                  width: "100%",
-                }}
+              <IconButton
+                onClick={() => onAddConversation()}
+                sx={{ color: "primary.main" }}
               >
-                <Avatar src={otherUser?.avatar} />
-                <Typography variant="subtitle1">
-                  {otherUser?.name || "Usuário"}
-                </Typography>
-              </Box>
-            </ListItemButton>
-          );
-        })}
-      </List>
+                <CirclePlus size={30} />
+              </IconButton>
+            </Box>
+          </Box>
+
+          <List>
+            {filteredConversations.map((conversation) => {
+              const otherUser = conversation.users.find((u) => u.id !== userId);
+
+              const isSelected = selectedConversation?.id === conversation.id;
+
+              return (
+                <ListItemButton
+                  key={conversation.id}
+                  onClick={() => {
+                    setSelectedConversation(conversation);
+                    if (isMobile) onClose();
+                  }}
+                  sx={{
+                    bgcolor: isSelected ? "#ddd" : "transparent",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 2,
+                      width: "100%",
+                    }}
+                  >
+                    <Avatar src={otherUser?.avatar} />
+                    <Typography variant="subtitle1">
+                      {otherUser?.name || "Usuário"}
+                    </Typography>
+                  </Box>
+                </ListItemButton>
+              );
+            })}
+          </List>
+        </Box>
+        <ButtonGroup
+          variant="outlined"
+          aria-label="Basic button group"
+          size="large"
+          sx={{
+            padding: 2,
+            display: "flex",
+            justifyContent: "center",
+          }}
+          color="secondary"
+        >
+          <Button sx={{ textTransform: "none" }}>Recentes</Button>
+          <Button sx={{ textTransform: "none" }}>Favoritos</Button>
+          <Button sx={{ textTransform: "none" }}>Contatos</Button>
+        </ButtonGroup>
+      </Box>
     </Drawer>
   );
 }
