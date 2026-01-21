@@ -18,7 +18,7 @@ export default function Chat() {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedConversation, setSelectedConversation] = useState(null);
 
-  const { user, loading: loadingUser } = useUser();
+  const { user } = useUser();
   const {
     conversations,
     loading: loadingConversations,
@@ -42,12 +42,8 @@ export default function Chat() {
     await sendMessage(content);
   };
 
-  if (loadingUser) {
-    return <LinearProgress />;
-  }
-
   if (!user) {
-    return <p>Usuário não autenticado</p>;
+    return <LinearProgress />;
   }
 
   return (

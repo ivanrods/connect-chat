@@ -84,7 +84,7 @@ export function MessageList({ messages, loading, userId }) {
                         bgcolor: isMe ? "primary.main" : "border.main",
                         color: isMe ? "text.secondary" : "text.primary",
                         p: 1.5,
-                        maxWidth: 500,
+                        maxWidth: 600,
                         borderRadius: isMe
                           ? "10px 10px 0px 10px"
                           : "10px 10px 10px 0px",

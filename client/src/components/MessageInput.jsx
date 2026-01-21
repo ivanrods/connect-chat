@@ -19,9 +19,7 @@ export function MessageInput({ onSend, disabled }) {
       alignItems="center"
       padding={2}
       gap={1}
-      sx={{
-        borderTop: "1px solid #ddd",
-      }}
+      borderTop={"1px solid #ddd"}
     >
       <TextField
         fullWidth

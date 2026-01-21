@@ -13,9 +13,7 @@ export function ChatHeader({ conversation, userId, onMenuClick }) {
       display="flex"
       alignItems="center"
       gap={2}
-      sx={{
-        borderBottom: "1px solid #ddd",
-      }}
+      borderBottom={"1px solid #ddd"}
     >
       {onMenuClick && (
         <IconButton onClick={onMenuClick} sx={{ display: { md: "none" } }}>
