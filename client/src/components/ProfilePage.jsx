@@ -1,6 +1,7 @@
 import {
   Avatar,
   Box,
+  Button,
   IconButton,
   LinearProgress,
   Paper,
@@ -8,7 +9,6 @@ import {
 } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import InputForm from "./inputForm";
-import ButtonForm from "./buttonForm";
 
 import PersonIcon from "@mui/icons-material/Person";
 import MailIcon from "@mui/icons-material/Mail";
@@ -78,12 +78,21 @@ const ProfilePage = ({ signOut, user }) => {
                 icon={<MailIcon size={18} />}
               />
 
-              <ButtonForm
-                text="Sair"
+              <Button
+                type="submit"
+                size="large"
                 variant="contained"
+                fullWidth
+                endIcon={<LogoutIcon />}
                 onClick={() => signOut()}
-                icon={<LogoutIcon />}
-              />
+                sx={{
+                  fontWeight: "600",
+                  mt: 2,
+                  color: "white",
+                }}
+              >
+                Sair
+              </Button>
             </Box>
           </Paper>
         </Box>

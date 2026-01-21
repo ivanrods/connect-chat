@@ -8,9 +8,7 @@ import MailIcon from "@mui/icons-material/Mail";
 import PasswordIcon from "@mui/icons-material/Password";
 import ForumIcon from "@mui/icons-material/Forum";
 import SendIcon from "@mui/icons-material/Send";
-
 import InputForm from "../components/inputForm";
-import ButtonForm from "../components/buttonForm";
 
 import {
   Box,
@@ -103,11 +101,20 @@ const Login = () => {
               helperText={errors.password?.message}
             />
 
-            <ButtonForm
-              text="Entrar"
+            <Button
+              type="submit"
+              size="large"
               variant="contained"
-              icon={<SendIcon color="white" display="block" />}
-            />
+              fullWidth
+              endIcon={<SendIcon />}
+              sx={{
+                fontWeight: "600",
+                mt: 2,
+                color: "white",
+              }}
+            >
+              Entrar
+            </Button>
           </form>
           <Typography variant="body2" textAlign="center" mt={2}>
             <Link to="/register" style={{ color: "#22c55e" }}>

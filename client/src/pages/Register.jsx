@@ -2,9 +2,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link, useNavigate } from "react-router-dom";
 import { registerSchema } from "../lib/schemas/auth-schema";
-
 import InputForm from "../components/inputForm";
-import ButtonForm from "../components/buttonForm";
+
 import {
   Box,
   Button,
@@ -130,11 +129,20 @@ const Register = () => {
               helperText={errors.password?.message}
             />
 
-            <ButtonForm
-              text="Registrar"
+            <Button
+              type="submit"
+              size="large"
               variant="contained"
-              icon={<SendIcon color="white" display="block" />}
-            />
+              endIcon={<SendIcon />}
+              fullWidth
+              sx={{
+                fontWeight: "600",
+                mt: 2,
+                color: "white",
+              }}
+            >
+              Registrar
+            </Button>
           </form>
           <Typography variant="body2" textAlign="center" mt={2}>
             <Link to="/login" style={{ color: "#22c55e" }}>

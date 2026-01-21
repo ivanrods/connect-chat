@@ -7,6 +7,7 @@ import {
   Box,
 } from "@mui/material";
 import { useState } from "react";
+import AddIcon from "@mui/icons-material/Add";
 
 export function CreateConversation({ open, onClose, onCreate }) {
   const [email, setEmail] = useState("");
@@ -36,11 +37,17 @@ export function CreateConversation({ open, onClose, onCreate }) {
           />
 
           <Button
+            type="submit"
+            size="large"
             variant="contained"
+            startIcon={<AddIcon />}
             onClick={handleCreate}
             disabled={loading}
-            textTransform="none"
-            fontWeight="bold"
+            sx={{
+              textTransform: "none",
+              fontWeight: "600",
+              color: "white",
+            }}
           >
             Criar
           </Button>
