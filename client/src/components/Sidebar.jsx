@@ -15,7 +15,8 @@ import {
 } from "@mui/material";
 
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import ProfilePage from "./ProfilePage";
+import LogoutIcon from "@mui/icons-material/Logout";
+
 import { useAuth } from "../context/auth-context";
 import { useUser } from "../hooks/use-profile";
 import { useState } from "react";
@@ -53,6 +54,9 @@ export function Sidebar({
   if (loading) {
     return <LinearProgress />;
   }
+  if (!user) {
+    return <LinearProgress />;
+  }
 
   return (
     <Drawer
@@ -76,7 +80,26 @@ export function Sidebar({
       >
         <Box>
           <Box display="flex" flexDirection="column" gap={2} padding={2}>
-            <ProfilePage signOut={signOut} user={user} />
+            <Box
+              display="flex"
+              alignItems="center"
+              gap={1}
+              justifyContent="space-between"
+            >
+              <Box display="flex" gap={2}>
+                <Avatar src={user ? user.avatar : "?"} />
+                <Box>
+                  <Typography variant="body1" fontWeight="bold">
+                    {user.name}
+                  </Typography>
+                  <Typography variant="body2">{user.email}</Typography>
+                </Box>
+              </Box>
+              <IconButton onClick={() => signOut()} title="Sair">
+                <LogoutIcon />
+              </IconButton>
+            </Box>
+
             <Box display="flex" alignItems="center" gap={1}>
               <TextField
                 fullWidth
