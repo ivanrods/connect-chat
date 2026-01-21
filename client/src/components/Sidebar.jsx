@@ -12,10 +12,12 @@ import {
   LinearProgress,
   ToggleButtonGroup,
   ToggleButton,
+  InputAdornment,
 } from "@mui/material";
 
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import LogoutIcon from "@mui/icons-material/Logout";
+import SearchIcon from "@mui/icons-material/Search";
 
 import { useAuth } from "../context/auth-context";
 import { useUser } from "../hooks/use-profile";
@@ -107,10 +109,19 @@ export function Sidebar({
                 placeholder="Busque por nome ou email"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
+                slotProps={{
+                  input: {
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <SearchIcon />
+                      </InputAdornment>
+                    ),
+                  },
+                }}
               />
 
               <IconButton onClick={() => onAddConversation()} color="primary">
-                <AddCircleOutlineIcon />
+                <AddCircleOutlineIcon fontSize="large" />
               </IconButton>
             </Box>
           </Box>

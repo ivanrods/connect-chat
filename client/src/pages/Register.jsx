@@ -86,10 +86,13 @@ const Register = () => {
           }}
         >
           <Box>
-            <Box display="flex" alignItems="center" justifyContent="center">
-              <Button>
-                <ForumIcon />
-              </Button>
+            <Box
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              gap={1}
+            >
+              <ForumIcon fontSize="large" color="primary" />
 
               <Typography variant="h4" fontWeight="bold">
                 ConnectChat

@@ -30,8 +30,9 @@ export function CreateConversation({ open, onClose, onCreate }) {
       <DialogContent>
         <Box display="flex" gap={2} mt={1}>
           <TextField
+            type="email"
+            placeholder="Email do usuário"
             fullWidth
-            label="Email do usuário"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />

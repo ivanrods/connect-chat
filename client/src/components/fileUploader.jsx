@@ -1,4 +1,3 @@
-import { Paperclip } from "lucide-react";
 import { IconButton } from "@mui/material";
 import { useState } from "react";
 
@@ -55,7 +54,7 @@ const FileUploader = () => {
           },
         }}
       >
-        <Paperclip />
+        Enviar
       </IconButton>
     </label>
   );
