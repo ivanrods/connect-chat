@@ -8,12 +8,13 @@ import MailIcon from "@mui/icons-material/Mail";
 import PasswordIcon from "@mui/icons-material/Password";
 import ForumIcon from "@mui/icons-material/Forum";
 import SendIcon from "@mui/icons-material/Send";
-import InputForm from "../components/inputForm";
 
 import {
   Box,
   Button,
+  InputAdornment,
   Paper,
+  TextField,
   Typography,
   useMediaQuery,
   useTheme,
@@ -82,23 +83,48 @@ const Login = () => {
           <Typography variant="h5" fontWeight="bold">
             Faça seu login
           </Typography>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <InputForm
+          <Box
+            component="form"
+            display="flex"
+            flexDirection="column"
+            width="100%"
+            gap={2}
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            <TextField
               type="email"
               placeholder="E-mail"
-              icon={<MailIcon />}
-              {...register("email")}
               error={errors.email}
               helperText={errors.email?.message}
+              fullWidth
+              slotProps={{
+                input: {
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <MailIcon />
+                    </InputAdornment>
+                  ),
+                },
+              }}
+              {...register("email")}
             />
 
-            <InputForm
+            <TextField
               type="password"
               placeholder="Senha"
-              icon={<PasswordIcon />}
-              {...register("password")}
               error={errors.password}
               helperText={errors.password?.message}
+              fullWidth
+              slotProps={{
+                input: {
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <PasswordIcon />
+                    </InputAdornment>
+                  ),
+                },
+              }}
+              {...register("password")}
             />
 
             <Button
@@ -109,13 +135,12 @@ const Login = () => {
               endIcon={<SendIcon />}
               sx={{
                 fontWeight: "600",
-                mt: 2,
                 color: "white",
               }}
             >
               Entrar
             </Button>
-          </form>
+          </Box>
           <Typography variant="body2" textAlign="center" mt={2}>
             <Link to="/register" style={{ color: "#22c55e" }}>
               Registrar

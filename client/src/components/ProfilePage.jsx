@@ -8,10 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
-import InputForm from "./inputForm";
 
-import PersonIcon from "@mui/icons-material/Person";
-import MailIcon from "@mui/icons-material/Mail";
 import LogoutIcon from "@mui/icons-material/Logout";
 
 const ProfilePage = ({ signOut, user }) => {
@@ -65,18 +62,6 @@ const ProfilePage = ({ signOut, user }) => {
           <Paper elevation={4} sx={{ p: 4, width: "100%", maxWidth: 400 }}>
             <Box display="flex" flexDirection="column" alignItems="center">
               <Avatar src={user ? user.avatar : ""} />
-              <InputForm
-                type="text"
-                placeholder="Nome"
-                value={user.name}
-                icon={<PersonIcon size={18} />}
-              />
-              <InputForm
-                type="email"
-                placeholder={user.email}
-                value={user.email}
-                icon={<MailIcon size={18} />}
-              />
 
               <Button
                 type="submit"

@@ -2,12 +2,13 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link, useNavigate } from "react-router-dom";
 import { registerSchema } from "../lib/schemas/auth-schema";
-import InputForm from "../components/inputForm";
 
 import {
   Box,
   Button,
+  InputAdornment,
   Paper,
+  TextField,
   Typography,
   useMediaQuery,
   useTheme,
@@ -102,31 +103,65 @@ const Register = () => {
           <Typography variant="h5" fontWeight="bold">
             Faça seu registro
           </Typography>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <InputForm
+          <Box
+            component="form"
+            display="flex"
+            flexDirection="column"
+            width="100%"
+            gap={2}
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            <TextField
               type="text"
               placeholder="Nome"
-              icon={<PersonIcon />}
-              {...register("name")}
               error={errors.name}
               helperText={errors.name?.message}
+              fullWidth
+              slotProps={{
+                input: {
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <PersonIcon />
+                    </InputAdornment>
+                  ),
+                },
+              }}
+              {...register("name")}
             />
-            <InputForm
+            <TextField
               type="email"
               placeholder="E-mail"
-              icon={<MailIcon />}
-              {...register("email")}
               error={errors.email}
               helperText={errors.email?.message}
+              fullWidth
+              slotProps={{
+                input: {
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <MailIcon />
+                    </InputAdornment>
+                  ),
+                },
+              }}
+              {...register("email")}
             />
 
-            <InputForm
+            <TextField
               type="password"
               placeholder="Senha"
-              icon={<PasswordIcon />}
-              {...register("password")}
               error={errors.password}
               helperText={errors.password?.message}
+              fullWidth
+              slotProps={{
+                input: {
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <PasswordIcon />
+                    </InputAdornment>
+                  ),
+                },
+              }}
+              {...register("password")}
             />
 
             <Button
@@ -137,13 +172,13 @@ const Register = () => {
               fullWidth
               sx={{
                 fontWeight: "600",
-                mt: 2,
+
                 color: "white",
               }}
             >
               Registrar
             </Button>
-          </form>
+          </Box>
           <Typography variant="body2" textAlign="center" mt={2}>
             <Link to="/login" style={{ color: "#22c55e" }}>
               Entrar
