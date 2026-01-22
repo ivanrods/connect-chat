@@ -8,6 +8,7 @@ import MailIcon from "@mui/icons-material/Mail";
 import PasswordIcon from "@mui/icons-material/Password";
 import ForumIcon from "@mui/icons-material/Forum";
 import SendIcon from "@mui/icons-material/Send";
+import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
 
 import {
   Box,
@@ -21,7 +22,7 @@ import {
 } from "@mui/material";
 
 const Login = () => {
-  const { signIn } = useAuth();
+  const { signIn, loading } = useAuth();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -135,7 +136,8 @@ const Login = () => {
               size="large"
               variant="contained"
               fullWidth
-              endIcon={<SendIcon />}
+              endIcon={loading ? <HourglassBottomIcon /> : <SendIcon />}
+              disabled={loading}
               sx={{
                 fontWeight: "600",
                 color: "white",

@@ -2,8 +2,9 @@ import { useState } from "react";
 import { Box, TextField, IconButton, InputAdornment } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
+import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
 
-export function MessageInput({ onSend, disabled }) {
+export function MessageInput({ onSend, disabled, loading }) {
   const [message, setMessage] = useState("");
 
   const handleSend = () => {
@@ -39,7 +40,7 @@ export function MessageInput({ onSend, disabled }) {
                   disabled={disabled}
                   color="primary"
                 >
-                  <SendIcon />
+                  {loading ? <HourglassBottomIcon /> : <SendIcon />}
                 </IconButton>
               </InputAdornment>
             ),

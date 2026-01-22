@@ -99,6 +99,7 @@ export default function Chat() {
             <MessageInput
               disabled={!selectedConversation}
               onSend={handleSendMessage}
+              loading={loadingSendMessage}
             />
           </>
         )}

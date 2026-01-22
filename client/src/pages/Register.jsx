@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link, useNavigate } from "react-router-dom";
 import { registerSchema } from "../lib/schemas/auth-schema";
+import { useAuth } from "../context/auth-context";
 
 import {
   Box,
@@ -19,10 +20,10 @@ import MailIcon from "@mui/icons-material/Mail";
 import PasswordIcon from "@mui/icons-material/Password";
 import ForumIcon from "@mui/icons-material/Forum";
 import SendIcon from "@mui/icons-material/Send";
-import { useAuth } from "../context/auth-context";
+import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
 
 const Register = () => {
-  const { signUp } = useAuth();
+  const { signUp, loading } = useAuth();
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
@@ -163,7 +164,8 @@ const Register = () => {
               type="submit"
               size="large"
               variant="contained"
-              endIcon={<SendIcon />}
+              endIcon={loading ? <HourglassBottomIcon /> : <SendIcon />}
+              disabled={loading}
               fullWidth
               sx={{
                 fontWeight: "600",
