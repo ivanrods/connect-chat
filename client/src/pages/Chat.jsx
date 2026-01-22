@@ -1,14 +1,13 @@
 import { useState } from "react";
-import { Box, Button, LinearProgress, Typography } from "@mui/material";
+import { Box, Button, LinearProgress } from "@mui/material";
 
-import { useUser } from "../hooks/use-profile";
+import { useProfile } from "../hooks/use-profile";
 import { useConversations } from "../hooks/use-conversations";
-import { useMessages } from "../hooks/use-messages";
+import { useMessages, useSendMessage } from "../hooks/use-messages";
 import { useConversationSocket } from "../hooks/use-conversation-socket";
 
 import { Sidebar } from "../components/Sidebar";
 import { MessageInput } from "../components/MessageInput";
-import { useSendMessage } from "../hooks/use-send-message";
 import { ChatHeader } from "../components/ChatHeader";
 import { MessageList } from "../components/MessageList";
 import { CreateConversation } from "../components/CreateConversation";
@@ -18,10 +17,11 @@ export default function Chat() {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedConversation, setSelectedConversation] = useState(null);
 
-  const { user } = useUser();
+  const { user, loading: loadingProfile, error: errorProfile } = useProfile();
   const {
     conversations,
     loading: loadingConversations,
+    error: errorConversations,
     createConversation,
   } = useConversations();
 
@@ -29,9 +29,14 @@ export default function Chat() {
     messages,
     setMessages,
     loading: loadingMessages,
+    error: errorMessages,
   } = useMessages(selectedConversation?.id);
 
-  const { sendMessage } = useSendMessage(selectedConversation?.id);
+  const {
+    sendMessage,
+    loading: loadingSendMessage,
+    error: errorSendMessage,
+  } = useSendMessage(selectedConversation?.id);
 
   // Socket em tempo real
   useConversationSocket(selectedConversation?.id, (newMessage) => {
@@ -42,7 +47,7 @@ export default function Chat() {
     await sendMessage(content);
   };
 
-  if (!user) {
+  if (loadingProfile) {
     return <LinearProgress />;
   }
 

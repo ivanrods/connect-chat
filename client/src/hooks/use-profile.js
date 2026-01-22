@@ -1,28 +1,56 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
-export function useUser() {
+export function useProfile() {
   const apiUrl = import.meta.env.VITE_API_URL;
-  const [load, setLoad] = useState(true);
+
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const fetchUser = useCallback(async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const storedUser = localStorage.getItem("user");
+
+      if (!token || !storedUser) {
+        setUser(null);
+        return;
+      }
+
+      const parsedUser = JSON.parse(storedUser);
+
+      const res = await fetch(`${apiUrl}/api/user/${parsedUser.id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!res.ok) {
+        throw new Error("Não autorizado");
+      }
+
+      const data = await res.json();
+      setUser(data);
+    } catch (err) {
+      console.error("Erro ao buscar usuário:", err);
+      setUser(null);
+      setError(err.message);
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+    } finally {
+      setLoading(false);
+    }
+  }, [apiUrl]);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    const parsedUser = storedUser ? JSON.parse(storedUser) : null;
+    fetchUser();
+  }, [fetchUser]);
 
-    if (!parsedUser?.id) {
-      setLoad(false);
-      return;
-    }
-
-    fetch(`${apiUrl}/api/user/${parsedUser.id}`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    })
-      .then((res) => res.json())
-      .then(setUser)
-      .finally(() => setLoad(false));
-  }, []);
-
-  return { user, load };
+  return {
+    user,
+    loading,
+    error,
+    refetchUser: fetchUser,
+    setUser,
+  };
 }
