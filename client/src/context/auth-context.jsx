@@ -1,11 +1,12 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
 const AuthContext = createContext({});
+const apiUrl = import.meta.env.VITE_API_URL;
 
 export const AuthProvider = ({ children }) => {
-  const apiUrl = import.meta.env.VITE_API_URL;
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -18,21 +19,48 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   async function signIn({ email, password }) {
-    const response = await fetch(`${apiUrl}/api/auth/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
+    try {
+      setLoading(true);
+      const response = await fetch(`${apiUrl}/api/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
 
-    const data = await response.json();
-    if (!response.ok) {
-      throw new Error(data.error || "Erro no login");
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error || "Erro no login");
+      }
+
+      localStorage.setItem("user", JSON.stringify(data.user));
+      localStorage.setItem("token", data.token);
+
+      setUser(data.user);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
     }
+  }
 
-    localStorage.setItem("user", JSON.stringify(data.user));
-    localStorage.setItem("token", data.token);
+  async function signUp({ name, email, password }) {
+    try {
+      const response = await fetch(`${apiUrl}/api/auth/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password }),
+      });
 
-    setUser(data.user);
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error || "Erro no Registro");
+      }
+      return data;
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   }
 
   function signOut() {
@@ -42,7 +70,9 @@ export const AuthProvider = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ user, loading, signIn, signOut }}>
+    <AuthContext.Provider
+      value={{ user, loading, error, signIn, signUp, signOut }}
+    >
       {!loading && children}
     </AuthContext.Provider>
   );

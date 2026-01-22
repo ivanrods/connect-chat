@@ -19,11 +19,11 @@ import MailIcon from "@mui/icons-material/Mail";
 import PasswordIcon from "@mui/icons-material/Password";
 import ForumIcon from "@mui/icons-material/Forum";
 import SendIcon from "@mui/icons-material/Send";
-
-const apiUrl = import.meta.env.VITE_API_URL;
+import { useAuth } from "../context/auth-context";
 
 const Register = () => {
-  const navigate = useNavigate();
+  const { signUp } = useAuth();
+
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const {
@@ -34,22 +34,14 @@ const Register = () => {
     resolver: zodResolver(registerSchema),
   });
 
+  const navigate = useNavigate();
+
   const onSubmit = async (data) => {
     try {
-      const response = await fetch(`${apiUrl}/api/auth/register`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      const res = await response.json();
-
-      if (!response.ok) {
-        throw new Error(res.error || "Erro ao criar conta");
-      }
-      alert("Conta criada com sucesso!");
+      await signUp(data);
       navigate("/login");
-    } catch (err) {
-      alert(err.message);
+    } catch (error) {
+      return alert(error.message);
     }
   };
 
