@@ -20,9 +20,11 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
+import { useAlert } from "../context/alert-context";
 
 const Login = () => {
   const { signIn, loading } = useAuth();
+  const { showAlert } = useAlert();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -41,7 +43,7 @@ const Login = () => {
       await signIn(data);
       navigate("/chat");
     } catch (error) {
-      return alert(error.message);
+      showAlert(error?.message || "Erro ao fazer login", "error");
     }
   };
 

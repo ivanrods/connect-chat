@@ -21,9 +21,11 @@ import MailIcon from "@mui/icons-material/Mail";
 import PasswordIcon from "@mui/icons-material/Password";
 import ForumIcon from "@mui/icons-material/Forum";
 import SendIcon from "@mui/icons-material/Send";
+import { useAlert } from "../context/alert-context";
 
 const Register = () => {
   const { signUp, loading } = useAuth();
+  const { showAlert } = useAlert();
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
@@ -41,8 +43,9 @@ const Register = () => {
     try {
       await signUp(data);
       navigate("/login");
+      showAlert("Conta criada com sucesso! Faça o login", "success");
     } catch (error) {
-      return alert(error.message);
+      showAlert(error?.message || "Erro ao fazer o registro", "error");
     }
   };
 
