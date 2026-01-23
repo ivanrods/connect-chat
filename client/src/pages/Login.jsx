@@ -8,11 +8,11 @@ import MailIcon from "@mui/icons-material/Mail";
 import PasswordIcon from "@mui/icons-material/Password";
 import ForumIcon from "@mui/icons-material/Forum";
 import SendIcon from "@mui/icons-material/Send";
-import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
 
 import {
   Box,
   Button,
+  CircularProgress,
   InputAdornment,
   Paper,
   TextField,
@@ -136,7 +136,7 @@ const Login = () => {
               size="large"
               variant="contained"
               fullWidth
-              endIcon={loading ? <HourglassBottomIcon /> : <SendIcon />}
+              endIcon={loading ? <CircularProgress /> : <SendIcon />}
               disabled={loading}
               sx={{
                 fontWeight: "600",

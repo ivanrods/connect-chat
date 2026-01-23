@@ -10,11 +10,13 @@ import PrivateRoute from "./routes/PrivateRoute";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "./theme/theme.js";
 import { SocketProvider } from "./context/socket-context.jsx";
+import { CssBaseline } from "@mui/material";
 
 const root = document.getElementById("root");
 
 ReactDOM.createRoot(root).render(
   <StrictMode>
+    <CssBaseline />
     <ThemeProvider theme={theme}>
       <AuthProvider>
         {" "}
@@ -32,5 +34,5 @@ ReactDOM.createRoot(root).render(
         </SocketProvider>
       </AuthProvider>
     </ThemeProvider>
-  </StrictMode>
+  </StrictMode>,
 );
