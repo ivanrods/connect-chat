@@ -24,7 +24,7 @@ export const getOrCreateConversation = async (req, res) => {
         .json({ message: "Não é possível criar conversa consigo mesmo" });
     }
 
-    // 🔹 Buscar todas as conversas do usuário logado
+    //  Buscar todas as conversas do usuário logado
     const conversations = await Conversation.findAll({
       include: {
         model: User,
@@ -33,7 +33,7 @@ export const getOrCreateConversation = async (req, res) => {
       },
     });
 
-    // 🔹 Verificar se alguma conversa já tem o outro usuário
+    // Verificar se alguma conversa já tem o outro usuário
     for (const conversation of conversations) {
       const users = await conversation.getUsers({
         where: { id: otherUser.id },
@@ -52,7 +52,7 @@ export const getOrCreateConversation = async (req, res) => {
       }
     }
 
-    // 🔹 Criar nova conversa
+    // Criar nova conversa
     const conversation = await Conversation.create();
 
     await ConversationUser.bulkCreate([
@@ -75,9 +75,8 @@ export const getOrCreateConversation = async (req, res) => {
   }
 };
 
-/**
- * Listar todas as conversas do usuário logado
- */
+//Listar todas as conversas do usuário logado
+
 export const getUserConversations = async (req, res) => {
   const userId = req.user.id;
 

@@ -8,11 +8,18 @@ export const register = async (req, res) => {
   try {
     const { name, email, password } = registerSchema.parse(req.body);
 
-    const avatarUrl = `https://api.dicebear.com/7.x/bottts-neutral/svg?seed=${encodeURIComponent(
-      name
-    )}`;
+    const userExists = await User.findOne({ where: { email } });
+
+    if (userExists) {
+      return res.status(409).json({
+        message: "Este email já está em uso",
+      });
+    }
 
     const hashedPassword = await bcrypt.hash(password, 10);
+
+    const avatarUrl = `${process.env.APP_URL}/avatars/avatar.png`;
+
     await User.create({
       name,
       email,
@@ -20,41 +27,75 @@ export const register = async (req, res) => {
       avatar: avatarUrl,
     });
 
-    res.status(201).json({ message: "Usuário registrado com sucesso" });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Erro ao registrar usuário" });
+    return res.status(201).json({
+      message: "Usuário registrado com sucesso",
+    });
+  } catch (error) {
+    console.error("Erro no registro:", error);
+
+    if (error.name === "ZodError") {
+      return res.status(400).json({
+        message: "Dados inválidos",
+        errors: error.errors,
+      });
+    }
+
+    return res.status(500).json({
+      message: "Erro interno ao registrar usuário",
+    });
   }
 };
 
 export const login = async (req, res) => {
-  const { email, password } = loginSchema.parse(req.body);
   try {
+    const { email, password } = loginSchema.parse(req.body);
+
     const user = await User.findOne({ where: { email } });
 
     if (!user) {
-      return res.status(400).json({ error: "Usuário não encontrado" });
+      return res.status(401).json({
+        message: "Email ou senha inválidos",
+      });
     }
 
-    const comparePassword = await bcrypt.compare(password, user.password);
+    const passwordMatch = await bcrypt.compare(password, user.password);
 
-    if (!comparePassword) {
-      return res.status(400).json({ error: "Senha incorreta" });
+    if (!passwordMatch) {
+      return res.status(401).json({
+        message: "Email ou senha inválidos",
+      });
     }
 
-    const secret = process.env.SECRET;
-    const token = jwt.sign({ id: user.id }, secret, { expiresIn: "7d" });
+    if (!process.env.SECRET) {
+      throw new Error("JWT secret não configurado");
+    }
 
-    return res.json({
+    const token = jwt.sign({ id: user.id }, process.env.SECRET, {
+      expiresIn: "7d",
+    });
+
+    return res.status(200).json({
       message: "Login realizado com sucesso",
       token,
       user: {
         id: user.id,
+        name: user.name,
         email: user.email,
+        avatar: user.avatar,
       },
     });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Erro ao fazer login" });
+  } catch (error) {
+    console.error("Erro no login:", error);
+
+    if (error.name === "ZodError") {
+      return res.status(400).json({
+        message: "Dados inválidos",
+        errors: error.errors,
+      });
+    }
+
+    return res.status(500).json({
+      message: "Erro interno ao realizar login",
+    });
   }
 };

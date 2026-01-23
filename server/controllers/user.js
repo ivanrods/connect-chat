@@ -1,13 +1,31 @@
 import User from "../models/user.js";
 
 export const getUser = async (req, res) => {
-  const userId = req.params.id;
+  const { id } = req.params;
 
-  const user = await User.findByPk(userId);
+  if (!id) {
+    return res.status(400).json({
+      message: "ID do usuário é obrigatório",
+    });
+  }
 
-  if (user) {
-    res.status(200).json(user);
-  } else {
-    res.status(404).json({ message: "Usuário não encontrado" });
+  try {
+    const user = await User.findByPk(id, {
+      attributes: ["id", "name", "email", "avatar", "createdAt"],
+    });
+
+    if (!user) {
+      return res.status(404).json({
+        message: "Usuário não encontrado",
+      });
+    }
+
+    return res.status(200).json(user);
+  } catch (error) {
+    console.error("Erro ao buscar usuário:", error);
+
+    return res.status(500).json({
+      message: "Erro interno ao buscar usuário",
+    });
   }
 };

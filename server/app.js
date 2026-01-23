@@ -10,6 +10,8 @@ app.use(cors());
 app.use(express.json());
 
 // arquivos estáticos
+app.use("/avatars", express.static("public/avatars"));
+
 app.use("/uploads", express.static("uploads"));
 
 // rotas
