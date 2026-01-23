@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Box, Button, LinearProgress } from "@mui/material";
 
 import { useProfile } from "../hooks/use-profile";
@@ -11,13 +11,16 @@ import { MessageInput } from "../components/MessageInput";
 import { ChatHeader } from "../components/ChatHeader";
 import { MessageList } from "../components/MessageList";
 import { CreateConversation } from "../components/CreateConversation";
+import { useAlert } from "../context/alert-context";
 
 export default function Chat() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedConversation, setSelectedConversation] = useState(null);
+  const { showAlert } = useAlert();
 
   const { user, loading: loadingProfile, error: errorProfile } = useProfile();
+
   const {
     conversations,
     loading: loadingConversations,
@@ -47,6 +50,30 @@ export default function Chat() {
     await sendMessage(content);
   };
 
+  //Mostra aleta de erros
+  const shownErrorRef = useRef(null);
+
+  useEffect(() => {
+    const firstError = [
+      errorConversations,
+      errorMessages,
+      errorSendMessage,
+      errorProfile,
+    ].find(Boolean);
+
+    if (!firstError) return;
+    if (shownErrorRef.current === firstError) return;
+
+    shownErrorRef.current = firstError;
+    showAlert(firstError, "error");
+  }, [
+    errorConversations,
+    errorMessages,
+    errorSendMessage,
+    errorProfile,
+    showAlert,
+  ]);
+
   if (loadingProfile) {
     return <LinearProgress />;
   }
@@ -61,6 +88,7 @@ export default function Chat() {
           loading={loadingConversations}
           selectedConversation={selectedConversation}
           setSelectedConversation={setSelectedConversation}
+          user={user}
           userId={user.id}
           onAddConversation={() => setModalOpen(true)}
         />

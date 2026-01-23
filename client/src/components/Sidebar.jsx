@@ -20,7 +20,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import SearchIcon from "@mui/icons-material/Search";
 
 import { useAuth } from "../context/auth-context";
-import { useProfile } from "../hooks/use-profile";
+
 import { useState } from "react";
 
 export function Sidebar({
@@ -30,13 +30,13 @@ export function Sidebar({
   loading,
   selectedConversation,
   setSelectedConversation,
+  user,
   userId,
   onAddConversation,
 }) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const { signOut } = useAuth();
-  const { user, loading: loadingProfile, error: errorProfile } = useProfile();
 
   const [search, setSearch] = useState("");
 
@@ -54,9 +54,6 @@ export function Sidebar({
   });
 
   if (loading) {
-    return <LinearProgress />;
-  }
-  if (loadingProfile) {
     return <LinearProgress />;
   }
 
