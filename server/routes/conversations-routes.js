@@ -1,7 +1,7 @@
 import { Router } from "express";
 import {
-  getUserConversations,
-  getOrCreateConversation,
+  getConversations,
+  createConversation,
 } from "../controllers/conversation-controller.js";
 import {
   getMessages,
@@ -13,8 +13,8 @@ import { upload } from "../config/multer.js";
 const router = Router();
 
 router.use(authenticateToken);
-router.get("/", getUserConversations);
-router.post("/", getOrCreateConversation);
+router.get("/", getConversations);
+router.post("/", createConversation);
 router.get("/:id/messages", getMessages);
 router.post("/:id/messages", upload.single("file"), createMessage);
 
