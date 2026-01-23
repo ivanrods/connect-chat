@@ -1,8 +1,8 @@
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Link, useNavigate } from "react-router-dom";
-import { registerSchema } from "../lib/schemas/auth-schema";
-import { useAuth } from "../context/auth-context";
+import PersonIcon from "@mui/icons-material/Person";
+import MailIcon from "@mui/icons-material/Mail";
+import PasswordIcon from "@mui/icons-material/Password";
+import ForumIcon from "@mui/icons-material/Forum";
+import SendIcon from "@mui/icons-material/Send";
 
 import {
   Box,
@@ -16,11 +16,11 @@ import {
   useTheme,
 } from "@mui/material";
 
-import PersonIcon from "@mui/icons-material/Person";
-import MailIcon from "@mui/icons-material/Mail";
-import PasswordIcon from "@mui/icons-material/Password";
-import ForumIcon from "@mui/icons-material/Forum";
-import SendIcon from "@mui/icons-material/Send";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Link, useNavigate } from "react-router-dom";
+import { registerSchema } from "../lib/schemas/auth-schema";
+import { useAuth } from "../context/auth-context";
 import { useAlert } from "../context/alert-context";
 
 const Register = () => {
@@ -167,12 +167,13 @@ const Register = () => {
               type="submit"
               size="large"
               variant="contained"
-              endIcon={loading ? <CircularProgress /> : <SendIcon />}
+              endIcon={
+                loading ? <CircularProgress color="secondary" /> : <SendIcon />
+              }
               disabled={loading}
               fullWidth
               sx={{
                 fontWeight: "600",
-
                 color: "white",
               }}
             >

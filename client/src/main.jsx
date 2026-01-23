@@ -1,17 +1,18 @@
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Chat from "./pages/Chat";
+import { CssBaseline } from "@mui/material";
+import { ThemeProvider } from "@mui/material/styles";
 
 import { AuthProvider } from "./context/auth-context";
 import PrivateRoute from "./routes/PrivateRoute";
-import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "./theme/theme.js";
 import { SocketProvider } from "./context/socket-context.jsx";
-import { CssBaseline } from "@mui/material";
 import { AlertProvider } from "./context/alert-context.jsx";
+
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Chat from "./pages/Chat";
 
 const root = document.getElementById("root");
 
@@ -28,7 +29,6 @@ ReactDOM.createRoot(root).render(
                 <Route path="/register" element={<Register />} />
                 <Route element={<PrivateRoute />}>
                   <Route path="*" element={<Chat />} />
-                  <Route path="/chat" element={<Chat />} />
                 </Route>
               </Routes>
             </BrowserRouter>

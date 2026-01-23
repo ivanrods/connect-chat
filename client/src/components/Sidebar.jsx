@@ -14,14 +14,13 @@ import {
   ToggleButton,
   InputAdornment,
 } from "@mui/material";
+import { useState } from "react";
 
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import LogoutIcon from "@mui/icons-material/Logout";
 import SearchIcon from "@mui/icons-material/Search";
 
 import { useAuth } from "../context/auth-context";
-
-import { useState } from "react";
 
 export function Sidebar({
   open,
