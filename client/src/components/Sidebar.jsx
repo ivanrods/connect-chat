@@ -141,7 +141,7 @@ export function Sidebar({
                 >
                   <Box gap={2} display="flex" alignItems="center">
                     <Avatar src={otherUser?.avatar} />
-                    <Typography variant="subtitle1" z>
+                    <Typography variant="subtitle1">
                       {otherUser?.name || "Usuário"}
                     </Typography>
                   </Box>

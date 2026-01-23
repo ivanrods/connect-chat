@@ -161,9 +161,6 @@ const Login = () => {
         <Box
           component="img"
           src="background.jpg"
-          backgroundRepeat="no-repeat"
-          backgroundSize="cover"
-          backgroundPosition="center"
           width="100%"
           sx={{
             objectFit: "none",

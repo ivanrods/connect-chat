@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }) => {
 
       const data = await response.json();
       if (!response.ok) {
-        throw new Error(data.error || "Erro no login");
+        throw new Error(data.message || "Erro no login");
       }
 
       localStorage.setItem("user", JSON.stringify(data.user));
@@ -55,7 +55,7 @@ export const AuthProvider = ({ children }) => {
 
       const data = await response.json();
       if (!response.ok) {
-        throw new Error(data.error || "Erro no Registro");
+        throw new Error(data.message || "Erro no Registro");
       }
       return data;
     } catch (err) {
