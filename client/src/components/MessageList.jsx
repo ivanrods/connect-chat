@@ -1,9 +1,20 @@
-import { Box, Typography, Paper, Avatar, LinearProgress } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Paper,
+  Avatar,
+  LinearProgress,
+  useTheme,
+  useMediaQuery,
+} from "@mui/material";
 import { useEffect, useMemo, useRef } from "react";
 import { formatTime, formatDay } from "../utils/format-date";
 
 export function MessageList({ messages, loading, userId }) {
   const messageRef = useRef(null);
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   //  Scroll automático
   useEffect(() => {
@@ -32,7 +43,8 @@ export function MessageList({ messages, loading, userId }) {
       flexGrow={1}
       width="100%"
       mx="auto"
-      p={2}
+      py={2}
+      px={isMobile ? 2 : 4}
       display="flex"
       flexDirection="column"
       gap={3}
@@ -60,12 +72,11 @@ export function MessageList({ messages, loading, userId }) {
                 alignSelf={isMe ? "flex-end" : "flex-start"}
                 display="flex"
                 flexDirection="column"
-                gap={0.5}
                 my={1}
               >
                 <Box
                   display="flex"
-                  alignItems="flex-end"
+                  alignItems="center"
                   flexDirection={isMe ? "row-reverse" : "row"}
                   gap={1}
                 >
@@ -84,10 +95,7 @@ export function MessageList({ messages, loading, userId }) {
                         bgcolor: isMe ? "primary.main" : "border.main",
                         color: isMe ? "text.secondary" : "text.primary",
                         p: 1.5,
-                        maxWidth: 600,
-                        borderRadius: isMe
-                          ? "10px 10px 0px 10px"
-                          : "10px 10px 10px 0px",
+                        maxWidth: isMobile ? "75%" : 600,
                       }}
                     >
                       <Typography variant="body1">{msg.content}</Typography>
