@@ -30,5 +30,8 @@ export const theme = createTheme({
     subtitle1: {
       color: "#737373",
     },
+    caption: {
+      color: "#8f8f8f",
+    },
   },
 });

@@ -12,12 +12,14 @@ import { ChatHeader } from "../components/ChatHeader";
 import { MessageList } from "../components/MessageList";
 import { CreateConversation } from "../components/CreateConversation";
 import { useAlert } from "../context/alert-context";
+import { useFavoriteConversation } from "../hooks/use-favorite-conversation";
 
 export default function Chat() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedConversation, setSelectedConversation] = useState(null);
   const { showAlert } = useAlert();
+  const { toggleFavorite } = useFavoriteConversation();
 
   const { user, loading: loadingProfile, error: errorProfile } = useProfile();
 
@@ -48,6 +50,14 @@ export default function Chat() {
 
   const handleSendMessage = async (content) => {
     await sendMessage(content);
+  };
+
+  const handleToggleFavorite = async (conversationId) => {
+    try {
+      await toggleFavorite(conversationId);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   //Mostra aleta de erros
@@ -117,6 +127,7 @@ export default function Chat() {
               conversation={selectedConversation}
               userId={user.id}
               onMenuClick={() => setSidebarOpen(true)}
+              onToggleFavorite={handleToggleFavorite}
             />
             <MessageList
               messages={messages}
