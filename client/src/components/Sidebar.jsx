@@ -125,8 +125,8 @@ export function Sidebar({
           <List>
             {filteredConversations.map((conversation) => {
               const otherUser = conversation.users.find((u) => u.id !== userId);
-
               const isSelected = selectedConversation?.id === conversation.id;
+              const lastMessage = conversation.messages?.[0];
 
               return (
                 <ListItemButton
@@ -141,9 +141,19 @@ export function Sidebar({
                 >
                   <Box gap={2} display="flex" alignItems="center">
                     <Avatar src={otherUser?.avatar} />
-                    <Typography variant="subtitle1">
-                      {otherUser?.name || "Usuário"}
-                    </Typography>
+                    <Box display="flex" flexDirection="column" width={300}>
+                      <Typography variant="subtitle1">
+                        {otherUser?.name || "Usuário"}
+                      </Typography>
+                      <Typography
+                        variant="caption"
+                        noWrap
+                        textOverflow="ellipsis"
+                        whiteSpace="nowrap"
+                      >
+                        {lastMessage ? lastMessage.content : ""}
+                      </Typography>
+                    </Box>
                   </Box>
                 </ListItemButton>
               );

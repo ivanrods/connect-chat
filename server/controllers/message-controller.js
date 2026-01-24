@@ -48,6 +48,7 @@ export const createMessage = async (req, res) => {
       include: {
         model: User,
         where: { id: userId },
+        attributes: [],
       },
     });
 
@@ -60,6 +61,9 @@ export const createMessage = async (req, res) => {
       senderId: userId,
       content,
     });
+
+    conversation.changed("updatedAt", true);
+    await conversation.save();
 
     const fullMessage = await Message.findByPk(message.id, {
       include: [
@@ -74,9 +78,9 @@ export const createMessage = async (req, res) => {
     const io = getIO();
     io.to(`conversation_${conversationId}`).emit("newMessage", fullMessage);
 
-    res.status(201).json(fullMessage);
+    return res.status(201).json(fullMessage);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Erro ao enviar mensagem." });
+    return res.status(500).json({ message: "Erro ao enviar mensagem." });
   }
 };

@@ -1,4 +1,9 @@
-import { Conversation, User, ConversationUser } from "../models/index.js";
+import {
+  Conversation,
+  User,
+  ConversationUser,
+  Message,
+} from "../models/index.js";
 
 export const getConversations = async (req, res) => {
   const userId = req.user.id;
@@ -15,6 +20,18 @@ export const getConversations = async (req, res) => {
           model: User,
           attributes: ["id", "name", "avatar"],
           through: { attributes: [] },
+        },
+        {
+          model: Message,
+          limit: 1,
+          order: [["createdAt", "DESC"]],
+          include: [
+            {
+              model: User,
+              as: "sender",
+              attributes: ["id", "name"],
+            },
+          ],
         },
       ],
       order: [["updatedAt", "DESC"]],
