@@ -19,6 +19,6 @@ router.get("/", getConversations);
 router.post("/", createConversation);
 router.get("/:id/messages", getMessages);
 router.post("/:id/messages", upload.single("file"), createMessage);
-router.get("/:id/favorite", toggleFavorite);
+router.patch("/:id/favorite", toggleFavorite);
 
 export default router;

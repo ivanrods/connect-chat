@@ -15,12 +15,16 @@ export function CreateConversation({ open, onClose, onCreate }) {
 
   const handleCreate = async () => {
     if (!email) return;
-
-    setLoading(true);
-    await onCreate(email);
-    setEmail("");
-    setLoading(false);
-    onClose();
+    try {
+      setLoading(true);
+      await onCreate(email);
+      onClose();
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setEmail("");
+      setLoading(false);
+    }
   };
 
   return (

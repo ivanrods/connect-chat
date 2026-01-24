@@ -38,17 +38,24 @@ export function Sidebar({
   const { signOut } = useAuth();
 
   const [search, setSearch] = useState("");
+  const [filter, setFilter] = useState("recentes");
 
   const filteredConversations = conversations.filter((conversation) => {
     const otherUser = conversation.users.find((u) => u.id !== userId);
+    const isFavorite = conversation.conversation_users?.[0]?.favorite;
 
     if (!otherUser) return false;
 
-    const searchLower = search.toLowerCase();
+    if (filter === "favorites") {
+      return isFavorite;
+    }
+    if (filter === "unread") {
+      return;
+    }
 
     return (
-      otherUser.name?.toLowerCase().includes(searchLower) ||
-      otherUser.email?.toLowerCase().includes(searchLower)
+      otherUser.name?.toLowerCase().includes(search.toLowerCase()) ||
+      otherUser.email?.toLowerCase().includes(search.toLowerCase())
     );
   });
 
@@ -62,10 +69,10 @@ export function Sidebar({
       open={open}
       onClose={onClose}
       sx={{
-        width: 400,
+        width: isMobile ? "85%" : 400,
         flexShrink: 0,
         "& .MuiDrawer-paper": {
-          width: 400,
+          width: isMobile ? "85%" : 400,
           boxSizing: "border-box",
         },
       }}
@@ -116,7 +123,11 @@ export function Sidebar({
                 }}
               />
 
-              <IconButton onClick={() => onAddConversation()} color="primary">
+              <IconButton
+                onClick={() => onAddConversation()}
+                color="primary"
+                title="Adicionar nova conversa"
+              >
                 <AddCircleOutlineIcon fontSize="large" />
               </IconButton>
             </Box>
@@ -163,24 +174,29 @@ export function Sidebar({
         <Box display="flex" justifyContent="center">
           <ToggleButtonGroup
             color="primary"
-            value="recentes"
+            value={filter}
             exclusive
-            onChange={null}
+            onChange={(_, value) => {
+              if (value) setFilter(value);
+            }}
             aria-label="Platform"
-            sx={{ margin: 2 }}
+            sx={{ margin: 2, width: "100%" }}
           >
             <ToggleButton
-              value="recentes"
-              sx={{ textTransform: "none", px: 3 }}
+              value="recent"
+              sx={{ textTransform: "none", width: "100%" }}
             >
               Recentes
             </ToggleButton>
-            <ToggleButton value="antigos" sx={{ textTransform: "none", px: 3 }}>
-              Mais antigos
+            <ToggleButton
+              value="unread"
+              sx={{ textTransform: "none", width: "100%" }}
+            >
+              Não Lidos
             </ToggleButton>
             <ToggleButton
-              value="favoritos"
-              sx={{ textTransform: "none", px: 3 }}
+              value="favorites"
+              sx={{ textTransform: "none", width: "100%" }}
             >
               Favoritos
             </ToggleButton>

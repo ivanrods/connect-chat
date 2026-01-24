@@ -51,8 +51,9 @@ export function useConversations() {
         body: JSON.stringify({ email }),
       });
 
+      const data = await res.json();
       if (!res.ok) {
-        throw new Error("Erro ao criar conversa");
+        throw new Error(data.message || "Erro ao criar conversa");
       }
 
       const conversation = await res.json();
@@ -65,7 +66,6 @@ export function useConversations() {
 
       return conversation;
     } catch (err) {
-      console.error("Erro ao criar conversa:", err);
       setError(err.message);
       throw err;
     }

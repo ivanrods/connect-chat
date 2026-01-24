@@ -27,7 +27,7 @@ export function AlertProvider({ children }) {
         open={alert.open}
         autoHideDuration={4000}
         onClose={handleClose}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
         <Alert
           onClose={handleClose}

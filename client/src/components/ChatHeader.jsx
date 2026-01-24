@@ -38,6 +38,7 @@ export function ChatHeader({
 
       <IconButton
         size="small"
+        title="Adicionar aos favitos"
         onClick={() => {
           onToggleFavorite(conversation.id);
         }}
