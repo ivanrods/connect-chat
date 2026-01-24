@@ -7,6 +7,8 @@ import {
   getMessages,
   createMessage,
 } from "../controllers/message-controller.js";
+
+import { toggleFavorite } from "../controllers/favorite-controller.js";
 import { authenticateToken } from "../middlewares/authenticate-token.js";
 import { upload } from "../config/multer.js";
 
@@ -17,5 +19,6 @@ router.get("/", getConversations);
 router.post("/", createConversation);
 router.get("/:id/messages", getMessages);
 router.post("/:id/messages", upload.single("file"), createMessage);
+router.get("/:id/favorite", toggleFavorite);
 
 export default router;

@@ -14,7 +14,7 @@ export const getConversations = async (req, res) => {
         {
           model: ConversationUser,
           where: { userId },
-          attributes: [],
+          attributes: ["favorite"],
         },
         {
           model: User,

@@ -6,6 +6,10 @@ const ConversationUser = sequelize.define("conversation_user", {
     type: DataTypes.STRING,
     defaultValue: "member",
   },
+  favorite: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+  },
 });
 
 export default ConversationUser;
