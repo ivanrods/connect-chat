@@ -52,11 +52,12 @@ export function useConversations() {
       });
 
       const data = await res.json();
+
       if (!res.ok) {
         throw new Error(data.message || "Erro ao criar conversa");
       }
 
-      const conversation = await res.json();
+      const conversation = data;
 
       setConversations((prev) => {
         const exists = prev.some((c) => c.id === conversation.id);
@@ -71,11 +72,31 @@ export function useConversations() {
     }
   };
 
+  const updateConversation = (newMessage) => {
+    setConversations((prev) => {
+      const updated = prev.map((conv) =>
+        conv.id === newMessage.conversationId
+          ? {
+              ...conv,
+              Messages: [newMessage],
+              updatedAt: newMessage.createdAt,
+            }
+          : conv,
+      );
+
+      return updated.sort(
+        (a, b) => new Date(b.updatedAt) - new Date(a.updatedAt),
+      );
+    });
+  };
+
   return {
     conversations,
+    setConversations,
     loading,
     error,
     createConversation,
     refetch: fetchConversations,
+    updateConversation,
   };
 }

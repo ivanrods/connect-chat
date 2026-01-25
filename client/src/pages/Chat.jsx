@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Box, Button, LinearProgress } from "@mui/material";
 
 import { useProfile } from "../hooks/use-profile";
@@ -13,6 +13,7 @@ import { MessageList } from "../components/MessageList";
 import { CreateConversation } from "../components/CreateConversation";
 import { useAlert } from "../context/alert-context";
 import { useFavoriteConversation } from "../hooks/use-favorite-conversation";
+import { useConversationsSocket } from "../hooks/use-conversations-socket";
 
 export default function Chat() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -28,6 +29,7 @@ export default function Chat() {
     loading: loadingConversations,
     error: errorConversations,
     createConversation,
+    updateConversation,
   } = useConversations();
 
   const {
@@ -48,8 +50,18 @@ export default function Chat() {
     setMessages((prev) => [...prev, newMessage]);
   });
 
+  const handleConversationUpdate = useCallback(
+    ({ lastMessage }) => {
+      updateConversation(lastMessage);
+    },
+    [updateConversation],
+  );
+
+  useConversationsSocket(handleConversationUpdate);
+
   const handleSendMessage = async (content) => {
-    await sendMessage(content);
+    const newMessage = await sendMessage(content);
+    updateConversation(newMessage);
   };
 
   const handleToggleFavorite = async (conversationId) => {

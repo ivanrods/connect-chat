@@ -38,7 +38,7 @@ export function Sidebar({
   const { signOut } = useAuth();
 
   const [search, setSearch] = useState("");
-  const [filter, setFilter] = useState("recentes");
+  const [filter, setFilter] = useState("recent");
 
   const filteredConversations = conversations.filter((conversation) => {
     const otherUser = conversation.users.find((u) => u.id !== userId);

@@ -77,6 +77,10 @@ export const createMessage = async (req, res) => {
 
     const io = getIO();
     io.to(`conversation_${conversationId}`).emit("newMessage", fullMessage);
+    io.emit("conversationUpdated", {
+      conversationId,
+      lastMessage: fullMessage,
+    });
 
     return res.status(201).json(fullMessage);
   } catch (err) {
