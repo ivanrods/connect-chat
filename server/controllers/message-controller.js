@@ -1,4 +1,5 @@
 import { Message, Conversation, User } from "../models/index.js";
+import { Op } from "sequelize";
 import { getIO } from "../config/socket.js";
 
 export const getMessages = async (req, res) => {
@@ -30,6 +31,17 @@ export const getMessages = async (req, res) => {
       order: [["createdAt", "ASC"]],
     });
 
+    await Message.update(
+      { isRead: true },
+      {
+        where: {
+          conversationId,
+          senderId: { [Op.ne]: userId },
+          isRead: false,
+        },
+      },
+    );
+
     res.json(messages);
   } catch (err) {
     console.error(err);
@@ -60,6 +72,7 @@ export const createMessage = async (req, res) => {
       conversationId,
       senderId: userId,
       content,
+      isRead: false,
     });
 
     conversation.changed("updatedAt", true);
@@ -80,6 +93,11 @@ export const createMessage = async (req, res) => {
     io.emit("conversationUpdated", {
       conversationId,
       lastMessage: fullMessage,
+    });
+
+    io.emit("unreadMessage", {
+      conversationId,
+      senderId: userId,
     });
 
     return res.status(201).json(fullMessage);

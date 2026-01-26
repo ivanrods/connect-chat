@@ -107,10 +107,33 @@ export function useConversations() {
     );
   };
 
+  const incrementUnread = (conversationId) => {
+    setConversations((prev) =>
+      prev.map((conv) =>
+        conv.id === conversationId
+          ? {
+              ...conv,
+              unreadCount: (conv.unreadCount || 0) + 1,
+            }
+          : conv,
+      ),
+    );
+  };
+
+  const clearUnread = useCallback((conversationId) => {
+    setConversations((prev) =>
+      prev.map((conv) =>
+        conv.id === conversationId ? { ...conv, unread: 0 } : conv,
+      ),
+    );
+  }, []);
+
   return {
     conversations,
     setConversations,
     updateFavorite,
+    incrementUnread,
+    clearUnread,
     loading,
     error,
     createConversation,

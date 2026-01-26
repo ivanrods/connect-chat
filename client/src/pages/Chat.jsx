@@ -15,6 +15,7 @@ import { useAlert } from "../context/alert-context";
 import { useFavoriteConversation } from "../hooks/use-favorite-conversation";
 import { useConversationsSocket } from "../hooks/use-conversations-socket";
 import { useFavoriteSocket } from "../hooks/use-favorite-conversation-socket";
+import { useUnreadSocket } from "../hooks/use-unread-socket";
 
 export default function Chat() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -31,6 +32,8 @@ export default function Chat() {
     createConversation,
     updateConversation,
     updateFavorite,
+    clearUnread,
+    incrementUnread,
   } = useConversations();
 
   const {
@@ -47,9 +50,6 @@ export default function Chat() {
   } = useSendMessage(selectedConversation?.id);
 
   // Socket em tempo real
-  useConversationSocket(selectedConversation?.id, (newMessage) => {
-    setMessages((prev) => [...prev, newMessage]);
-  });
 
   const handleConversationUpdate = useCallback(
     ({ lastMessage }) => {
@@ -86,6 +86,32 @@ export default function Chat() {
   const handleToggleFavorite = async (conversationId) => {
     await toggleFavorite(conversationId);
   };
+
+  //Mostra menssagens não lidas
+  const handleUnread = useCallback(
+    ({ conversationId, senderId }) => {
+      if (!user) return; // 🛑 evita erro user null
+      if (senderId === user.id) return;
+      if (selectedConversation?.id === conversationId) return;
+
+      incrementUnread(conversationId);
+    },
+    [selectedConversation?.id, user?.id, incrementUnread],
+  );
+
+  const handleNewMessage = useCallback((newMessage) => {
+    setMessages((prev) => [...prev, newMessage]);
+  }, []);
+
+  useConversationSocket(selectedConversation?.id, handleNewMessage);
+
+  useUnreadSocket(handleUnread);
+
+  useEffect(() => {
+    if (!selectedConversation) return;
+
+    clearUnread(selectedConversation.id);
+  }, [selectedConversation, clearUnread]);
 
   //Mostra aleta de erros
   const shownErrorRef = useRef(null);
