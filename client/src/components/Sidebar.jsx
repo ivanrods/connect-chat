@@ -152,7 +152,11 @@ export function Sidebar({
                 >
                   <Box gap={2} display="flex" alignItems="center">
                     <Avatar src={otherUser?.avatar} />
-                    <Box display="flex" flexDirection="column" width={300}>
+                    <Box
+                      display="flex"
+                      flexDirection="column"
+                      width={isMobile ? 200 : 300}
+                    >
                       <Typography variant="subtitle1">
                         {otherUser?.name || "Usuário"}
                       </Typography>

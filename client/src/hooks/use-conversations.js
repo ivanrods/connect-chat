@@ -78,7 +78,7 @@ export function useConversations() {
         conv.id === newMessage.conversationId
           ? {
               ...conv,
-              Messages: [newMessage],
+              messages: [newMessage],
               updatedAt: newMessage.createdAt,
             }
           : conv,
@@ -89,10 +89,28 @@ export function useConversations() {
       );
     });
   };
+  const updateFavorite = ({ conversationId, favorite }) => {
+    setConversations((prev) =>
+      prev.map((conv) =>
+        conv.id === conversationId
+          ? {
+              ...conv,
+              conversation_users: [
+                {
+                  ...conv.conversation_users[0],
+                  favorite,
+                },
+              ],
+            }
+          : conv,
+      ),
+    );
+  };
 
   return {
     conversations,
     setConversations,
+    updateFavorite,
     loading,
     error,
     createConversation,

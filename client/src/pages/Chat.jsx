@@ -14,6 +14,7 @@ import { CreateConversation } from "../components/CreateConversation";
 import { useAlert } from "../context/alert-context";
 import { useFavoriteConversation } from "../hooks/use-favorite-conversation";
 import { useConversationsSocket } from "../hooks/use-conversations-socket";
+import { useFavoriteSocket } from "../hooks/use-favorite-conversation-socket";
 
 export default function Chat() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -21,7 +22,6 @@ export default function Chat() {
   const [selectedConversation, setSelectedConversation] = useState(null);
   const { showAlert } = useAlert();
   const { toggleFavorite } = useFavoriteConversation();
-
   const { user, loading: loadingProfile, error: errorProfile } = useProfile();
 
   const {
@@ -30,6 +30,7 @@ export default function Chat() {
     error: errorConversations,
     createConversation,
     updateConversation,
+    updateFavorite,
   } = useConversations();
 
   const {
@@ -60,16 +61,30 @@ export default function Chat() {
   useConversationsSocket(handleConversationUpdate);
 
   const handleSendMessage = async (content) => {
-    const newMessage = await sendMessage(content);
-    updateConversation(newMessage);
+    await sendMessage(content);
   };
 
+  //Atualizar favoritos
+  const handleFavoriteUpdate = useCallback(
+    ({ conversationId, favorite }) => {
+      updateFavorite({ conversationId, favorite });
+
+      setSelectedConversation((prev) =>
+        prev?.id === conversationId
+          ? {
+              ...prev,
+              conversation_users: [{ ...prev.conversation_users[0], favorite }],
+            }
+          : prev,
+      );
+    },
+    [updateFavorite],
+  );
+
+  useFavoriteSocket(handleFavoriteUpdate);
+
   const handleToggleFavorite = async (conversationId) => {
-    try {
-      await toggleFavorite(conversationId);
-    } catch (err) {
-      console.error(err);
-    }
+    await toggleFavorite(conversationId);
   };
 
   //Mostra aleta de erros
