@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import { useEffect, useMemo, useRef } from "react";
 import { formatTime, formatDay } from "../utils/format-date";
+import DoneAllIcon from "@mui/icons-material/DoneAll";
 
 export function MessageList({ messages, loading, userId }) {
   const messageRef = useRef(null);
@@ -102,14 +103,21 @@ export function MessageList({ messages, loading, userId }) {
                     </Paper>
                   )}
                 </Box>
-
-                <Typography
-                  variant="caption"
-                  color="text.primary"
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  gap={2}
                   alignSelf={isMe ? "flex-end" : "flex-start"}
                 >
-                  {formatTime(msg.createdAt)}
-                </Typography>
+                  <Typography variant="caption" color="text.primary">
+                    {formatTime(msg.createdAt)}
+                  </Typography>{" "}
+                  {msg.isRead ? (
+                    <DoneAllIcon fontSize="small" color="primary" />
+                  ) : (
+                    <DoneAllIcon fontSize="small" color="secondary" />
+                  )}
+                </Box>{" "}
               </Box>
             );
           })}
