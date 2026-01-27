@@ -111,13 +111,17 @@ export function MessageList({ messages, loading, userId }) {
                 >
                   <Typography variant="caption" color="text.primary">
                     {formatTime(msg.createdAt)}
-                  </Typography>{" "}
-                  {msg.isRead ? (
-                    <DoneAllIcon fontSize="small" color="primary" />
-                  ) : (
-                    <DoneAllIcon fontSize="small" color="secondary" />
+                  </Typography>
+                  {isMe && (
+                    <Box>
+                      {msg.isRead ? (
+                        <DoneAllIcon fontSize="small" color="primary" />
+                      ) : (
+                        <DoneAllIcon fontSize="small" color="secondary" />
+                      )}
+                    </Box>
                   )}
-                </Box>{" "}
+                </Box>
               </Box>
             );
           })}
