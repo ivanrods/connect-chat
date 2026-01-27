@@ -9,7 +9,7 @@ export function SocketProvider({ children }) {
   const [socket, setSocket] = useState(null);
   const { user } = useProfile();
 
-  // 1️⃣ Conecta o socket
+  // Conecta o socket
   useEffect(() => {
     const socketInstance = io(apiUrl, {
       withCredentials: true,
@@ -25,12 +25,10 @@ export function SocketProvider({ children }) {
     };
   }, []);
 
-  // 2️⃣ Entra na sala do usuário (ESSENCIAL)
+  // Entra na sala do usuário
   useEffect(() => {
     if (!socket || !user?.id) return;
-
     socket.emit("joinUser", user.id);
-    console.log("🟢 joinUser emitido:", user.id);
   }, [socket, user?.id]);
 
   return (

@@ -4,6 +4,7 @@ import {
   ConversationUser,
   Message,
 } from "../models/index.js";
+import { Op } from "sequelize";
 
 export const getConversations = async (req, res) => {
   const userId = req.user.id;
@@ -21,6 +22,7 @@ export const getConversations = async (req, res) => {
           attributes: ["id", "name", "avatar"],
           through: { attributes: [] },
         },
+        // 🔹 Última mensagem (continua igual)
         {
           model: Message,
           limit: 1,
@@ -33,11 +35,31 @@ export const getConversations = async (req, res) => {
             },
           ],
         },
+        // Mensagens não lidas
+        {
+          model: Message,
+          as: "unreadMessages",
+          attributes: ["id"],
+          where: {
+            isRead: false,
+            senderId: { [Op.ne]: userId },
+          },
+          required: false,
+        },
       ],
       order: [["updatedAt", "DESC"]],
     });
 
-    res.json(conversations);
+    const formatted = conversations.map((conv) => {
+      const json = conv.toJSON();
+
+      return {
+        ...json,
+        unreadCount: json.unreadMessages?.length || 0,
+      };
+    });
+
+    res.json(formatted);
   } catch (err) {
     console.error(err);
     res.status(500).json({

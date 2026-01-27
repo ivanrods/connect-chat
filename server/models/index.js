@@ -44,5 +44,9 @@ Message.belongsTo(User, {
   foreignKey: "senderId",
   as: "sender",
 });
+Conversation.hasMany(Message, {
+  as: "unreadMessages",
+  foreignKey: "conversationId",
+});
 
 export { User, Conversation, Message, ConversationUser };

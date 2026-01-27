@@ -9,10 +9,6 @@ export function useUnreadSocket(onUnread) {
 
     socket.on("unreadMessage", onUnread);
 
-    socket.on("unreadMessage", (data) => {
-      console.log("📩 unread recebido:", data);
-    });
-
     return () => {
       socket.off("unreadMessage", onUnread);
     };
