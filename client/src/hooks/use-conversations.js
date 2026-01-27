@@ -24,7 +24,13 @@ export function useConversations() {
       }
 
       const data = await res.json();
-      setConversations(data);
+
+      const formatted = data.map((conv) => ({
+        ...conv,
+        unreadCount: conv.unreadCount || 0,
+      }));
+
+      setConversations(formatted);
     } catch (err) {
       console.error(err);
       setError(err.message);
@@ -80,6 +86,7 @@ export function useConversations() {
               ...conv,
               messages: [newMessage],
               updatedAt: newMessage.createdAt,
+              unreadCount: conv.unreadCount ?? 0,
             }
           : conv,
       );
@@ -89,6 +96,7 @@ export function useConversations() {
       );
     });
   };
+
   const updateFavorite = ({ conversationId, favorite }) => {
     setConversations((prev) =>
       prev.map((conv) =>
@@ -107,23 +115,24 @@ export function useConversations() {
     );
   };
 
-  const incrementUnread = (conversationId) => {
-    setConversations((prev) =>
-      prev.map((conv) =>
+  const incrementUnread = useCallback((conversationId) => {
+    setConversations((prev) => {
+      const exists = prev.some((c) => c.id === conversationId);
+
+      if (!exists) return prev;
+
+      return prev.map((conv) =>
         conv.id === conversationId
-          ? {
-              ...conv,
-              unreadCount: (conv.unreadCount || 0) + 1,
-            }
+          ? { ...conv, unreadCount: (conv.unreadCount || 0) + 1 }
           : conv,
-      ),
-    );
-  };
+      );
+    });
+  }, []);
 
   const clearUnread = useCallback((conversationId) => {
     setConversations((prev) =>
       prev.map((conv) =>
-        conv.id === conversationId ? { ...conv, unread: 0 } : conv,
+        conv.id === conversationId ? { ...conv, unreadCount: 0 } : conv,
       ),
     );
   }, []);

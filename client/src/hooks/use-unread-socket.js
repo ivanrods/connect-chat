@@ -5,9 +5,13 @@ export function useUnreadSocket(onUnread) {
   const socket = useSocket();
 
   useEffect(() => {
-    if (!socket) return;
+    if (!socket || !onUnread) return;
 
     socket.on("unreadMessage", onUnread);
+
+    socket.on("unreadMessage", (data) => {
+      console.log("📩 unread recebido:", data);
+    });
 
     return () => {
       socket.off("unreadMessage", onUnread);

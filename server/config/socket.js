@@ -14,6 +14,11 @@ export function setupSocket(server) {
   io.on("connection", (socket) => {
     console.log("Usuário conectado:", socket.id);
 
+    socket.on("joinUser", (userId) => {
+      socket.join(`user_${userId}`);
+      console.log(`Usuário ${userId} entrou na sala user_${userId}`);
+    });
+
     socket.on("joinConversation", (conversationId) => {
       socket.join(`conversation_${conversationId}`);
     });

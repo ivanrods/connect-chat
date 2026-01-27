@@ -60,7 +60,7 @@ export const createMessage = async (req, res) => {
       include: {
         model: User,
         where: { id: userId },
-        attributes: [],
+        attributes: ["id"],
       },
     });
 
@@ -95,9 +95,17 @@ export const createMessage = async (req, res) => {
       lastMessage: fullMessage,
     });
 
-    io.emit("unreadMessage", {
-      conversationId,
-      senderId: userId,
+    const users = await conversation.getUsers({
+      attributes: ["id"],
+    });
+
+    users.forEach((u) => {
+      if (u.id !== userId) {
+        io.to(`user_${u.id}`).emit("unreadMessage", {
+          conversationId,
+          senderId: userId,
+        });
+      }
     });
 
     return res.status(201).json(fullMessage);

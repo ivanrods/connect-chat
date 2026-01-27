@@ -50,7 +50,6 @@ export default function Chat() {
   } = useSendMessage(selectedConversation?.id);
 
   // Socket em tempo real
-
   const handleConversationUpdate = useCallback(
     ({ lastMessage }) => {
       updateConversation(lastMessage);
@@ -90,12 +89,13 @@ export default function Chat() {
   //Mostra menssagens não lidas
   const handleUnread = useCallback(
     ({ conversationId, senderId }) => {
-      if (!user) return; // 🛑 evita erro user null
+      if (!user?.id) return;
       if (senderId === user.id) return;
       if (selectedConversation?.id === conversationId) return;
 
       incrementUnread(conversationId);
     },
+
     [selectedConversation?.id, user?.id, incrementUnread],
   );
 

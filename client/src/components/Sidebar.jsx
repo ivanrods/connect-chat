@@ -51,7 +51,7 @@ export function Sidebar({
       return isFavorite;
     }
     if (filter === "unread") {
-      return;
+      return conversation.unreadCount > 0;
     }
 
     return (
@@ -139,7 +139,6 @@ export function Sidebar({
               const otherUser = conversation.users.find((u) => u.id !== userId);
               const isSelected = selectedConversation?.id === conversation.id;
               const lastMessage = conversation.messages?.[0];
-              const unreadCount = conversation.messages?.unreadCount;
 
               return (
                 <ListItemButton
@@ -155,8 +154,8 @@ export function Sidebar({
                   <Box gap={2} display="flex" alignItems="center">
                     <Badge
                       color="primary"
-                      badgeContent={unreadCount}
-                      //invisible={!conversation.unreadCount}
+                      badgeContent={conversation.unreadCount}
+                      invisible={!conversation.unreadCount}
                     >
                       <Avatar src={otherUser?.avatar} />
                     </Badge>
