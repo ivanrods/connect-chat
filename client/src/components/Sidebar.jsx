@@ -44,20 +44,21 @@ export function Sidebar({
   const filteredConversations = conversations.filter((conversation) => {
     const otherUser = conversation.users.find((u) => u.id !== userId);
     const isFavorite = conversation.conversation_users?.[0]?.favorite;
+    const userSearch =
+      otherUser?.name?.toLowerCase().includes(search.toLowerCase()) ||
+      otherUser?.email?.toLowerCase().includes(search.toLowerCase());
 
     if (!otherUser) return false;
 
     if (filter === "favorites") {
-      return isFavorite;
-    }
-    if (filter === "unread") {
-      return conversation.unreadCount > 0;
+      return isFavorite && userSearch;
     }
 
-    return (
-      otherUser.name?.toLowerCase().includes(search.toLowerCase()) ||
-      otherUser.email?.toLowerCase().includes(search.toLowerCase())
-    );
+    if (filter === "unread") {
+      return conversation.unreadCount > 0 && userSearch;
+    }
+
+    return userSearch;
   });
 
   if (loading) {
