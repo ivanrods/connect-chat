@@ -17,7 +17,6 @@ export const toggleFavorite = async (req, res) => {
     relation.favorite = !relation.favorite;
     await relation.save();
 
-    res.json({ favorite: relation.favorite });
     const io = getIO();
 
     io.emit("toggleFavorite", {
