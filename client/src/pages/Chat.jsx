@@ -172,6 +172,7 @@ export default function Chat() {
           open={openPofile}
           onClose={() => setOpenPofile(false)}
           onEdit={updateUser}
+          user={user}
         />
       </Box>
 

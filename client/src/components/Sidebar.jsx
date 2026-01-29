@@ -103,9 +103,8 @@ export function Sidebar({
                     fontWeight="bold"
                     display="flex"
                     alignItems="center"
-                    gap={1}
                   >
-                    {user.name}{" "}
+                    {user.name}
                     <IconButton>
                       <EditIcon
                         fontSize="small"

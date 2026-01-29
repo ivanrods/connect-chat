@@ -5,15 +5,111 @@ import {
   TextField,
   Button,
   Box,
+  CircularProgress,
+  InputAdornment,
+  Avatar,
+  Typography,
 } from "@mui/material";
+import PersonIcon from "@mui/icons-material/Person";
+import MailIcon from "@mui/icons-material/Mail";
+import SendIcon from "@mui/icons-material/Send";
 
-export function EditProfile({ open, onClose }) {
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { registerSchema } from "../lib/schemas/auth-schema";
+import { useAlert } from "../context/alert-context";
+
+export function EditProfile({ open, onClose, updateProfile, user, loading }) {
+  const { showAlert } = useAlert();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(registerSchema),
+  });
+
+  const onSubmit = async (data) => {
+    await updateProfile(data);
+    try {
+      showAlert("Perfil editado", "success");
+    } catch (error) {
+      showAlert(error?.message || "Erro ao editar perfil", "error");
+    }
+  };
   return (
-    <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
+    <Dialog open={open} onClose={onClose} fullWidth maxWidth="xs">
       <DialogTitle>Editar Perfil</DialogTitle>
-
       <DialogContent>
-        <Box>Perfil</Box>
+        <Box display="flex" flexDirection="column" alignItems="center" gap={4}>
+          <Avatar sx={{ width: 130, height: 130 }} src={user.avatar} />
+
+          <Box
+            component="form"
+            display="flex"
+            flexDirection="column"
+            width="100%"
+            gap={2}
+            mt={1}
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            <TextField
+              type="text"
+              placeholder="Nome"
+              value={user.name}
+              error={errors.name}
+              helperText={errors.name?.message}
+              fullWidth
+              slotProps={{
+                input: {
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <PersonIcon />
+                    </InputAdornment>
+                  ),
+                },
+              }}
+              {...register("name")}
+            />
+            <TextField
+              type="email"
+              placeholder="E-mail"
+              value={user.email}
+              error={errors.email}
+              helperText={errors.email?.message}
+              fullWidth
+              slotProps={{
+                input: {
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <MailIcon />
+                    </InputAdornment>
+                  ),
+                },
+              }}
+              {...register("email")}
+            />
+            <Typography variant="caption">
+              Seu perfil ajuda as pessoas a reconhecerem você
+            </Typography>
+            <Box display="flex" justifyContent="end">
+              <Button
+                type="submit"
+                size="large"
+                variant="contained"
+                disabled={loading}
+                sx={{
+                  fontWeight: "600",
+                  color: "white",
+                  textTransform: "none",
+                }}
+              >
+                Salvar
+              </Button>
+            </Box>
+          </Box>
+        </Box>
       </DialogContent>
     </Dialog>
   );
