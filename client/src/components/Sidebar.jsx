@@ -20,6 +20,7 @@ import { useState } from "react";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import LogoutIcon from "@mui/icons-material/Logout";
 import SearchIcon from "@mui/icons-material/Search";
+import EditIcon from "@mui/icons-material/Edit";
 
 import { useAuth } from "../context/auth-context";
 
@@ -33,6 +34,7 @@ export function Sidebar({
   user,
   userId,
   onAddConversation,
+  handleProfile,
 }) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
@@ -96,8 +98,21 @@ export function Sidebar({
               <Box display="flex" gap={2}>
                 <Avatar src={user ? user.avatar : "?"} />
                 <Box>
-                  <Typography variant="body1" fontWeight="bold">
-                    {user.name}
+                  <Typography
+                    variant="body1"
+                    fontWeight="bold"
+                    display="flex"
+                    alignItems="center"
+                    gap={1}
+                  >
+                    {user.name}{" "}
+                    <IconButton>
+                      <EditIcon
+                        fontSize="small"
+                        color="primary"
+                        onClick={() => handleProfile()}
+                      />
+                    </IconButton>
                   </Typography>
                   <Typography variant="body2">{user.email}</Typography>
                 </Box>

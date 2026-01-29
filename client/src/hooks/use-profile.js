@@ -42,6 +42,8 @@ export function useProfile() {
     }
   }, [apiUrl]);
 
+  const updateUser = async () => {};
+
   useEffect(() => {
     fetchUser();
   }, [fetchUser]);
@@ -52,5 +54,6 @@ export function useProfile() {
     error,
     refetchUser: fetchUser,
     setUser,
+    updateUser,
   };
 }

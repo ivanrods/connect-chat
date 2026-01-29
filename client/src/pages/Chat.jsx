@@ -16,14 +16,21 @@ import { useFavoriteConversation } from "../hooks/use-favorite-conversation";
 import { useConversationsSocket } from "../hooks/use-conversations-socket";
 import { useFavoriteSocket } from "../hooks/use-favorite-conversation-socket";
 import { useUnreadSocket } from "../hooks/use-unread-socket";
+import { EditProfile } from "../components/EditProfile";
 
 export default function Chat() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const [openPofile, setOpenPofile] = useState(false);
   const [selectedConversation, setSelectedConversation] = useState(null);
   const { showAlert } = useAlert();
   const { toggleFavorite } = useFavoriteConversation();
-  const { user, loading: loadingProfile, error: errorProfile } = useProfile();
+  const {
+    user,
+    loading: loadingProfile,
+    error: errorProfile,
+    updateUser,
+  } = useProfile();
 
   const {
     conversations,
@@ -154,11 +161,17 @@ export default function Chat() {
           user={user}
           userId={user.id}
           onAddConversation={() => setModalOpen(true)}
+          handleProfile={() => setOpenPofile(true)}
         />
         <CreateConversation
           open={modalOpen}
           onClose={() => setModalOpen(false)}
           onCreate={createConversation}
+        />
+        <EditProfile
+          open={openPofile}
+          onClose={() => setOpenPofile(false)}
+          onEdit={updateUser}
         />
       </Box>
 
