@@ -65,7 +65,9 @@ const Register = () => {
         display="flex"
         justifyContent="center"
         alignItems="center"
-        sx={{ width: "100%", maxWidth: 600, padding: 4 }}
+        width="100%"
+        maxWidth={isMobile ? "100%" : "40%"}
+        padding={4}
       >
         <Paper
           elevation={0}

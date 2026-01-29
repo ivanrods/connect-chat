@@ -41,7 +41,7 @@ const Login = () => {
   const onSubmit = async (data) => {
     try {
       await signIn(data);
-      navigate("/chat");
+      navigate("/");
     } catch (error) {
       showAlert(error?.message || "Erro ao fazer login", "error");
     }
@@ -54,7 +54,7 @@ const Login = () => {
         justifyContent="center"
         alignItems="center"
         width="100%"
-        maxWidth={600}
+        maxWidth={isMobile ? "100%" : "40%"}
         padding={4}
       >
         <Paper
@@ -163,7 +163,7 @@ const Login = () => {
           src="background.jpg"
           width="100%"
           sx={{
-            objectFit: "none",
+            objectFit: "cover",
           }}
         />
       )}
