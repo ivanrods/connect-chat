@@ -28,7 +28,7 @@ export function CreateConversation({ open, onClose, onCreate }) {
   };
 
   return (
-    <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
+    <Dialog open={open} onClose={onClose} fullWidth maxWidth="xs">
       <DialogTitle>Nova conversa</DialogTitle>
 
       <DialogContent>
