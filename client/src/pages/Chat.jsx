@@ -171,8 +171,9 @@ export default function Chat() {
         <EditProfile
           open={openPofile}
           onClose={() => setOpenPofile(false)}
-          onEdit={updateUser}
           user={user}
+          updateProfile={updateUser}
+          loading={loadingProfile}
         />
       </Box>
 

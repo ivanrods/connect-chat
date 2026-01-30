@@ -16,7 +16,7 @@ import SendIcon from "@mui/icons-material/Send";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { registerSchema } from "../lib/schemas/auth-schema";
+import { userSchema } from "../lib/schemas/auth-schema";
 import { useAlert } from "../context/alert-context";
 
 export function EditProfile({ open, onClose, updateProfile, user, loading }) {
@@ -27,15 +27,20 @@ export function EditProfile({ open, onClose, updateProfile, user, loading }) {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: zodResolver(registerSchema),
+    resolver: zodResolver(userSchema),
+    defaultValues: {
+      name: user.name,
+      email: user.email,
+    },
   });
 
   const onSubmit = async (data) => {
-    await updateProfile(data);
     try {
-      showAlert("Perfil editado", "success");
+      await updateProfile(data);
+      showAlert("Perfil atualizado", "success");
+      onClose();
     } catch (error) {
-      showAlert(error?.message || "Erro ao editar perfil", "error");
+      showAlert(error?.message || "Erro ao atualiz perfil", "error");
     }
   };
   return (
@@ -57,7 +62,6 @@ export function EditProfile({ open, onClose, updateProfile, user, loading }) {
             <TextField
               type="text"
               placeholder="Nome"
-              value={user.name}
               error={errors.name}
               helperText={errors.name?.message}
               fullWidth
@@ -75,7 +79,6 @@ export function EditProfile({ open, onClose, updateProfile, user, loading }) {
             <TextField
               type="email"
               placeholder="E-mail"
-              value={user.email}
               error={errors.email}
               helperText={errors.email?.message}
               fullWidth

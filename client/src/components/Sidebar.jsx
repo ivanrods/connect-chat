@@ -95,25 +95,39 @@ export function Sidebar({
               gap={1}
               justifyContent="space-between"
             >
-              <Box display="flex" gap={2}>
+              <Box
+                display="flex"
+                gap={2}
+                alignItems="center"
+                justifyContent="center"
+                onClick={() => handleProfile()}
+              >
                 <Avatar src={user ? user.avatar : "?"} />
                 <Box>
+                  <Box display="flex" gap={1}>
+                    <Typography
+                      variant="body1"
+                      fontWeight="bold"
+                      alignItems="center"
+                      noWrap
+                      textOverflow="ellipsis"
+                      whiteSpace="nowrap"
+                      width={isMobile ? 150 : 230}
+                    >
+                      {user.name}
+                    </Typography>
+                    <EditIcon fontSize="small" color="primary" />
+                  </Box>
+
                   <Typography
-                    variant="body1"
-                    fontWeight="bold"
-                    display="flex"
-                    alignItems="center"
+                    variant="body2"
+                    noWrap
+                    textOverflow="ellipsis"
+                    whiteSpace="nowrap"
+                    width={isMobile ? 150 : 250}
                   >
-                    {user.name}
-                    <IconButton>
-                      <EditIcon
-                        fontSize="small"
-                        color="primary"
-                        onClick={() => handleProfile()}
-                      />
-                    </IconButton>
+                    {user.email}
                   </Typography>
-                  <Typography variant="body2">{user.email}</Typography>
                 </Box>
               </Box>
               <IconButton onClick={() => signOut()} title="Sair">
@@ -180,7 +194,13 @@ export function Sidebar({
                       flexDirection="column"
                       width={isMobile ? 200 : 300}
                     >
-                      <Typography variant="subtitle1">
+                      <Typography
+                        variant="subtitle1"
+                        noWrap
+                        textOverflow="ellipsis"
+                        whiteSpace="nowrap"
+                        width={isMobile ? 200 : 300}
+                      >
                         {otherUser?.name || "Usuário"}
                       </Typography>
                       <Typography
