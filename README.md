@@ -1,125 +1,101 @@
-# Connect Chat
+# ConnectChat
 
-## Descrição
+ConnectChat é uma aplicação de **chat em tempo real**, desenvolvida com foco em **performance, escalabilidade e experiência do usuário**, utilizando **React no front-end**, **Node.js no back-end** e **Socket.IO** para comunicação em tempo real.
 
-O **Connect Chat** é uma aplicação **Full Stack** de chat em tempo real, desenvolvida para permitir que usuários façam **login**, **troquem mensagens instantâneas** e **enviem imagens** em uma única página.
-
-O projeto foi pensado para demonstrar conceitos importantes de aplicações modernas, como autenticação com JWT, comunicação em tempo real com Socket.IO, validação de formulários, upload de arquivos e persistência de dados.
+O projeto simula funcionalidades presentes em aplicações reais como WhatsApp e Telegram, incluindo **mensagens em tempo real, contagem de mensagens não lidas, favoritos e atualização instantânea da interface**.
 
 ---
 
-## Objetivo do Projeto
+## Demonstração
 
-- Praticar comunicação em tempo real
-- Implementar autenticação segura
-- Trabalhar com upload de imagens
-- Integrar Front-end e Back-end
-- Aplicar boas práticas em projetos Full Stack
+> Em breve: GIF / vídeo curto mostrando o chat em funcionamento
 
 ---
 
 ## Funcionalidades
 
-- Login de usuário com autenticação JWT
-- Chat em tempo real usando Socket.IO
-- Envio de mensagens instantâneas
-- Upload de imagens no chat
-- Validação de formulários com React Hook Form + Zod
-- Interface SPA (Single Page Application)
-- Persistência de dados com SQLite
+### Autenticação
 
----
+- Login com JWT
+- Rotas protegidas
+- Sessão persistente
 
-## Tecnologias Utilizadas
+### Chat em tempo real
+
+- Envio e recebimento de mensagens via **Socket.IO**
+- Atualização instantânea das conversas
+- Notificação de mensagens não lidas
+
+### Mensagens não lidas
+
+- Contador de mensagens não lidas por conversa
+- Incremento automático ao receber mensagens
+- Reset ao abrir a conversa
+
+### Favoritos
+
+- Marcar / desmarcar conversas como favoritas
+- Atualização em tempo real para o usuário
+- Filtro de conversas favoritas
+
+### Conversas
+
+- Lista ordenada por atividade recente
+- Última mensagem exibida na sidebar
+- Busca por nome ou e-mail
+
+### Performance
+
+- Paginação de mensagens no back-end
+- Renderização otimizada no front-end
+- Arquitetura preparada para grandes volumes de mensagens
+
+## Arquitetura
 
 ### Front-end
 
-- React
-- React Hook Form
-- Zod
+- React + Vite
+- Hooks personalizados
+- Context API
+- Material UI
 - Socket.IO Client
-- JavaScript / TypeScript
 
 ### Back-end
 
 - Node.js
 - Express
+- Sequelize
+- PostgreSQL
 - Socket.IO
-- JSON Web Token (JWT)
-- Multer (upload de imagens)
-- Sequelize (ORM)
-- SQLite3
+- JWT
 
----
+### Comunicação em tempo real
 
-## Como Rodar o Projeto Localmente
+- Salas por usuário (`user_{id}`)
+- Salas por conversa (`conversation_{id}`)
+- Eventos customizados:
+  - `newMessage`
+  - `unreadMessage`
+  - `conversationUpdated`
+  - `toggleFavorite`
 
-### 🔧 Pré-requisitos
+## Estrutura de Pastas (resumida)
 
-- Node.js instalado
-- npm ou yarn
-
----
-
-### ▶ Back-end
-
-```bash
-# Acesse a pasta do backend
-cd server
-
-# Instale as dependências
-npm install
-
-
-# Inicie o servidor
-npm run dev
+```txt
+connect-chat/
+├── server/
+│   ├── controllers/
+│   ├── models/
+│   ├── routes/
+│   ├── config/
+│   │   └── socket.js
+│   └── app.js
+│
+├── web/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── hooks/
+│   │   ├── context/
+│   │   ├── pages/
+│   └── main.jsx
 ```
-
-O servidor será iniciado em:
-
-```
-http://localhost:3333
-```
-
----
-
-### ▶ Front-end
-
-```bash
-# Acesse a pasta do frontend
-cd client
-
-# Instale as dependências
-npm install
-
-# Inicie a aplicação
-npm run dev
-```
-
-A aplicação estará disponível em:
-
-```
-http://localhost:5173
-```
-
----
-
-## Autenticação
-
-- A autenticação é feita via **JWT**
-- O token é gerado no login e enviado nas requisições protegidas
-
----
-
-## Upload de Imagens
-
-- O upload é feito utilizando **Multer**
-- As imagens podem ser enviadas diretamente no chat
-- O backend valida e armazena os arquivos
-
----
-
-## Validação de Formulários
-
-- React Hook Form para gerenciamento de formulários
-- Zod para validações e tipagem segura
