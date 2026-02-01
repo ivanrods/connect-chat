@@ -1,4 +1,11 @@
-import { Box, Avatar, Typography, IconButton } from "@mui/material";
+import {
+  Box,
+  Avatar,
+  Typography,
+  IconButton,
+  useTheme,
+  useMediaQuery,
+} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import StarIcon from "@mui/icons-material/Star";
@@ -9,6 +16,9 @@ export function ChatHeader({
   onMenuClick,
   onToggleFavorite,
 }) {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
   if (!conversation) return null;
 
   const otherUser = conversation.users.find((user) => user.id !== userId);
@@ -31,7 +41,13 @@ export function ChatHeader({
         )}
 
         <Avatar src={otherUser.avatar} />
-        <Typography variant="subtitle1">
+        <Typography
+          variant="subtitle1"
+          noWrap
+          textOverflow="ellipsis"
+          whiteSpace="nowrap"
+          maxWidth={isMobile ? 200 : "100%"}
+        >
           {otherUser?.name || "Usuário"}
         </Typography>
       </Box>

@@ -112,7 +112,7 @@ export function Sidebar({
                       noWrap
                       textOverflow="ellipsis"
                       whiteSpace="nowrap"
-                      width={isMobile ? 150 : 230}
+                      maxWidth={isMobile ? 150 : 230}
                     >
                       {user.name}
                     </Typography>
@@ -164,6 +164,11 @@ export function Sidebar({
           </Box>
 
           <List>
+            {filteredConversations.length === 0 && (
+              <Typography variant="subtitle1" textAlign="center">
+                Nenhuma conversa encontrada
+              </Typography>
+            )}
             {filteredConversations.map((conversation) => {
               const otherUser = conversation.users.find((u) => u.id !== userId);
               const isSelected = selectedConversation?.id === conversation.id;
