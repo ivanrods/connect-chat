@@ -15,6 +15,9 @@ const User = sequelize.define("user", {
   },
   password: DataTypes.STRING,
   avatar: DataTypes.STRING,
+  avatarPublicId: {
+    type: DataTypes.STRING,
+  },
 });
 
 export default User;
