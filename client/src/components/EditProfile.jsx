@@ -9,9 +9,11 @@ import {
   InputAdornment,
   Avatar,
   Typography,
+  IconButton,
 } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import MailIcon from "@mui/icons-material/Mail";
+import CameraAltIcon from "@mui/icons-material/CameraAlt";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -25,6 +27,7 @@ export function EditProfile({
   updateProfile,
   updateAvatar,
   user,
+  refetchUser,
   loading,
 }) {
   const { showAlert } = useAlert();
@@ -65,8 +68,9 @@ export function EditProfile({
       if (avatarFile) {
         await updateAvatar(avatarFile);
       }
-      showAlert("Perfil atualizado", "success");
+      await refetchUser();
       onClose();
+      showAlert("Perfil atualizado", "success");
     } catch (error) {
       showAlert(error?.message || "Erro ao atualiz perfil", "error");
     }
@@ -84,9 +88,32 @@ export function EditProfile({
       <DialogTitle>Editar Perfil</DialogTitle>
       <DialogContent>
         <Box display="flex" flexDirection="column" alignItems="center" gap={4}>
-          <Avatar sx={{ width: 130, height: 130 }} src={avatarPreview} />
+          <Box position="relative">
+            <Avatar src={avatarPreview} sx={{ width: 130, height: 130 }} />
 
-          <input type="file" accept="image/*" onChange={handleAvatarChange} />
+            <IconButton
+              component="label"
+              sx={{
+                position: "absolute",
+                bottom: 4,
+                right: 4,
+                backgroundColor: "white",
+                boxShadow: 2,
+                "&:hover": {
+                  backgroundColor: "#ddd",
+                },
+              }}
+            >
+              <CameraAltIcon color="primary" fontSize="small" />
+
+              <input
+                hidden
+                type="file"
+                accept="image/*"
+                onChange={handleAvatarChange}
+              />
+            </IconButton>
+          </Box>
 
           <Box
             component="form"

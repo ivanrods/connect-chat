@@ -31,6 +31,7 @@ export default function Chat() {
     error: errorProfile,
     updateUser,
     uploadAvatar,
+    refetchUser,
   } = useProfile();
 
   const {
@@ -175,6 +176,7 @@ export default function Chat() {
           user={user}
           updateProfile={updateUser}
           updateAvatar={uploadAvatar}
+          refetchUser={refetchUser}
           loading={loadingProfile}
         />
       </Box>
