@@ -91,7 +91,7 @@ connect-chat/
 │   │   └── socket.js
 │   └── app.js
 │
-├── web/
+├── client/
 │   ├── src/
 │   │   ├── components/
 │   │   ├── hooks/

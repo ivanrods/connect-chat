@@ -102,6 +102,19 @@ export function MessageList({ messages, loading, userId }) {
                       <Typography variant="body1">{msg.content}</Typography>
                     </Paper>
                   )}
+                  {msg.imageUrl && (
+                    <Box mb={msg.content ? 1 : 0}>
+                      <img
+                        src={msg.imageUrl}
+                        alt="imagem enviada"
+                        style={{
+                          maxWidth: "100%",
+                          borderRadius: 8,
+                          cursor: "pointer",
+                        }}
+                      />
+                    </Box>
+                  )}
                 </Box>
                 <Box
                   display="flex"
