@@ -12,12 +12,12 @@ import {
 } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import MailIcon from "@mui/icons-material/Mail";
-import SendIcon from "@mui/icons-material/Send";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { userSchema } from "../lib/schemas/auth-schema";
 import { useAlert } from "../context/alert-context";
+import { useEffect, useState } from "react";
 
 export function EditProfile({
   open,
@@ -28,6 +28,8 @@ export function EditProfile({
   loading,
 }) {
   const { showAlert } = useAlert();
+  const [avatarFile, setAvatarFile] = useState(null);
+  const [avatarPreview, setAvatarPreview] = useState(user.avatar);
 
   const {
     register,
@@ -44,30 +46,47 @@ export function EditProfile({
   function handleAvatarChange(e) {
     const file = e.target.files[0];
 
-    if (file) {
-      updateAvatar(file);
+    if (file.size > 2 * 1024 * 1024) {
+      showAlert("Imagem muito grande (máx 2MB)", "warning");
+      return;
     }
+
+    if (!file) return;
+
+    setAvatarFile(file);
+
+    const previewUrl = URL.createObjectURL(file);
+    setAvatarPreview(previewUrl);
   }
 
   const onSubmit = async (data) => {
     try {
       await updateProfile(data);
+      if (avatarFile) {
+        await updateAvatar(avatarFile);
+      }
       showAlert("Perfil atualizado", "success");
       onClose();
     } catch (error) {
       showAlert(error?.message || "Erro ao atualiz perfil", "error");
     }
   };
+
+  useEffect(() => {
+    if (!open) {
+      setAvatarFile(null);
+      setAvatarPreview(user.avatar);
+    }
+  }, [open, user.avatar]);
+
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="xs">
       <DialogTitle>Editar Perfil</DialogTitle>
       <DialogContent>
         <Box display="flex" flexDirection="column" alignItems="center" gap={4}>
-          <Avatar sx={{ width: 130, height: 130 }} src={user.avatar} />
+          <Avatar sx={{ width: 130, height: 130 }} src={avatarPreview} />
 
           <input type="file" accept="image/*" onChange={handleAvatarChange} />
-
-          {loading && <p>Enviando...</p>}
 
           <Box
             component="form"
