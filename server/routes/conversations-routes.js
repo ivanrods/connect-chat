@@ -10,6 +10,7 @@ import {
 
 import { toggleFavorite } from "../controllers/favorite-controller.js";
 import { authenticateToken } from "../middlewares/authenticate-token.js";
+import upload from "../config/upload.js";
 
 const router = Router();
 
@@ -18,6 +19,13 @@ router.get("/", getConversations);
 router.post("/", createConversation);
 router.get("/:id/messages", getMessages);
 router.post("/:id/messages", createMessage);
+router.post(
+  "/:id/messages/upload",
+  authenticateToken,
+  upload.single("image"),
+  createMessage,
+);
+
 router.patch("/:id/favorite", toggleFavorite);
 
 export default router;

@@ -51,8 +51,22 @@ export const getMessages = async (req, res) => {
 
 export const createMessage = async (req, res) => {
   const { id: conversationId } = req.params;
-  const { content } = req.body;
+
+  const { content } = req.body || {};
+
   const userId = req.user.id;
+
+  let imageUrl = null;
+  let imagePublicId = null;
+
+  if (req.file) {
+    imageUrl = req.file.path;
+    imagePublicId = req.file.filename;
+  }
+
+  if (!content && !imageUrl) {
+    return res.status(400).json({ message: "Mensagem vazia" });
+  }
 
   try {
     const conversation = await Conversation.findOne({
@@ -72,6 +86,8 @@ export const createMessage = async (req, res) => {
       conversationId,
       senderId: userId,
       content,
+      imageUrl,
+      imagePublicId,
       isRead: false,
     });
 

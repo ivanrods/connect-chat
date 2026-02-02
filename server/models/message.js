@@ -9,7 +9,17 @@ const Message = sequelize.define("message", {
   },
   content: {
     type: DataTypes.TEXT,
-    allowNull: false,
+    allowNull: true,
+  },
+
+  imageUrl: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+
+  imagePublicId: {
+    type: DataTypes.STRING,
+    allowNull: true,
   },
   isRead: {
     type: DataTypes.BOOLEAN,
