@@ -19,7 +19,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { userSchema } from "../lib/schemas/auth-schema";
 import { useAlert } from "../context/alert-context";
 
-export function EditProfile({ open, onClose, updateProfile, user, loading }) {
+export function EditProfile({
+  open,
+  onClose,
+  updateProfile,
+  updateAvatar,
+  user,
+  loading,
+}) {
   const { showAlert } = useAlert();
 
   const {
@@ -33,6 +40,14 @@ export function EditProfile({ open, onClose, updateProfile, user, loading }) {
       email: user.email,
     },
   });
+
+  function handleAvatarChange(e) {
+    const file = e.target.files[0];
+
+    if (file) {
+      updateAvatar(file);
+    }
+  }
 
   const onSubmit = async (data) => {
     try {
@@ -49,6 +64,10 @@ export function EditProfile({ open, onClose, updateProfile, user, loading }) {
       <DialogContent>
         <Box display="flex" flexDirection="column" alignItems="center" gap={4}>
           <Avatar sx={{ width: 130, height: 130 }} src={user.avatar} />
+
+          <input type="file" accept="image/*" onChange={handleAvatarChange} />
+
+          {loading && <p>Enviando...</p>}
 
           <Box
             component="form"

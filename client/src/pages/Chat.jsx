@@ -30,6 +30,7 @@ export default function Chat() {
     loading: loadingProfile,
     error: errorProfile,
     updateUser,
+    uploadAvatar,
   } = useProfile();
 
   const {
@@ -173,6 +174,7 @@ export default function Chat() {
           onClose={() => setOpenPofile(false)}
           user={user}
           updateProfile={updateUser}
+          updateAvatar={uploadAvatar}
           loading={loadingProfile}
         />
       </Box>
