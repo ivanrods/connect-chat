@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
 export function MessageInput({ onSend, disabled, loading }) {
   const [message, setMessage] = useState("");
@@ -45,12 +46,13 @@ export function MessageInput({ onSend, disabled, loading }) {
       borderTop={"1px solid #ddd"}
     >
       {file && (
-        <Box mb={1} position="relative">
+        <Box position="relative">
           <img
             src={URL.createObjectURL(file)}
             alt="preview"
             style={{
-              maxWidth: 120,
+              maxWidth: 50,
+              maxHeight: 50,
               borderRadius: 8,
             }}
           />
@@ -60,11 +62,10 @@ export function MessageInput({ onSend, disabled, loading }) {
             sx={{
               position: "absolute",
               top: -8,
-              right: -8,
-              bgcolor: "background.paper",
+              left: -8,
             }}
           >
-            ✕
+            <DeleteOutlineIcon color="error" />
           </IconButton>
         </Box>
       )}
@@ -87,13 +88,13 @@ export function MessageInput({ onSend, disabled, loading }) {
                   disabled={disabled}
                   color="primary"
                 >
-                  {loading ? <CircularProgress /> : <SendIcon />}
+                  {loading ? <CircularProgress size={20} /> : <SendIcon />}
                 </IconButton>
               </InputAdornment>
             ),
             startAdornment: (
               <InputAdornment position="start">
-                <IconButton onClick={handleAttachClick}>
+                <IconButton onClick={handleAttachClick} disabled={file}>
                   <AttachFileIcon />
                 </IconButton>
               </InputAdornment>

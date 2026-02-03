@@ -167,7 +167,11 @@ const Register = () => {
               size="large"
               variant="contained"
               endIcon={
-                loading ? <CircularProgress color="secondary" /> : <SendIcon />
+                loading ? (
+                  <CircularProgress color="secondary" size={20} />
+                ) : (
+                  <SendIcon />
+                )
               }
               disabled={loading}
               fullWidth

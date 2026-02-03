@@ -139,7 +139,11 @@ const Login = () => {
               variant="contained"
               fullWidth
               endIcon={
-                loading ? <CircularProgress color="secondary" /> : <SendIcon />
+                loading ? (
+                  <CircularProgress color="secondary" size={20} />
+                ) : (
+                  <SendIcon />
+                )
               }
               disabled={loading}
               sx={{

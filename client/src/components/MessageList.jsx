@@ -89,31 +89,33 @@ export function MessageList({ messages, loading, userId }) {
                     }}
                   />
 
-                  {msg.content && (
+                  {msg && (
                     <Paper
                       elevation={0}
                       sx={{
                         bgcolor: isMe ? "primary.main" : "border.main",
                         color: isMe ? "text.secondary" : "text.primary",
-                        p: 1.5,
-                        maxWidth: isMobile ? "75%" : 600,
+                        p: msg.imageUrl ? 0.3 : 1.5,
+                        maxWidth: isMobile ? "75%" : msg.imageUrl ? 300 : 500,
                       }}
                     >
-                      <Typography variant="body1">{msg.content}</Typography>
+                      {msg.imageUrl && (
+                        <img
+                          src={msg.imageUrl}
+                          alt="imagem enviada"
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            borderRadius: 8,
+                            display: "block",
+                            cursor: "pointer",
+                          }}
+                        />
+                      )}
+                      {msg.content && (
+                        <Typography variant="body1">{msg.content}</Typography>
+                      )}
                     </Paper>
-                  )}
-                  {msg.imageUrl && (
-                    <Box mb={msg.content ? 1 : 0}>
-                      <img
-                        src={msg.imageUrl}
-                        alt="imagem enviada"
-                        style={{
-                          maxWidth: "100%",
-                          borderRadius: 8,
-                          cursor: "pointer",
-                        }}
-                      />
-                    </Box>
                   )}
                 </Box>
                 <Box
