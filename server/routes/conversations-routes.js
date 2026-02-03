@@ -18,14 +18,7 @@ router.use(authenticateToken);
 router.get("/", getConversations);
 router.post("/", createConversation);
 router.get("/:id/messages", getMessages);
-router.post("/:id/messages", createMessage);
-router.post(
-  "/:id/messages/upload",
-  authenticateToken,
-  upload.single("image"),
-  createMessage,
-);
-
+router.post("/:id/messages", upload.single("image"), createMessage);
 router.patch("/:id/favorite", toggleFavorite);
 
 export default router;

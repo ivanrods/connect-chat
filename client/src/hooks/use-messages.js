@@ -45,8 +45,12 @@ export function useSendMessage(conversationId) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const sendMessage = async (content) => {
-    if (!content.trim()) return;
+  const sendMessage = async ({ content = "", image = null }) => {
+    if (!content.trim() && !image) return;
+
+    const formData = new FormData();
+    if (content) formData.append("content", content);
+    if (image) formData.append("image", image);
 
     try {
       setLoading(true);
@@ -57,14 +61,16 @@ export function useSendMessage(conversationId) {
         {
           method: "POST",
           headers: {
-            "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-          body: JSON.stringify({ content }),
+          body: formData,
         },
       );
 
-      if (!res.ok) throw new Error("Erro ao enviar mensagem");
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.message || "Erro ao enviar mensagem");
+      }
 
       return await res.json();
     } catch (err) {

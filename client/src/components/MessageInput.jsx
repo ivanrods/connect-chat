@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import {
   Box,
   TextField,
@@ -11,12 +11,29 @@ import AttachFileIcon from "@mui/icons-material/AttachFile";
 
 export function MessageInput({ onSend, disabled, loading }) {
   const [message, setMessage] = useState("");
+  const [file, setFile] = useState(null);
+  const fileInputRef = useRef(null);
+
+  const handleAttachClick = () => {
+    fileInputRef.current.click();
+  };
+
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      setFile(selectedFile);
+    }
+  };
 
   const handleSend = () => {
-    if (!message.trim()) return;
+    if (!message.trim() && !file) return;
 
-    onSend(message);
+    onSend({
+      content: message,
+      image: file,
+    });
     setMessage("");
+    setFile(null);
   };
 
   return (
@@ -27,6 +44,31 @@ export function MessageInput({ onSend, disabled, loading }) {
       gap={1}
       borderTop={"1px solid #ddd"}
     >
+      {file && (
+        <Box mb={1} position="relative">
+          <img
+            src={URL.createObjectURL(file)}
+            alt="preview"
+            style={{
+              maxWidth: 120,
+              borderRadius: 8,
+            }}
+          />
+          <IconButton
+            size="small"
+            onClick={() => setFile(null)}
+            sx={{
+              position: "absolute",
+              top: -8,
+              right: -8,
+              bgcolor: "background.paper",
+            }}
+          >
+            ✕
+          </IconButton>
+        </Box>
+      )}
+
       <TextField
         fullWidth
         size="small"
@@ -51,7 +93,7 @@ export function MessageInput({ onSend, disabled, loading }) {
             ),
             startAdornment: (
               <InputAdornment position="start">
-                <IconButton>
+                <IconButton onClick={handleAttachClick}>
                   <AttachFileIcon />
                 </IconButton>
               </InputAdornment>
@@ -64,6 +106,13 @@ export function MessageInput({ onSend, disabled, loading }) {
             handleSend();
           }
         }}
+      />
+      <input
+        type="file"
+        accept="image/*"
+        ref={fileInputRef}
+        hidden
+        onChange={handleFileChange}
       />
     </Box>
   );
