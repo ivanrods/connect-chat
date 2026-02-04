@@ -17,14 +17,14 @@ export function MessageList({ messages, loading, userId, onOpenImage }) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
-  //  Scroll automático
+  // Scroll automático
   useEffect(() => {
     if (messageRef.current) {
       messageRef.current.scrollTop = messageRef.current.scrollHeight;
     }
   }, [messages]);
 
-  //  Agrupar mensagens por data
+  // Agrupar mensagens por data
   const groupedMessages = useMemo(() => {
     const groups = {};
 

@@ -5,17 +5,18 @@ import { useProfile } from "../hooks/use-profile";
 import { useConversations } from "../hooks/use-conversations";
 import { useMessages, useSendMessage } from "../hooks/use-messages";
 import { useConversationSocket } from "../hooks/use-conversation-socket";
+import { useUnreadSocket } from "../hooks/use-unread-socket";
+import { useFavoriteSocket } from "../hooks/use-favorite-conversation-socket";
+import { useFavoriteConversation } from "../hooks/use-favorite-conversation";
+import { useConversationsSocket } from "../hooks/use-conversations-socket";
+
+import { CreateConversation } from "../components/CreateConversation";
 
 import { Sidebar } from "../components/Sidebar";
 import { MessageInput } from "../components/MessageInput";
 import { ChatHeader } from "../components/ChatHeader";
 import { MessageList } from "../components/MessageList";
-import { CreateConversation } from "../components/CreateConversation";
 import { useAlert } from "../context/alert-context";
-import { useFavoriteConversation } from "../hooks/use-favorite-conversation";
-import { useConversationsSocket } from "../hooks/use-conversations-socket";
-import { useFavoriteSocket } from "../hooks/use-favorite-conversation-socket";
-import { useUnreadSocket } from "../hooks/use-unread-socket";
 import { EditProfile } from "../components/EditProfile";
 import { ImageViewer } from "../components/ImageViewer";
 
@@ -151,7 +152,7 @@ export default function Chat() {
     showAlert,
   ]);
 
-  //ver imagem
+  //Ver imagem
   const handleOpenImage = (url) => {
     setSelectedImage(url);
   };

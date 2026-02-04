@@ -12,7 +12,12 @@ export function ImageViewer({ image, onClose }) {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   return (
-    <Dialog open={!!image} onClose={onClose} maxWidth="lg">
+    <Dialog
+      open={!!image}
+      onClose={onClose}
+      maxWidth="lg"
+      fullWidth={isMobile ? true : false}
+    >
       <Box display="flex" justifyContent="center">
         <IconButton
           onClick={onClose}

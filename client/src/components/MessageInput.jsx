@@ -9,8 +9,10 @@ import {
 import SendIcon from "@mui/icons-material/Send";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import { useAlert } from "../context/alert-context";
 
 export function MessageInput({ onSend, disabled, loading }) {
+  const { showAlert } = useAlert();
   const [message, setMessage] = useState("");
   const [file, setFile] = useState(null);
   const fileInputRef = useRef(null);
@@ -28,6 +30,11 @@ export function MessageInput({ onSend, disabled, loading }) {
 
   const handleSend = () => {
     if (!message.trim() && !file) return;
+
+    if (file.size > 4 * 1024 * 1024) {
+      showAlert("Imagem muito grande (máx 4MB)", "warning");
+      return;
+    }
 
     onSend({
       content: message,
@@ -47,14 +54,13 @@ export function MessageInput({ onSend, disabled, loading }) {
     >
       {file && (
         <Box position="relative">
-          <img
+          <Box
+            component="img"
             src={URL.createObjectURL(file)}
+            maxHeight={40}
+            maxWidth={40}
+            borderRadius={1}
             alt="preview"
-            style={{
-              maxWidth: 50,
-              maxHeight: 50,
-              borderRadius: 8,
-            }}
           />
           <IconButton
             size="small"
