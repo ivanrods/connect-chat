@@ -17,14 +17,19 @@ import { useConversationsSocket } from "../hooks/use-conversations-socket";
 import { useFavoriteSocket } from "../hooks/use-favorite-conversation-socket";
 import { useUnreadSocket } from "../hooks/use-unread-socket";
 import { EditProfile } from "../components/EditProfile";
+import { ImageViewer } from "../components/ImageViewer";
 
 export default function Chat() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [openPofile, setOpenPofile] = useState(false);
   const [selectedConversation, setSelectedConversation] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
+
   const { showAlert } = useAlert();
+
   const { toggleFavorite } = useFavoriteConversation();
+
   const {
     user,
     loading: loadingProfile,
@@ -146,6 +151,15 @@ export default function Chat() {
     showAlert,
   ]);
 
+  //ver imagem
+  const handleOpenImage = (url) => {
+    setSelectedImage(url);
+  };
+
+  const handleCloseImage = () => {
+    setSelectedImage(null);
+  };
+
   if (loadingProfile) {
     return <LinearProgress />;
   }
@@ -179,6 +193,7 @@ export default function Chat() {
           refetchUser={refetchUser}
           loading={loadingProfile}
         />
+        <ImageViewer image={selectedImage} onClose={handleCloseImage} />
       </Box>
 
       <Box flex={1} display="flex" flexDirection="column">
@@ -205,6 +220,7 @@ export default function Chat() {
               messages={messages}
               loading={loadingMessages}
               userId={user.id}
+              onOpenImage={handleOpenImage}
             />
 
             <MessageInput

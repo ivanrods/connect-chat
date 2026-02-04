@@ -11,7 +11,7 @@ import { useEffect, useMemo, useRef } from "react";
 import { formatTime, formatDay } from "../utils/format-date";
 import DoneAllIcon from "@mui/icons-material/DoneAll";
 
-export function MessageList({ messages, loading, userId }) {
+export function MessageList({ messages, loading, userId, onOpenImage }) {
   const messageRef = useRef(null);
 
   const theme = useTheme();
@@ -97,19 +97,20 @@ export function MessageList({ messages, loading, userId }) {
                         color: isMe ? "text.secondary" : "text.primary",
                         p: msg.imageUrl ? 0.3 : 1.5,
                         maxWidth: isMobile ? "75%" : msg.imageUrl ? 300 : 500,
+                        wordBreak: "break-word",
+                        overflowWrap: "anywhere",
                       }}
                     >
                       {msg.imageUrl && (
-                        <img
+                        <Box
+                          component="img"
                           src={msg.imageUrl}
                           alt="imagem enviada"
-                          style={{
-                            width: "100%",
-                            height: "100%",
-                            borderRadius: 8,
-                            display: "block",
-                            cursor: "pointer",
-                          }}
+                          width="100%"
+                          height="100%"
+                          borderRadius={1}
+                          display="block"
+                          onClick={() => onOpenImage(msg.imageUrl)}
                         />
                       )}
                       {msg.content && (
