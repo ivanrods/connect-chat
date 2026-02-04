@@ -15,6 +15,7 @@ export function ChatHeader({
   userId,
   onMenuClick,
   onToggleFavorite,
+  onOpenImage,
 }) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
@@ -40,7 +41,10 @@ export function ChatHeader({
           </IconButton>
         )}
 
-        <Avatar src={otherUser.avatar} />
+        <Avatar
+          src={otherUser.avatar}
+          onClick={() => onOpenImage(otherUser.avatar)}
+        />
         <Typography
           variant="subtitle1"
           noWrap

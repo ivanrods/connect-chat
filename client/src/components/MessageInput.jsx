@@ -31,7 +31,7 @@ export function MessageInput({ onSend, disabled, loading }) {
   const handleSend = () => {
     if (!message.trim() && !file) return;
 
-    if (file.size > 4 * 1024 * 1024) {
+    if (file && file.size > 4 * 1024 * 1024) {
       showAlert("Imagem muito grande (máx 4MB)", "warning");
       return;
     }

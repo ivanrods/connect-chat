@@ -193,6 +193,7 @@ export default function Chat() {
           updateAvatar={uploadAvatar}
           refetchUser={refetchUser}
           loading={loadingProfile}
+          onOpenImage={handleOpenImage}
         />
         <ImageViewer image={selectedImage} onClose={handleCloseImage} />
       </Box>
@@ -216,6 +217,7 @@ export default function Chat() {
               userId={user.id}
               onMenuClick={() => setSidebarOpen(true)}
               onToggleFavorite={handleToggleFavorite}
+              onOpenImage={handleOpenImage}
             />
             <MessageList
               messages={messages}

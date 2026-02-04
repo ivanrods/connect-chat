@@ -29,6 +29,7 @@ export function EditProfile({
   user,
   refetchUser,
   loading,
+  onOpenImage,
 }) {
   const { showAlert } = useAlert();
   const [avatarFile, setAvatarFile] = useState(null);
@@ -89,7 +90,11 @@ export function EditProfile({
       <DialogContent>
         <Box display="flex" flexDirection="column" alignItems="center" gap={4}>
           <Box position="relative">
-            <Avatar src={avatarPreview} sx={{ width: 130, height: 130 }} />
+            <Avatar
+              src={avatarPreview}
+              sx={{ width: 130, height: 130 }}
+              onClick={() => onOpenImage(avatarPreview)}
+            />
 
             <IconButton
               component="label"
