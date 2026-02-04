@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import { rateLimit } from "express-rate-limit";
 import sequelize from "./config/database.js";
 import routes from "./routes/index.js";
 
@@ -9,10 +10,20 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+//Limite de requisições
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  message:
+    "Muitas requisições a partir deste IP, por favor tente novamente após 15 minutos",
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+app.use(apiLimiter);
+
 // arquivos estáticos
 app.use("/avatars", express.static("public/avatars"));
-
-app.use("/uploads", express.static("uploads"));
 
 // rotas
 app.use(routes);
