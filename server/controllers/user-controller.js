@@ -64,6 +64,44 @@ export const updateUser = async (req, res) => {
   }
 };
 
+export const deleteUser = async (req, res) => {
+  const { id } = req.params;
+  const authUserId = req.user.id;
+
+  if (!id) {
+    return res.status(400).json({
+      message: "ID do usuário é obrigatório",
+    });
+  }
+
+  if (id !== authUserId) {
+    return res.status(403).json({
+      message: "Você não pode deletar outro usuário",
+    });
+  }
+
+  try {
+    const user = await User.findByPk(id);
+
+    if (!user) {
+      return res.status(404).json({
+        message: "Usuário não encontrado",
+      });
+    }
+
+    await user.destroy();
+
+    return res.json({
+      message: "Usuário deletado com sucesso",
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      message: "Erro ao deletar usuário",
+    });
+  }
+};
+
 export const updateUserAvatar = async (req, res) => {
   const { id } = req.params;
 
