@@ -36,6 +36,7 @@ export default function Chat() {
     loading: loadingProfile,
     error: errorProfile,
     updateUser,
+    deleteUser,
     uploadAvatar,
     refetchUser,
   } = useProfile();
@@ -192,6 +193,7 @@ export default function Chat() {
           updateProfile={updateUser}
           updateAvatar={uploadAvatar}
           refetchUser={refetchUser}
+          deleteUser={deleteUser}
           loading={loadingProfile}
           onOpenImage={handleOpenImage}
         />

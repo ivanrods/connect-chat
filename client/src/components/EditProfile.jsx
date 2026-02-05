@@ -20,6 +20,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { userSchema } from "../lib/schemas/auth-schema";
 import { useAlert } from "../context/alert-context";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export function EditProfile({
   open,
@@ -28,12 +29,14 @@ export function EditProfile({
   updateAvatar,
   user,
   refetchUser,
+  deleteUser,
   loading,
   onOpenImage,
 }) {
   const { showAlert } = useAlert();
   const [avatarFile, setAvatarFile] = useState(null);
   const [avatarPreview, setAvatarPreview] = useState(user.avatar);
+  const navigate = useNavigate();
 
   const {
     register,
@@ -75,6 +78,11 @@ export function EditProfile({
     } catch (error) {
       showAlert(error?.message || "Erro ao atualiz perfil", "error");
     }
+  };
+  const handleDeleteUser = () => {
+    deleteUser();
+    navigate("/login");
+    showAlert("Usuário deletado com sucesso", "success");
   };
 
   useEffect(() => {
@@ -166,7 +174,10 @@ export function EditProfile({
             <Typography variant="caption">
               Seu perfil ajuda as pessoas a reconhecerem você
             </Typography>
-            <Box display="flex" justifyContent="end">
+            <Box display="flex" justifyContent="space-between">
+              <Button variant="text" color="error" onClick={handleDeleteUser}>
+                Deletar conta
+              </Button>
               <Button
                 type="submit"
                 size="large"

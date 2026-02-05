@@ -86,6 +86,42 @@ export function useProfile() {
     }
   };
 
+  const deleteUser = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const storedUser = localStorage.getItem("user");
+
+      if (!token || !storedUser) {
+        setUser(null);
+        return;
+      }
+
+      const parsedUser = JSON.parse(storedUser);
+
+      const res = await fetch(`${apiUrl}/api/user/${parsedUser.id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (!res.ok) {
+        const error = await res.json();
+        throw new Error(error.error || "Erro ao deletar usuário");
+      }
+
+      return await res.json();
+    } catch (err) {
+      console.error("Erro ao deletar usuário:", err);
+
+      setError(err.message);
+    } finally {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      setUser(null);
+      setLoading(false);
+    }
+  };
+
   const uploadAvatar = async (file) => {
     try {
       setLoading(true);
@@ -151,6 +187,7 @@ export function useProfile() {
     refetchUser: fetchUser,
     setUser,
     updateUser,
+    deleteUser,
     uploadAvatar,
   };
 }
