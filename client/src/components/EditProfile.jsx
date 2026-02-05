@@ -10,6 +10,8 @@ import {
   Avatar,
   Typography,
   IconButton,
+  Backdrop,
+  Card,
 } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import MailIcon from "@mui/icons-material/Mail";
@@ -19,7 +21,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { userSchema } from "../lib/schemas/auth-schema";
 import { useAlert } from "../context/alert-context";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export function EditProfile({
@@ -36,6 +38,7 @@ export function EditProfile({
   const { showAlert } = useAlert();
   const [avatarFile, setAvatarFile] = useState(null);
   const [avatarPreview, setAvatarPreview] = useState(user.avatar);
+  const [openDeleteUser, setOpenDeleteUser] = React.useState(false);
   const navigate = useNavigate();
 
   const {
@@ -83,6 +86,13 @@ export function EditProfile({
     deleteUser();
     navigate("/login");
     showAlert("Usuário deletado com sucesso", "success");
+  };
+
+  const handleCloseDeleteUser = () => {
+    setOpenDeleteUser(false);
+  };
+  const handleOpenDeleteUser = () => {
+    setOpenDeleteUser(true);
   };
 
   useEffect(() => {
@@ -175,9 +185,55 @@ export function EditProfile({
               Seu perfil ajuda as pessoas a reconhecerem você
             </Typography>
             <Box display="flex" justifyContent="space-between">
-              <Button variant="text" color="error" onClick={handleDeleteUser}>
+              <Button
+                onClick={handleOpenDeleteUser}
+                color="error"
+                size="small"
+                sx={{
+                  textTransform: "none",
+                }}
+              >
                 Deletar conta
               </Button>
+              <Backdrop
+                sx={(theme) => ({
+                  zIndex: theme.zIndex.drawer + 1,
+                })}
+                open={openDeleteUser}
+                onClick={handleCloseDeleteUser}
+              >
+                <Card>
+                  <Box
+                    padding={2}
+                    display="flex"
+                    flexDirection="column"
+                    gap={2}
+                    maxWidth="sm"
+                  >
+                    <Typography variant="h6">
+                      Você tem certeza absoluta?
+                    </Typography>
+                    <Typography>
+                      Esta ação não pode ser desfeita. Isso excluirá
+                      permanentemente sua conta e removerá seus dados de nossos
+                      servidores.
+                    </Typography>
+                    <Button
+                      variant="contained"
+                      color="error"
+                      onClick={handleDeleteUser}
+                      sx={{
+                        fontWeight: "600",
+                        color: "white",
+                        textTransform: "none",
+                      }}
+                    >
+                      Confirmar exclusão
+                    </Button>
+                  </Box>
+                </Card>
+              </Backdrop>
+
               <Button
                 type="submit"
                 size="large"
