@@ -7,56 +7,70 @@ export function useProfile() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  //  helper auth
+  const getAuthData = () => {
+    const token = localStorage.getItem("token");
+    const storedUser = localStorage.getItem("user");
+
+    if (!token || !storedUser) {
+      throw new Error("Usuário não autenticado");
+    }
+
+    return {
+      token,
+      parsedUser: JSON.parse(storedUser),
+    };
+  };
+
+  // helper request
+  const request = async (url, options = {}) => {
+    const res = await fetch(url, options);
+
+    if (!res.ok) {
+      let errorMessage = "Erro na requisição";
+      try {
+        const data = await res.json();
+        errorMessage = data.error || data.message || errorMessage;
+      } catch {
+        throw new Error(errorMessage);
+      }
+    }
+
+    return res.json();
+  };
+
+  // buscar usuário
   const fetchUser = useCallback(async () => {
     try {
-      const token = localStorage.getItem("token");
-      const storedUser = localStorage.getItem("user");
+      setLoading(true);
+      const { token, parsedUser } = getAuthData();
 
-      if (!token || !storedUser) {
-        setUser(null);
-        return;
-      }
-
-      const parsedUser = JSON.parse(storedUser);
-
-      const res = await fetch(`${apiUrl}/api/user/${parsedUser.id}`, {
+      const data = await request(`${apiUrl}/api/user/${parsedUser.id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
-      if (!res.ok) {
-        throw new Error("Não autorizado");
-      }
-
-      const data = await res.json();
       setUser(data);
     } catch (err) {
-      console.error("Erro ao buscar usuário:", err);
+      console.error(err);
       setUser(null);
       setError(err.message);
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
+      localStorage.clear();
     } finally {
       setLoading(false);
     }
   }, [apiUrl]);
 
+  // update
   const updateUser = async (payload) => {
     try {
       setLoading(true);
       setError(null);
 
-      const token = localStorage.getItem("token");
-      const storedUser = localStorage.getItem("user");
+      const { token, parsedUser } = getAuthData();
 
-      if (!token || !storedUser) {
-        throw new Error("Usuário não autenticado");
-      }
-
-      const parsedUser = JSON.parse(storedUser);
-
-      const res = await fetch(`${apiUrl}/api/user/${parsedUser.id}`, {
+      const data = await request(`${apiUrl}/api/user/${parsedUser.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -65,20 +79,11 @@ export function useProfile() {
         body: JSON.stringify(payload),
       });
 
-      if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.error || "Erro ao atualizar perfil");
-      }
+      setUser(data.user);
+      localStorage.setItem("user", JSON.stringify(data.user));
 
-      const updatedUser = await res.json();
-
-      setUser(updatedUser);
-
-      localStorage.setItem("user", JSON.stringify(updatedUser));
-
-      return updatedUser;
+      return data;
     } catch (err) {
-      console.error("Erro ao atualizar usuário:", err);
       setError(err.message);
       throw err;
     } finally {
@@ -86,64 +91,44 @@ export function useProfile() {
     }
   };
 
+  //  delete
   const deleteUser = async () => {
     try {
-      const token = localStorage.getItem("token");
-      const storedUser = localStorage.getItem("user");
+      setLoading(true);
 
-      if (!token || !storedUser) {
-        setUser(null);
-        return;
-      }
+      const { token, parsedUser } = getAuthData();
 
-      const parsedUser = JSON.parse(storedUser);
-
-      const res = await fetch(`${apiUrl}/api/user/${parsedUser.id}`, {
+      const data = await request(`${apiUrl}/api/user/${parsedUser.id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      if (!res.ok) {
-        const error = await res.json();
-        throw new Error(error.error || "Erro ao deletar usuário");
-      }
 
-      return await res.json();
+      localStorage.clear();
+      setUser(null);
+      return data;
     } catch (err) {
-      console.error("Erro ao deletar usuário:", err);
-
       setError(err.message);
     } finally {
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
-      setUser(null);
       setLoading(false);
     }
   };
 
+  // upload avatar
   const uploadAvatar = async (file) => {
     try {
       setLoading(true);
       setError(null);
 
-      if (!file) {
-        throw new Error("Nenhuma imagem selecionada");
-      }
+      if (!file) throw new Error("Nenhuma imagem selecionada");
 
-      const token = localStorage.getItem("token");
-      const storedUser = localStorage.getItem("user");
-
-      if (!token || !storedUser) {
-        throw new Error("Usuário não autenticado");
-      }
-
-      const parsedUser = JSON.parse(storedUser);
+      const { token, parsedUser } = getAuthData();
 
       const formData = new FormData();
       formData.append("avatar", file);
 
-      const res = await fetch(`${apiUrl}/api/user/${parsedUser.id}/avatar`, {
+      const data = await request(`${apiUrl}/api/user/${parsedUser.id}/avatar`, {
         method: "PATCH",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -151,24 +136,13 @@ export function useProfile() {
         body: formData,
       });
 
-      if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.message || "Erro ao enviar avatar");
-      }
-
-      const data = await res.json();
-
-      const updatedUser = {
-        ...user,
-        avatar: data.avatar,
-      };
+      const updatedUser = { ...user, avatar: data.avatar };
 
       setUser(updatedUser);
       localStorage.setItem("user", JSON.stringify(updatedUser));
 
       return data;
     } catch (err) {
-      console.error("Erro ao enviar avatar:", err);
       setError(err.message);
       throw err;
     } finally {

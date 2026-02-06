@@ -52,15 +52,25 @@ export const updateUser = async (req, res) => {
     await user.update({ name, email });
 
     return res.json({
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      avatar: user.avatar,
-      createdAt: user.createdAt,
+      message: "Perfil atualizado com sucesso",
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        avatar: user.avatar,
+        createdAt: user.createdAt,
+      },
     });
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: "Erro ao atualizar usuário" });
+    if (error instanceof Sequelize.UniqueConstraintError) {
+      return res.status(409).json({
+        error: "Este email já está em uso",
+      });
+    }
+
+    return res.status(500).json({
+      error: "Erro ao atualizar usuário",
+    });
   }
 };
 

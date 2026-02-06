@@ -5,7 +5,6 @@ import {
   TextField,
   Button,
   Box,
-  CircularProgress,
   InputAdornment,
   Avatar,
   Typography,
@@ -62,30 +61,33 @@ export function EditProfile({
     }
 
     if (!file) return;
-
     setAvatarFile(file);
-
     const previewUrl = URL.createObjectURL(file);
     setAvatarPreview(previewUrl);
   }
 
   const onSubmit = async (data) => {
     try {
-      await updateProfile(data);
+      const res = await updateProfile(data);
       if (avatarFile) {
         await updateAvatar(avatarFile);
       }
       await refetchUser();
       onClose();
-      showAlert("Perfil atualizado", "success");
+      showAlert(res.message, "success");
     } catch (error) {
-      showAlert(error?.message || "Erro ao atualiz perfil", "error");
+      showAlert(error.message, "error");
     }
   };
-  const handleDeleteUser = () => {
-    deleteUser();
-    navigate("/login");
-    showAlert("Usuário deletado com sucesso", "success");
+
+  const handleDeleteUser = async (data) => {
+    try {
+      const res = await deleteUser(data);
+      navigate("/login");
+      showAlert(res.message, "success");
+    } catch (error) {
+      showAlert(error.message, "error");
+    }
   };
 
   const handleCloseDeleteUser = () => {
