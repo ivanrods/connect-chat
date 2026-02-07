@@ -13,7 +13,7 @@ export function useProfile() {
     const storedUser = localStorage.getItem("user");
 
     if (!token || !storedUser) {
-      throw new Error("Usuário não autenticado");
+      return null;
     }
 
     return {
@@ -41,13 +41,20 @@ export function useProfile() {
 
   // buscar usuário
   const fetchUser = useCallback(async () => {
+    const auth = getAuthData();
+
+    if (!auth) {
+      setUser(null);
+      setLoading(false);
+      return;
+    }
+
     try {
       setLoading(true);
-      const { token, parsedUser } = getAuthData();
 
-      const data = await request(`${apiUrl}/api/user/${parsedUser.id}`, {
+      const data = await request(`${apiUrl}/api/user/${auth.parsedUser.id}`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${auth.token}`,
         },
       });
 

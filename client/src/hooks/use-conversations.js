@@ -28,6 +28,8 @@ export function useConversations() {
       const formatted = data.map((conv) => ({
         ...conv,
         unreadCount: conv.unreadCount || 0,
+        favorite:
+          conv.favorite ?? conv.conversation_users?.[0]?.favorite ?? false,
       }));
 
       setConversations(formatted);
@@ -103,12 +105,7 @@ export function useConversations() {
         conv.id === conversationId
           ? {
               ...conv,
-              conversation_users: [
-                {
-                  ...conv.conversation_users[0],
-                  favorite,
-                },
-              ],
+              favorite,
             }
           : conv,
       ),

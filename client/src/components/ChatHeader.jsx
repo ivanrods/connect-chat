@@ -16,6 +16,7 @@ export function ChatHeader({
   onMenuClick,
   onToggleFavorite,
   onOpenImage,
+  loadingFavorite,
 }) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
@@ -23,7 +24,7 @@ export function ChatHeader({
   if (!conversation) return null;
 
   const otherUser = conversation.users.find((user) => user.id !== userId);
-  const isFavorite = conversation.conversation_users?.[0]?.favorite;
+  const isFavorite = conversation.favorite ?? false;
 
   return (
     <Box
@@ -59,6 +60,7 @@ export function ChatHeader({
       <IconButton
         size="small"
         title="Adicionar aos favitos"
+        disabled={loadingFavorite}
         onClick={() => {
           onToggleFavorite(conversation.id);
         }}

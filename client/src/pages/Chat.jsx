@@ -29,8 +29,6 @@ export default function Chat() {
 
   const { showAlert } = useAlert();
 
-  const { toggleFavorite } = useFavoriteConversation();
-
   const {
     user,
     loading: loadingProfile,
@@ -65,6 +63,12 @@ export default function Chat() {
     error: errorSendMessage,
   } = useSendMessage(selectedConversation?.id);
 
+  const {
+    toggleFavorite,
+    loading: loadingFavorite,
+    error: errorFavorite,
+  } = useFavoriteConversation();
+
   // Socket em tempo real
   const handleConversationUpdate = useCallback(
     ({ lastMessage }) => {
@@ -88,7 +92,7 @@ export default function Chat() {
         prev?.id === conversationId
           ? {
               ...prev,
-              conversation_users: [{ ...prev.conversation_users[0], favorite }],
+              favorite,
             }
           : prev,
       );
@@ -138,6 +142,7 @@ export default function Chat() {
       errorMessages,
       errorSendMessage,
       errorProfile,
+      errorFavorite,
     ].find(Boolean);
 
     if (!firstError) return;
@@ -150,6 +155,8 @@ export default function Chat() {
     errorMessages,
     errorSendMessage,
     errorProfile,
+    errorFavorite,
+
     showAlert,
   ]);
 
@@ -220,6 +227,7 @@ export default function Chat() {
               onMenuClick={() => setSidebarOpen(true)}
               onToggleFavorite={handleToggleFavorite}
               onOpenImage={handleOpenImage}
+              loadingFavorite={loadingFavorite}
             />
             <MessageList
               messages={messages}

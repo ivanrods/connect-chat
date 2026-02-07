@@ -46,7 +46,7 @@ export function Sidebar({
   //filtro de conversas
   const filteredConversations = conversations.filter((conversation) => {
     const otherUser = conversation.users.find((u) => u.id !== userId);
-    const isFavorite = conversation.conversation_users?.[0]?.favorite;
+    const isFavorite = conversation.favorite ?? false;
     const userSearch =
       otherUser?.name?.toLowerCase().includes(search.toLowerCase()) ||
       otherUser?.email?.toLowerCase().includes(search.toLowerCase());
