@@ -6,6 +6,10 @@ export const getMessages = async (req, res) => {
   const { id: conversationId } = req.params;
   const userId = req.user.id;
 
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 20;
+  const offset = (page - 1) * limit;
+
   try {
     const conversation = await Conversation.findOne({
       where: { id: conversationId },
@@ -19,7 +23,7 @@ export const getMessages = async (req, res) => {
       return res.status(403).json({ message: "Acesso negado" });
     }
 
-    const messages = await Message.findAll({
+    const { rows, count } = await Message.findAndCountAll({
       where: { conversationId },
       include: [
         {
@@ -28,7 +32,9 @@ export const getMessages = async (req, res) => {
           attributes: ["id", "name", "avatar"],
         },
       ],
-      order: [["createdAt", "ASC"]],
+      order: [["createdAt", "DESC"]],
+      limit,
+      offset,
     });
 
     await Message.update(
@@ -42,7 +48,12 @@ export const getMessages = async (req, res) => {
       },
     );
 
-    res.json(messages);
+    res.json({
+      messages: rows.reverse(),
+      page,
+      totalPages: Math.ceil(count / limit),
+      totalMessages: count,
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Erro ao buscar mensagens." });
