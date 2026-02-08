@@ -11,18 +11,20 @@ import { useEffect, useMemo, useRef } from "react";
 import { formatTime, formatDay } from "../utils/format-date";
 import DoneAllIcon from "@mui/icons-material/DoneAll";
 
-export function MessageList({ messages, loading, userId, onOpenImage }) {
+export function MessageList({
+  messages,
+  loading,
+  userId,
+  onOpenImage,
+  loadMore,
+  hasMore,
+}) {
   const messageRef = useRef(null);
+  const isFirstLoad = useRef(true);
+  const previousHeight = useRef(0);
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-
-  // Scroll automático
-  useEffect(() => {
-    if (messageRef.current) {
-      messageRef.current.scrollTop = messageRef.current.scrollHeight;
-    }
-  }, [messages]);
 
   // Agrupar mensagens por data
   const groupedMessages = useMemo(() => {
@@ -38,9 +40,38 @@ export function MessageList({ messages, loading, userId, onOpenImage }) {
     return groups;
   }, [messages]);
 
+  const handleScroll = () => {
+    const el = messageRef.current;
+    if (!el) return;
+
+    if (el.scrollTop === 0 && hasMore && !loading) {
+      previousHeight.current = el.scrollHeight;
+      loadMore();
+    }
+  };
+
+  useEffect(() => {
+    const el = messageRef.current;
+    if (!el) return;
+
+    if (isFirstLoad.current) {
+      el.scrollTop = el.scrollHeight;
+      isFirstLoad.current = false;
+      return;
+    }
+
+    const newHeight = el.scrollHeight;
+    const diff = newHeight - previousHeight.current;
+
+    if (diff > 0) {
+      el.scrollTop += diff;
+    }
+  }, [messages]);
+
   return (
     <Box
       ref={messageRef}
+      onScroll={handleScroll}
       flexGrow={1}
       width="100%"
       mx="auto"

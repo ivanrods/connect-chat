@@ -55,6 +55,8 @@ export default function Chat() {
     setMessages,
     loading: loadingMessages,
     error: errorMessages,
+    loadMore,
+    hasMore,
   } = useMessages(selectedConversation?.id);
 
   const {
@@ -234,6 +236,8 @@ export default function Chat() {
               loading={loadingMessages}
               userId={user.id}
               onOpenImage={handleOpenImage}
+              loadMore={loadMore}
+              hasMore={hasMore}
             />
 
             <MessageInput

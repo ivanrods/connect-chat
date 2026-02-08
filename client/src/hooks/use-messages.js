@@ -4,41 +4,73 @@ const apiUrl = import.meta.env.VITE_API_URL;
 
 export function useMessages(conversationId) {
   const [messages, setMessages] = useState([]);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  const fetchMessages = async (pageNumber = 1) => {
+    if (!conversationId) return;
+
+    try {
+      setLoading(true);
+      setError(null);
+
+      const res = await fetch(
+        `${apiUrl}/api/conversations/${conversationId}/messages?page=${pageNumber}&limit=20`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        },
+      );
+
+      if (!res.ok) throw new Error("Erro ao buscar mensagens");
+
+      const data = await res.json();
+
+      if (pageNumber === 1) {
+        setMessages(data.messages);
+      } else {
+        setMessages((prev) => [...data.messages, ...prev]);
+      }
+
+      setHasMore(pageNumber < data.totalPages);
+      setPage(pageNumber);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // carregar quando muda conversa
   useEffect(() => {
     if (!conversationId) return;
 
-    const fetchMessages = async () => {
-      try {
-        setLoading(true);
-        setError(null);
+    setMessages([]);
+    setPage(1);
+    setHasMore(true);
 
-        const res = await fetch(
-          `${apiUrl}/api/conversations/${conversationId}/messages`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          },
-        );
-
-        if (!res.ok) throw new Error("Erro ao buscar mensagens");
-
-        const data = await res.json();
-        setMessages(data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchMessages();
+    fetchMessages(1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [conversationId]);
 
-  return { messages, setMessages, loading, error };
+  // carregar mais mensagens antigas
+  const loadMore = () => {
+    if (!hasMore || loading) return;
+    fetchMessages(page + 1);
+  };
+
+  return {
+    messages,
+    setMessages,
+    loading,
+    error,
+    loadMore,
+    hasMore,
+  };
 }
 
 export function useSendMessage(conversationId) {
