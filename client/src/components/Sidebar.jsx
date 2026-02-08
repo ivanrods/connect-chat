@@ -233,24 +233,16 @@ export function Sidebar({
               if (value) setFilter(value);
             }}
             aria-label="Platform"
-            sx={{ margin: 2, width: "100%" }}
+            fullWidth
+            sx={{ margin: 2 }}
           >
-            <ToggleButton
-              value="recent"
-              sx={{ textTransform: "none", width: "100%" }}
-            >
+            <ToggleButton value="recent" fullWidth>
               Recentes
             </ToggleButton>
-            <ToggleButton
-              value="unread"
-              sx={{ textTransform: "none", width: "100%" }}
-            >
+            <ToggleButton value="unread" fullWidth>
               Não Lidos
             </ToggleButton>
-            <ToggleButton
-              value="favorites"
-              sx={{ textTransform: "none", width: "100%" }}
-            >
+            <ToggleButton value="favorites" fullWidth>
               Favoritos
             </ToggleButton>
           </ToggleButtonGroup>

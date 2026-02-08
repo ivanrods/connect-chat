@@ -177,7 +177,6 @@ const Register = () => {
               fullWidth
               sx={{
                 fontWeight: "600",
-                color: "white",
               }}
             >
               Registrar

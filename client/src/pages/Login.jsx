@@ -148,7 +148,6 @@ const Login = () => {
               disabled={loading}
               sx={{
                 fontWeight: "600",
-                color: "white",
               }}
             >
               Entrar

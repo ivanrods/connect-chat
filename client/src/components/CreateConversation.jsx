@@ -31,7 +31,7 @@ export function CreateConversation({ open, onClose, onCreate }) {
       <DialogTitle>Nova conversa</DialogTitle>
 
       <DialogContent>
-        <Box display="flex" gap={2} mt={1}>
+        <Box component="form" display="flex" gap={2} mt={1}>
           <TextField
             size="small"
             type="email"
@@ -47,11 +47,6 @@ export function CreateConversation({ open, onClose, onCreate }) {
             variant="contained"
             onClick={handleCreate}
             disabled={loading}
-            sx={{
-              textTransform: "none",
-              fontWeight: "600",
-              color: "white",
-            }}
           >
             Criar
           </Button>

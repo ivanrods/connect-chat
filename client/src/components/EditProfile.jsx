@@ -187,14 +187,7 @@ export function EditProfile({
               Seu perfil ajuda as pessoas a reconhecerem você
             </Typography>
             <Box display="flex" justifyContent="space-between">
-              <Button
-                onClick={handleOpenDeleteUser}
-                color="error"
-                size="small"
-                sx={{
-                  textTransform: "none",
-                }}
-              >
+              <Button onClick={handleOpenDeleteUser} color="error" size="small">
                 Deletar conta
               </Button>
               <Backdrop
@@ -220,32 +213,31 @@ export function EditProfile({
                       permanentemente sua conta e removerá seus dados de nossos
                       servidores.
                     </Typography>
-                    <Button
-                      variant="contained"
-                      color="error"
-                      onClick={handleDeleteUser}
-                      sx={{
-                        fontWeight: "600",
-                        color: "white",
-                        textTransform: "none",
-                      }}
-                    >
-                      Confirmar exclusão
-                    </Button>
+                    <Box display="flex" gap={1} justifyContent="end">
+                      <Button
+                        variant="contained"
+                        color="inherit"
+                        onClick={onClose}
+                      >
+                        Cancelar
+                      </Button>
+                      <Button
+                        variant="contained"
+                        color="error"
+                        onClick={handleDeleteUser}
+                      >
+                        Confirmar
+                      </Button>
+                    </Box>
                   </Box>
                 </Card>
               </Backdrop>
 
               <Button
                 type="submit"
-                size="large"
                 variant="contained"
                 disabled={loading}
-                sx={{
-                  fontWeight: "600",
-                  color: "white",
-                  textTransform: "none",
-                }}
+                color="primary"
               >
                 Salvar
               </Button>

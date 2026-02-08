@@ -4,9 +4,11 @@ export const theme = createTheme({
   palette: {
     primary: {
       main: "#22c55e",
+      contrastText: "#fff",
     },
     secondary: {
       main: "#737373",
+      contrastText: "#fff",
     },
     background: {
       paper: "#ffff",
@@ -32,6 +34,23 @@ export const theme = createTheme({
     },
     caption: {
       color: "#8f8f8f",
+    },
+  },
+
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          textTransform: "none",
+        },
+      },
+    },
+    MuiToggleButton: {
+      styleOverrides: {
+        root: {
+          textTransform: "none",
+        },
+      },
     },
   },
 });
