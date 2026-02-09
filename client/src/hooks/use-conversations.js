@@ -99,6 +99,32 @@ export function useConversations() {
     });
   };
 
+  const deleteConversation = async (conversationId) => {
+    try {
+      setError(null);
+
+      const res = await fetch(`${apiUrl}/api/conversations/${conversationId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message || "Erro ao deletar conversa");
+      }
+
+      setConversations((prev) => prev.filter((c) => c.id !== conversationId));
+
+      return data;
+    } catch (err) {
+      setError(err.message);
+      throw err;
+    }
+  };
+
   const updateFavorite = ({ conversationId, favorite }) => {
     setConversations((prev) =>
       prev.map((conv) =>
@@ -138,6 +164,7 @@ export function useConversations() {
     conversations,
     setConversations,
     updateFavorite,
+    deleteConversation,
     incrementUnread,
     clearUnread,
     loading,

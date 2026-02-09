@@ -14,6 +14,7 @@ export function ChatHeader({
   conversation,
   userId,
   onMenuClick,
+  onDelete,
   onToggleFavorite,
   onOpenImage,
   loadingFavorite,
@@ -57,16 +58,26 @@ export function ChatHeader({
         </Typography>
       </Box>
 
-      <IconButton
-        size="small"
-        title="Adicionar aos favitos"
-        disabled={loadingFavorite}
-        onClick={() => {
-          onToggleFavorite(conversation.id);
-        }}
-      >
-        {isFavorite ? <StarIcon color="primary" /> : <StarBorderIcon />}
-      </IconButton>
+      <Box>
+        <IconButton
+          size="small"
+          title="Adicionar aos favitos"
+          disabled={loadingFavorite}
+          onClick={() => {
+            onToggleFavorite(conversation.id);
+          }}
+        >
+          {isFavorite ? <StarIcon color="primary" /> : <StarBorderIcon />}
+        </IconButton>
+
+        <button
+          onClick={() => {
+            onDelete(conversation.id);
+          }}
+        >
+          Apagar
+        </button>
+      </Box>
     </Box>
   );
 }

@@ -45,6 +45,7 @@ export default function Chat() {
     error: errorConversations,
     createConversation,
     updateConversation,
+    deleteConversation,
     updateFavorite,
     clearUnread,
     incrementUnread,
@@ -83,6 +84,20 @@ export default function Chat() {
 
   const handleSendMessage = async (content) => {
     await sendMessage(content);
+  };
+
+  const handleDeleteConversation = async (conversationId) => {
+    try {
+      const res = await deleteConversation(conversationId);
+
+      if (selectedConversation?.id === conversationId) {
+        setSelectedConversation(null);
+      }
+
+      showAlert(res.message, "success");
+    } catch (err) {
+      showAlert(err.message, "error");
+    }
   };
 
   //Atualizar favoritos
@@ -227,6 +242,7 @@ export default function Chat() {
               conversation={selectedConversation}
               userId={user.id}
               onMenuClick={() => setSidebarOpen(true)}
+              onDelete={handleDeleteConversation}
               onToggleFavorite={handleToggleFavorite}
               onOpenImage={handleOpenImage}
               loadingFavorite={loadingFavorite}
