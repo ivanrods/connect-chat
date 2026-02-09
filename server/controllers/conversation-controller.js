@@ -137,3 +137,36 @@ export const createConversation = async (req, res) => {
     return res.status(500).json({ message: "Erro ao criar conversa" });
   }
 };
+
+export const deleteConversation = async (req, res) => {
+  const userId = req.user.id;
+  const { id: conversationId } = req.params;
+
+  console.log("DELETANDO RELATION:", {
+    userId,
+    conversationId,
+  });
+
+  try {
+    const relation = await ConversationUser.findOne({
+      where: { userId, conversationId },
+    });
+
+    if (!relation) {
+      return res.status(404).json({
+        message: "Conversa não encontrada",
+      });
+    }
+
+    await relation.destroy();
+
+    return res.json({
+      message: "Conversa removida com sucesso",
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({
+      message: "Erro ao deletar conversa",
+    });
+  }
+};
