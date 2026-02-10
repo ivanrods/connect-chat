@@ -5,6 +5,9 @@ import {
   IconButton,
   useTheme,
   useMediaQuery,
+  Backdrop,
+  Card,
+  Button,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
@@ -27,18 +30,27 @@ export function ChatHeader({
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [anchorEl, setAnchorEl] = useState(null);
+  const [openDeleteConversation, setOpenDeleteConversation] = useState(false);
 
   if (!conversation) return null;
 
   const otherUser = conversation.users.find((user) => user.id !== userId);
   const isFavorite = conversation.favorite ?? false;
 
+  //Abrir e fechar o menu
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleCloseDeleteConversation = () => {
+    setOpenDeleteConversation(false);
+  };
+  const handleOpenDeleteConversation = () => {
+    setOpenDeleteConversation(true);
   };
 
   return (
@@ -73,55 +85,98 @@ export function ChatHeader({
       </Box>
 
       <Box>
-        <div>
-          <IconButton
-            aria-label="more"
-            id="long-button"
-            aria-controls={open ? "long-menu" : undefined}
-            aria-expanded={open ? "true" : undefined}
-            aria-haspopup="true"
-            onClick={handleClick}
-          >
-            <MoreVertIcon />
-          </IconButton>
-          <Menu
-            id="long-menu"
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-            slotProps={{
-              paper: {
-                style: {
-                  width: "20ch",
-                },
+        <IconButton
+          aria-label="more"
+          id="long-button"
+          aria-controls={open ? "long-menu" : undefined}
+          aria-expanded={open ? "true" : undefined}
+          aria-haspopup="true"
+          onClick={handleClick}
+        >
+          <MoreVertIcon />
+        </IconButton>
+        <Menu
+          id="long-menu"
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          slotProps={{
+            paper: {
+              style: {
+                width: "20ch",
               },
-              list: {
-                "aria-labelledby": "long-button",
-              },
+            },
+            list: {
+              "aria-labelledby": "long-button",
+            },
+          }}
+        >
+          <MenuItem
+            title="Adicionar aos favitos"
+            disabled={loadingFavorite}
+            onClick={() => {
+              onToggleFavorite(conversation.id);
             }}
           >
-            <MenuItem
-              size="small"
-              title="Adicionar aos favitos"
-              disabled={loadingFavorite}
-              onClick={() => {
-                onToggleFavorite(conversation.id);
-              }}
-            >
-              {isFavorite ? <StarIcon color="primary" /> : <StarBorderIcon />}{" "}
+            {isFavorite ? <StarIcon color="primary" /> : <StarBorderIcon />}
+            <Typography variant="body2" marginX={1}>
               Favoritar
-            </MenuItem>
+            </Typography>
+          </MenuItem>
 
-            <MenuItem
-              onClick={() => {
-                onDelete(conversation.id);
-              }}
-            >
-              <DeleteOutlineIcon color="error" /> Apagar
-            </MenuItem>
-          </Menu>
-        </div>
+          <MenuItem
+            title="Apagar todas as mensagens"
+            onClick={handleOpenDeleteConversation}
+          >
+            <DeleteOutlineIcon color="error" />
+            <Typography variant="body2" marginX={1}>
+              Apagar
+            </Typography>
+          </MenuItem>
+        </Menu>
       </Box>
+
+      <Backdrop
+        sx={(theme) => ({
+          zIndex: theme.zIndex.drawer + 1,
+          paddingX: 2,
+        })}
+        open={openDeleteConversation}
+      >
+        <Card>
+          <Box
+            padding={2}
+            display="flex"
+            flexDirection="column"
+            gap={2}
+            maxWidth="sm"
+          >
+            <Typography variant="h6">Você tem certeza absoluta?</Typography>
+            <Typography>
+              Esta ação não pode ser desfeita. Isso excluirá permanentemente
+              suas conversas e removerá seus dados de nossos servidores.
+            </Typography>
+            <Box display="flex" gap={1} justifyContent="end">
+              <Button
+                variant="contained"
+                color="inherit"
+                onClick={handleCloseDeleteConversation}
+              >
+                Cancelar
+              </Button>
+              <Button
+                variant="contained"
+                color="error"
+                onClick={() => {
+                  onDelete(conversation.id);
+                }}
+              >
+                Confirmar
+              </Button>
+            </Box>
+          </Box>
+        </Card>
+      </Backdrop>
     </Box>
   );
 }
