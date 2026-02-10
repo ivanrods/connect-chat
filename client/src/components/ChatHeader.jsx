@@ -9,6 +9,11 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import StarIcon from "@mui/icons-material/Star";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { useState } from "react";
 
 export function ChatHeader({
   conversation,
@@ -21,11 +26,20 @@ export function ChatHeader({
 }) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const [anchorEl, setAnchorEl] = useState(null);
 
   if (!conversation) return null;
 
   const otherUser = conversation.users.find((user) => user.id !== userId);
   const isFavorite = conversation.favorite ?? false;
+
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <Box
@@ -59,24 +73,54 @@ export function ChatHeader({
       </Box>
 
       <Box>
-        <IconButton
-          size="small"
-          title="Adicionar aos favitos"
-          disabled={loadingFavorite}
-          onClick={() => {
-            onToggleFavorite(conversation.id);
-          }}
-        >
-          {isFavorite ? <StarIcon color="primary" /> : <StarBorderIcon />}
-        </IconButton>
+        <div>
+          <IconButton
+            aria-label="more"
+            id="long-button"
+            aria-controls={open ? "long-menu" : undefined}
+            aria-expanded={open ? "true" : undefined}
+            aria-haspopup="true"
+            onClick={handleClick}
+          >
+            <MoreVertIcon />
+          </IconButton>
+          <Menu
+            id="long-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            slotProps={{
+              paper: {
+                style: {
+                  width: "20ch",
+                },
+              },
+              list: {
+                "aria-labelledby": "long-button",
+              },
+            }}
+          >
+            <MenuItem
+              size="small"
+              title="Adicionar aos favitos"
+              disabled={loadingFavorite}
+              onClick={() => {
+                onToggleFavorite(conversation.id);
+              }}
+            >
+              {isFavorite ? <StarIcon color="primary" /> : <StarBorderIcon />}{" "}
+              Favoritar
+            </MenuItem>
 
-        <button
-          onClick={() => {
-            onDelete(conversation.id);
-          }}
-        >
-          Apagar
-        </button>
+            <MenuItem
+              onClick={() => {
+                onDelete(conversation.id);
+              }}
+            >
+              <DeleteOutlineIcon color="error" /> Apagar
+            </MenuItem>
+          </Menu>
+        </div>
       </Box>
     </Box>
   );
