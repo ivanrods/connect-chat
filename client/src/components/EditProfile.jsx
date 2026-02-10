@@ -190,48 +190,6 @@ export function EditProfile({
               <Button onClick={handleOpenDeleteUser} color="error" size="small">
                 Deletar conta
               </Button>
-              <Backdrop
-                sx={(theme) => ({
-                  zIndex: theme.zIndex.drawer + 1,
-                })}
-                open={openDeleteUser}
-                onClick={handleCloseDeleteUser}
-              >
-                <Card>
-                  <Box
-                    padding={2}
-                    display="flex"
-                    flexDirection="column"
-                    gap={2}
-                    maxWidth="sm"
-                  >
-                    <Typography variant="h6">
-                      Você tem certeza absoluta?
-                    </Typography>
-                    <Typography>
-                      Esta ação não pode ser desfeita. Isso excluirá
-                      permanentemente sua conta e removerá seus dados de nossos
-                      servidores.
-                    </Typography>
-                    <Box display="flex" gap={1} justifyContent="end">
-                      <Button
-                        variant="contained"
-                        color="inherit"
-                        onClick={onClose}
-                      >
-                        Cancelar
-                      </Button>
-                      <Button
-                        variant="contained"
-                        color="error"
-                        onClick={handleDeleteUser}
-                      >
-                        Confirmar
-                      </Button>
-                    </Box>
-                  </Box>
-                </Card>
-              </Backdrop>
 
               <Button
                 type="submit"
@@ -244,6 +202,45 @@ export function EditProfile({
             </Box>
           </Box>
         </Box>
+        <Backdrop
+          sx={(theme) => ({
+            zIndex: theme.zIndex.drawer + 1,
+            paddingX: 2,
+          })}
+          open={openDeleteUser}
+        >
+          <Card>
+            <Box
+              padding={2}
+              display="flex"
+              flexDirection="column"
+              gap={2}
+              maxWidth="sm"
+            >
+              <Typography variant="h6">Você tem certeza absoluta?</Typography>
+              <Typography>
+                Esta ação não pode ser desfeita. Isso excluirá permanentemente
+                sua conta e removerá seus dados de nossos servidores.
+              </Typography>
+              <Box display="flex" gap={1} justifyContent="end">
+                <Button
+                  variant="contained"
+                  color="inherit"
+                  onClick={handleCloseDeleteUser}
+                >
+                  Cancelar
+                </Button>
+                <Button
+                  variant="contained"
+                  color="error"
+                  onClick={handleDeleteUser}
+                >
+                  Confirmar
+                </Button>
+              </Box>
+            </Box>
+          </Card>
+        </Backdrop>
       </DialogContent>
     </Dialog>
   );
