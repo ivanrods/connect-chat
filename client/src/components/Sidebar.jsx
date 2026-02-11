@@ -17,7 +17,8 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import StarIcon from "@mui/icons-material/Star";
 import LogoutIcon from "@mui/icons-material/Logout";
 import SearchIcon from "@mui/icons-material/Search";
 import EditIcon from "@mui/icons-material/Edit";
@@ -159,7 +160,7 @@ export function Sidebar({
                 color="primary"
                 title="Adicionar nova conversa"
               >
-                <AddCircleOutlineIcon fontSize="large" />
+                <AddCircleIcon fontSize="large" />
               </IconButton>
             </Box>
           </Box>
@@ -186,38 +187,48 @@ export function Sidebar({
                     bgcolor: isSelected ? "#ddd" : "transparent",
                   }}
                 >
-                  <Box gap={2} display="flex" alignItems="center">
-                    <Badge
-                      color="primary"
-                      badgeContent={conversation.unreadCount}
-                      invisible={!conversation.unreadCount}
-                    >
-                      <Avatar src={otherUser?.avatar} />
-                    </Badge>
+                  <Box
+                    width="100%"
+                    display="flex"
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
+                    <Box gap={2} display="flex" alignItems="center">
+                      <Badge
+                        color="primary"
+                        badgeContent={conversation.unreadCount}
+                        invisible={!conversation.unreadCount}
+                      >
+                        <Avatar src={otherUser?.avatar} />
+                      </Badge>
 
-                    <Box
-                      display="flex"
-                      flexDirection="column"
-                      width={isMobile ? 200 : 300}
-                    >
-                      <Typography
-                        variant="subtitle1"
-                        noWrap
-                        textOverflow="ellipsis"
-                        whiteSpace="nowrap"
+                      <Box
+                        display="flex"
+                        flexDirection="column"
                         width={isMobile ? 200 : 300}
                       >
-                        {otherUser?.name || "Usuário"}
-                      </Typography>
-                      <Typography
-                        variant="caption"
-                        noWrap
-                        textOverflow="ellipsis"
-                        whiteSpace="nowrap"
-                      >
-                        {lastMessage ? lastMessage.content : ""}
-                      </Typography>
+                        <Typography
+                          variant="subtitle1"
+                          noWrap
+                          textOverflow="ellipsis"
+                          whiteSpace="nowrap"
+                          width={isMobile ? 200 : 300}
+                        >
+                          {otherUser?.name || "Usuário"}
+                        </Typography>
+                        <Typography
+                          variant="caption"
+                          noWrap
+                          textOverflow="ellipsis"
+                          whiteSpace="nowrap"
+                        >
+                          {lastMessage ? lastMessage.content : ""}
+                        </Typography>
+                      </Box>
                     </Box>
+                    {conversation.favorite && (
+                      <StarIcon fontSize="small" color="primary" />
+                    )}
                   </Box>
                 </ListItemButton>
               );
