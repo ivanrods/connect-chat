@@ -22,6 +22,8 @@ import {
 } from "@mui/material";
 import { useAlert } from "../context/alert-context";
 
+import background from "../assets/background.webp";
+
 const Login = () => {
   const { signIn, loading } = useAuth();
   const { showAlert } = useAlert();
@@ -162,13 +164,19 @@ const Login = () => {
       </Box>
       {!isMobile && (
         <Box
-          component="img"
-          src="background.jpg"
           width="100%"
-          sx={{
-            objectFit: "cover",
-          }}
-        />
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          bgcolor="#6a9466"
+        >
+          <Box
+            component="img"
+            src={background}
+            maxWidth="sm"
+            draggable="false"
+          />
+        </Box>
       )}
     </Box>
   );

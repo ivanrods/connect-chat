@@ -23,6 +23,8 @@ import { registerSchema } from "../lib/schemas/auth-schema";
 import { useAuth } from "../context/auth-context";
 import { useAlert } from "../context/alert-context";
 
+import background from "../assets/background.webp";
+
 const Register = () => {
   const { signUp, loading } = useAuth();
   const { showAlert } = useAlert();
@@ -53,13 +55,19 @@ const Register = () => {
     <Box display="flex" height="100vh">
       {!isMobile && (
         <Box
-          component="img"
-          src="background.jpg"
           width="100%"
-          sx={{
-            objectFit: "none",
-          }}
-        />
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          bgcolor="#6a9466"
+        >
+          <Box
+            component="img"
+            src={background}
+            maxWidth="sm"
+            draggable="false"
+          />
+        </Box>
       )}
       <Box
         display="flex"
