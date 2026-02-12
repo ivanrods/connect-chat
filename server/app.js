@@ -1,8 +1,8 @@
 import express from "express";
 import cors from "cors";
 import { rateLimit } from "express-rate-limit";
-import sequelize from "./config/database.js";
 import routes from "./routes/index.js";
+//import sequelize from "./config/database.js";
 
 const app = express();
 
@@ -28,7 +28,7 @@ app.use("/avatars", express.static("public/avatars"));
 // rotas
 app.use(routes);
 
-// banco
+/*
 (async () => {
   try {
     await sequelize.sync({ force: false });
@@ -37,5 +37,7 @@ app.use(routes);
     console.error("Erro ao sincronizar o banco:", err);
   }
 })();
+
+*/
 
 export default app;

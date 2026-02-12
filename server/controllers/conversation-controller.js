@@ -142,11 +142,6 @@ export const deleteConversation = async (req, res) => {
   const userId = req.user.id;
   const { id: conversationId } = req.params;
 
-  console.log("DELETANDO RELATION:", {
-    userId,
-    conversationId,
-  });
-
   try {
     const relation = await ConversationUser.findOne({
       where: { userId, conversationId },

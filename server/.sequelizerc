@@ -1,0 +1,11 @@
+import path from "path";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+export default {
+  config: path.resolve("config", "config.json"),
+  "migrations-path": path.resolve("migrations"),
+  "models-path": path.resolve("models"),
+  "seeders-path": path.resolve("seeders"),
+};
