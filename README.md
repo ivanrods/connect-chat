@@ -43,6 +43,7 @@ O projeto simula funcionalidades presentes em aplicações reais como WhatsApp e
 - Lista ordenada por atividade recente
 - Última mensagem exibida na sidebar
 - Busca por nome ou e-mail
+- Envio de imagens
 
 ### Performance
 
@@ -59,6 +60,7 @@ O projeto simula funcionalidades presentes em aplicações reais como WhatsApp e
 - Context API
 - Material UI
 - Socket.IO Client
+- React Hook Form + Zod
 
 ### Back-end
 
@@ -68,6 +70,8 @@ O projeto simula funcionalidades presentes em aplicações reais como WhatsApp e
 - PostgreSQL
 - Socket.IO
 - JWT
+- Cloudinary
+- Zod
 
 ### Comunicação em tempo real
 
@@ -86,16 +90,24 @@ connect-chat/
 ├── server/
 │   ├── controllers/
 │   ├── models/
+│   │   └── index.js
 │   ├── routes/
+│   ├── middlewares
+│   ├── schemas
 │   ├── config/
 │   │   └── socket.js
 │   └── app.js
+│   └── server.js
 │
 ├── client/
 │   ├── src/
 │   │   ├── components/
 │   │   ├── hooks/
 │   │   ├── context/
+│   │   ├── lib/
 │   │   ├── pages/
+│   │   │   └── Chat.jsx
+│   │   ├── utils/
+│   │   ├── theme/
 │   └── main.jsx
 ```
