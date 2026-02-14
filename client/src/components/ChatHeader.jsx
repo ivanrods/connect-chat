@@ -12,7 +12,7 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import StarIcon from "@mui/icons-material/Star";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -128,9 +128,9 @@ export function ChatHeader({
             title="Apagar todas as mensagens"
             onClick={handleOpenDeleteConversation}
           >
-            <DeleteOutlineIcon color="error" />
+            <RemoveCircleOutlineIcon color="error" />
             <Typography variant="body2" marginX={1}>
-              Apagar
+              Desconectar
             </Typography>
           </MenuItem>
         </Menu>

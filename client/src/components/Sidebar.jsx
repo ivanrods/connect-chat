@@ -137,7 +137,7 @@ export function Sidebar({
               </IconButton>
             </Box>
 
-            <Box display="flex" alignItems="center" gap={1}>
+            <Box display="flex" alignItems="center">
               <TextField
                 fullWidth
                 size="small"
@@ -158,7 +158,7 @@ export function Sidebar({
               <IconButton
                 onClick={() => onAddConversation()}
                 color="primary"
-                title="Adicionar nova conversa"
+                title="Adicionar nova conexão"
               >
                 <AddCircleIcon fontSize="large" />
               </IconButton>

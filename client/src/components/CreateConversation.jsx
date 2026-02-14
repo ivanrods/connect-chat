@@ -5,8 +5,10 @@ import {
   TextField,
   Button,
   Box,
+  InputAdornment,
 } from "@mui/material";
 import { useState } from "react";
+import MailIcon from "@mui/icons-material/Mail";
 
 export function CreateConversation({ open, onClose, onCreate }) {
   const [email, setEmail] = useState("");
@@ -28,7 +30,7 @@ export function CreateConversation({ open, onClose, onCreate }) {
 
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="xs">
-      <DialogTitle>Nova conversa</DialogTitle>
+      <DialogTitle>Nova conexão</DialogTitle>
 
       <DialogContent>
         <Box component="form" display="flex" gap={2} mt={1}>
@@ -39,6 +41,15 @@ export function CreateConversation({ open, onClose, onCreate }) {
             fullWidth
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            slotProps={{
+              input: {
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <MailIcon />
+                  </InputAdornment>
+                ),
+              },
+            }}
           />
 
           <Button
@@ -48,7 +59,7 @@ export function CreateConversation({ open, onClose, onCreate }) {
             onClick={handleCreate}
             disabled={loading}
           >
-            Criar
+            Conectar
           </Button>
         </Box>
       </DialogContent>

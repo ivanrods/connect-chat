@@ -126,7 +126,7 @@ export function MessageList({
                       sx={{
                         bgcolor: isMe ? "primary.main" : "border.main",
                         color: isMe ? "text.secondary" : "text.primary",
-                        p: msg.imageUrl ? 0.3 : 1.5,
+                        p: msg.imageUrl ? 0.3 : 1,
                         maxWidth: isMobile ? "75%" : msg.imageUrl ? 300 : 500,
                         wordBreak: "break-word",
                         overflowWrap: "anywhere",
