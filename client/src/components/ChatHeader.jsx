@@ -100,6 +100,7 @@ export function ChatHeader({
           anchorEl={anchorEl}
           open={open}
           onClose={handleClose}
+          onClick={handleClose}
           slotProps={{
             paper: {
               style: {

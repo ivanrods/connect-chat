@@ -21,7 +21,7 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import StarIcon from "@mui/icons-material/Star";
 import LogoutIcon from "@mui/icons-material/Logout";
 import SearchIcon from "@mui/icons-material/Search";
-import EditIcon from "@mui/icons-material/Edit";
+import SettingsIcon from "@mui/icons-material/Settings";
 
 import { useAuth } from "../context/auth-context";
 
@@ -102,24 +102,33 @@ export function Sidebar({
                 gap={2}
                 alignItems="center"
                 justifyContent="center"
-                onClick={() => handleProfile()}
               >
-                <Avatar src={user ? user.avatar : "?"} />
+                <Badge
+                  color="white"
+                  badgeContent={
+                    <IconButton>
+                      <SettingsIcon
+                        fontSize="small"
+                        color="primary"
+                        onClick={() => handleProfile()}
+                      />
+                    </IconButton>
+                  }
+                >
+                  <Avatar src={user ? user.avatar : "?"} />
+                </Badge>
                 <Box>
-                  <Box display="flex" gap={1}>
-                    <Typography
-                      variant="body1"
-                      fontWeight="bold"
-                      alignItems="center"
-                      noWrap
-                      textOverflow="ellipsis"
-                      whiteSpace="nowrap"
-                      maxWidth={isMobile ? 150 : 230}
-                    >
-                      {user.name}
-                    </Typography>
-                    <EditIcon fontSize="small" color="primary" />
-                  </Box>
+                  <Typography
+                    variant="body1"
+                    fontWeight="bold"
+                    alignItems="center"
+                    noWrap
+                    textOverflow="ellipsis"
+                    whiteSpace="nowrap"
+                    maxWidth={isMobile ? 150 : 230}
+                  >
+                    {user.name}
+                  </Typography>
 
                   <Typography
                     variant="body2"
