@@ -12,10 +12,10 @@ app.use(express.json());
 
 //Limite de requisições
 const apiLimiter = rateLimit({
-  windowMs: 10 * 60 * 100,
+  windowMs: 10 * 60 * 1000,
   max: 60,
   message:
-    "Muitas requisições a partir deste IP, por favor tente novamente após 15 minutos",
+    "Muitas requisições a partir deste IP, por favor tente novamente após 10 minutos",
   standardHeaders: true,
   legacyHeaders: false,
 });

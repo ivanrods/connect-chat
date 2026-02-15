@@ -138,6 +138,7 @@ export default function Chat() {
 
   const handleNewMessage = useCallback((newMessage) => {
     setMessages((prev) => [...prev, newMessage]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useConversationSocket(selectedConversation?.id, handleNewMessage);
