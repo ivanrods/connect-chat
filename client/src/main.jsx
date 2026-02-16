@@ -1,6 +1,7 @@
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router";
+import { lazy, Suspense } from "react";
 import { CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 
@@ -12,9 +13,11 @@ import { AlertProvider } from "./context/alert-context.jsx";
 
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Chat from "./pages/Chat";
+import LoadingPage from "./components/LoadingPage.jsx";
 
 const root = document.getElementById("root");
+
+const Chat = lazy(() => import("./pages/Chat"));
 
 ReactDOM.createRoot(root).render(
   <StrictMode>
@@ -28,7 +31,14 @@ ReactDOM.createRoot(root).render(
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route element={<PrivateRoute />}>
-                  <Route path="*" element={<Chat />} />
+                  <Route
+                    path="*"
+                    element={
+                      <Suspense fallback={<LoadingPage />}>
+                        <Chat />
+                      </Suspense>
+                    }
+                  />
                 </Route>
               </Routes>
             </BrowserRouter>
