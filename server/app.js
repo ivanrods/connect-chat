@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import "dotenv/config";
 import { rateLimit } from "express-rate-limit";
 import routes from "./routes/index.js";
 //import sequelize from "./config/database.js";
@@ -7,7 +8,13 @@ import routes from "./routes/index.js";
 const app = express();
 
 // middlewares globais
-app.use(cors());
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL,
+    credentials: true,
+  }),
+);
+
 app.use(express.json());
 
 //Limite de requisições

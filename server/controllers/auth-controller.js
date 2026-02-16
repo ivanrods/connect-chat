@@ -18,13 +18,10 @@ export const register = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const avatarUrl = `${process.env.APP_URL}/avatars/avatar.png`;
-
     await User.create({
       name,
       email,
       password: hashedPassword,
-      avatar: avatarUrl,
     });
 
     return res.status(201).json({
