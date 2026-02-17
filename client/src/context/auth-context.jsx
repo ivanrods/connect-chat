@@ -13,8 +13,9 @@ export const AuthProvider = ({ children }) => {
     const userData = localStorage.getItem("user");
 
     if (token && userData) {
-      setUser(userData);
+      setUser(JSON.parse(userData));
     }
+
     setLoading(false);
   }, []);
 
@@ -46,6 +47,7 @@ export const AuthProvider = ({ children }) => {
   }
 
   async function signUp({ name, email, password }) {
+    setLoading(true);
     try {
       const response = await fetch(`${apiUrl}/api/auth/register`, {
         method: "POST",
@@ -76,7 +78,7 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider
       value={{ user, loading, error, signIn, signUp, signOut }}
     >
-      {!loading && children}
+      {children}
     </AuthContext.Provider>
   );
 };

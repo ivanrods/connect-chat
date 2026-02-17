@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Box, Button, LinearProgress } from "@mui/material";
+import { Box, Button } from "@mui/material";
 
 import { useProfile } from "../hooks/use-profile";
 import { useConversations } from "../hooks/use-conversations";
@@ -19,6 +19,7 @@ import { MessageList } from "../components/MessageList";
 import { useAlert } from "../context/alert-context";
 import { EditProfile } from "../components/EditProfile";
 import { ImageViewer } from "../components/ImageViewer";
+import LoadingPage from "../components/LoadingPage";
 
 export default function Chat() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -188,7 +189,7 @@ export default function Chat() {
   };
 
   if (loadingProfile) {
-    return <LinearProgress />;
+    return <LoadingPage />;
   }
 
   return (

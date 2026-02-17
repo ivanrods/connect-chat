@@ -13,7 +13,7 @@ const LoadingPage = () => {
     >
       <Box display="flex" alignItems="center" justifyContent="center" gap={1}>
         <ForumIcon fontSize="large" color="primary" />
-        <Typography variant="h6" fontWeight="bold" color="primay">
+        <Typography variant="h5" fontWeight="bold" color="primay">
           ConnectChat
         </Typography>
       </Box>

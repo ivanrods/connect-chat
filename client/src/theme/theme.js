@@ -29,7 +29,7 @@ export const theme = createTheme({
     h4: {
       color: "#22c55e",
     },
-    h6: {
+    h5: {
       color: "#22c55e",
     },
     subtitle1: {
