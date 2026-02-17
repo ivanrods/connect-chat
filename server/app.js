@@ -20,7 +20,7 @@ app.use(express.json());
 //Limite de requisições
 const apiLimiter = rateLimit({
   windowMs: 10 * 60 * 1000,
-  max: 60,
+  max: 200,
   message:
     "Muitas requisições a partir deste IP, por favor tente novamente após 10 minutos",
   standardHeaders: true,
@@ -28,9 +28,6 @@ const apiLimiter = rateLimit({
 });
 
 app.use(apiLimiter);
-
-// arquivos estáticos
-app.use("/avatars", express.static("public/avatars"));
 
 // rotas
 app.use(routes);

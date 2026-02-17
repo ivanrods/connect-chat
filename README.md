@@ -8,7 +8,7 @@ O projeto simula funcionalidades presentes em aplicações reais como WhatsApp e
 
 ## Demonstração
 
-> Em breve: GIF / vídeo curto mostrando o chat em funcionamento
+<img src="https://i.ibb.co/ZpmD853N/connect-chat.png" width="50%" alt="Imagem da tela de chat">
 
 ---
 

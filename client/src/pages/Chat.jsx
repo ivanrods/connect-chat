@@ -11,7 +11,6 @@ import { useFavoriteConversation } from "../hooks/use-favorite-conversation";
 import { useConversationsSocket } from "../hooks/use-conversations-socket";
 
 import { CreateConversation } from "../components/CreateConversation";
-
 import { Sidebar } from "../components/Sidebar";
 import { MessageInput } from "../components/MessageInput";
 import { ChatHeader } from "../components/ChatHeader";
@@ -193,7 +192,7 @@ export default function Chat() {
   }
 
   return (
-    <Box display="flex" height="100vh">
+    <Box display="flex" height="100dvh">
       <Box>
         <Sidebar
           open={sidebarOpen}

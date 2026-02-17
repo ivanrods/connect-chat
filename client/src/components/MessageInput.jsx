@@ -83,7 +83,7 @@ export function MessageInput({ onSend, disabled, loading }) {
         maxRows={3}
         placeholder="Digite uma mensagem..."
         value={message}
-        disabled={disabled}
+        disabled={loading}
         onChange={(e) => setMessage(e.target.value)}
         slotProps={{
           input: {
